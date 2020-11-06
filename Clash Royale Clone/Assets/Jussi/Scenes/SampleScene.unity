@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 49794173}
   - component: {fileID: 49794172}
   - component: {fileID: 49794171}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: DownWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 376201874}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -500,7 +500,7 @@ GameObject:
   - component: {fileID: 790184312}
   - component: {fileID: 790184311}
   - component: {fileID: 790184310}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: LeftWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1315,7 +1315,7 @@ GameObject:
   - component: {fileID: 1228451886}
   - component: {fileID: 1228451885}
   - component: {fileID: 1228451884}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Water3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1431,7 +1431,7 @@ MonoBehaviour:
   cam: {fileID: 963194227}
   placableGrid:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 768
 --- !u!4 &1245631002
 Transform:
   m_ObjectHideFlags: 0
@@ -1458,7 +1458,7 @@ GameObject:
   - component: {fileID: 1333040276}
   - component: {fileID: 1333040275}
   - component: {fileID: 1333040274}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: CardSet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1554,7 +1554,7 @@ GameObject:
   - component: {fileID: 1333862195}
   - component: {fileID: 1333862194}
   - component: {fileID: 1333862193}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Water2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1742,7 +1742,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1471332767}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1779,7 +1779,7 @@ GameObject:
   - component: {fileID: 1589857034}
   - component: {fileID: 1589857033}
   - component: {fileID: 1589857032}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: UpWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1874,7 +1874,7 @@ GameObject:
   - component: {fileID: 1924572562}
   - component: {fileID: 1924572561}
   - component: {fileID: 1924572560}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Water1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2119,7 +2119,7 @@ GameObject:
   - component: {fileID: 2062644506}
   - component: {fileID: 2062644505}
   - component: {fileID: 2062644504}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: RightWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
