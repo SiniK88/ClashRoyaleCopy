@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering; //why do we need this?
 
 public class DragInput : MonoBehaviour
 {
