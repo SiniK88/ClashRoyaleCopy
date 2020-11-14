@@ -16,7 +16,7 @@ public class ClickCard : MonoBehaviour
         //knight = Resources.Load<Sprite>("Clashknightfront");
     }
 
-    void Update()
+   /* void Update()
     {
         if(Input.GetMouseButtonDown(0)){
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -39,6 +39,6 @@ public class ClickCard : MonoBehaviour
         }
 
 
-    }
+    }*/
 }
 

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 26fdb0bb999d04a40a852919d9b0f7d5, type: 3}
-  m_Name: Orion
+  m_Name: OrionRed
   m_EditorClassIdentifier: 
-  cardname: Orion
-  manaCost: 2
-  artwork: {fileID: 21300000, guid: d318c17512430e242bfc3bd05902f20e, type: 3}
-  borderArt: {fileID: 21300000, guid: 2abb2b65ba913374982c6b637eba2533, type: 3}
+  cardname: OrionRed
+  manaCost: 3
+  artwork: {fileID: 21300000, guid: 9f5f609bf113a9443b75613a2953b5b7, type: 3}
+  borderArt: {fileID: 21300000, guid: a714b4a0d34f10b43b32a1f07ff86e5b, type: 3}
