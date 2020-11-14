@@ -33,8 +33,16 @@ public class CardPlacer : MonoBehaviour {
     Color highlightColor = Color.yellow;
     Color selectionColor = Color.red;
 
+    public Transform defaultPosTransform;
+    Vector3 defaultPos;
+
+    public GameObject placerGfx;
+    public GameObject cardGfx;
+    public GameObject minionGfx;
+
     private void Awake() {
-        rend = GetComponent<Renderer>();
+        defaultPos = defaultPosTransform.position;
+        rend = cardGfx.GetComponent<Renderer>();
         initialColor = rend.material.color;
         startingPos = transform.position;
     }
@@ -46,18 +54,32 @@ public class CardPlacer : MonoBehaviour {
 
         if (isActive) {
             if (!attemptPlacement) {
-                transform.Translate(speed, Space.World);
+
+                transform.position += speed;
+                //Vector3 discretePos = new Vector3(Mathf.Floor(transform.position.x), Mathf.Floor(transform.position.y), Mathf.Floor(transform.position.z));
+                //placerGfx.transform.position = discretePos;
+
+
             } else if (attemptPlacement) {
-                //check if placement is succesful and in that case, somehow remove it from the list
-                //if the placement is not successful, call a function called ResetCard()
                 attemptPlacement = false;
                 isActive = false;
             }
         }
     }
 
+    //public Vector3 UpdateObjectPos() {        
+    //    Vector3 discretePosition = Vector3.zero;
+    //    Vector3 position = new Vector3(transform.position)
+
+    //    return discretePosition;
+    //}
+
+    public void UpdateGraphics() {
+
+    }
+
     public void PlacementSpeed(Vector2 direction) {
-        speed = new Vector3(direction.x, 0, direction.y) * 0.05f;
+        speed = new Vector3(direction.x, 0, direction.y) * Time.deltaTime * 20f;
     }
 
     public void SelectCard() {
@@ -65,11 +87,14 @@ public class CardPlacer : MonoBehaviour {
             return;
         } else if (isActivatable && !isActive) {
             startingPos = transform.position;
-            rend.material.color = selectionColor;
             isActive = true;
+            transform.position = defaultPos;
+            cardGfx.SetActive(false);
+            placerGfx.SetActive(true);
         } else if(isActivatable && isActive) {
             attemptPlacement = true;
-            rend.material.color = initialColor;
+            placerGfx.SetActive(false);
+            minionGfx.SetActive(true);
         }
     }
 
