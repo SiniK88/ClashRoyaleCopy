@@ -8,6 +8,7 @@ public class ClickCard : MonoBehaviour
     GameObject placerObject;
     Renderer rend;
     public PlacerScript placerScript;
+    public Camera CamP1, CamP2; 
 
     private void Awake()
     {
@@ -16,10 +17,11 @@ public class ClickCard : MonoBehaviour
         //knight = Resources.Load<Sprite>("Clashknightfront");
     }
 
-   /* void Update()
+    void Update()
     {
         if(Input.GetMouseButtonDown(0)){
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //Camera CamP1 = GameObject.Find("CameraP1");
+            Ray ray = CamP1.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
@@ -29,6 +31,7 @@ public class ClickCard : MonoBehaviour
                     Debug.Log("Card");
                     // do something to placerobject, call PlacerScript
                     placerScript.ChangeSprite();
+                    placerObject.gameObject.tag = "P1"; 
                     //GetComponent<PlacerScript>().ChangeSprite(); 
                 }
                 else
@@ -39,6 +42,6 @@ public class ClickCard : MonoBehaviour
         }
 
 
-    }*/
+    }
 }
 
