@@ -9,14 +9,15 @@ public class PlayerInput : MonoBehaviour {
 
     InputMaster controls;
     Vector2 movePos;
+    public Player player = null;
 
-    public delegate void NavigateAction(int i);
+    public delegate void NavigateAction(int i, Player player);
     public static event NavigateAction OnNavigate;
 
-    public delegate void SelectAction();
+    public delegate void SelectAction(Player player);
     public static event SelectAction OnSelect;
 
-    public delegate void CancelAction();
+    public delegate void CancelAction(Player player);
     public static event CancelAction OnCancel;
 
     //public delegate void PlaceAction(Vector2 place);
@@ -25,34 +26,46 @@ public class PlayerInput : MonoBehaviour {
     private void Awake() {        
 
         controls = new InputMaster();
-        controls.Player.Select.performed += ctx => Select();
-        controls.Player.Cancel.performed += ctx => Cancel();
-        controls.Player.SelectionPlus.performed += ctx => Navigate(1);
-        controls.Player.SelectionMinus.performed += ctx => Navigate(-1);
+        controls.Player.Select.performed += ctx => Select(player);
+        controls.Player.Cancel.performed += ctx => Cancel(player);
+        controls.Player.SelectionPlus.performed += ctx => Navigate(1, player);
+        controls.Player.SelectionMinus.performed += ctx => Navigate(-1, player);
 
-        //controls.Player.Place.performed += ctx => Place(ctx.ReadValue<Vector2>());
-        //controls.Player.Place.canceled += ctx => movePos = Vector2.zero;
-    }    
+        controls.Player.Place.performed += ctx => Place(ctx.ReadValue<Vector2>());
+        controls.Player.Place.canceled += ctx => movePos = Vector2.zero;        
+    }
 
-    //public void Place(Vector2 place) {
-    //    print("Moved left stick");
-    //    movePos = place;
-    //    OnPlacement(movePos);
-    //}
+    private void Update() {
+        transform.position += new Vector3(movePos.x, 0, movePos.y) * Time.deltaTime;
+        print(player);
 
-    public void Navigate(int i) {
+
+    }
+
+    public void SetPlayer(Player _player) {
+        player = _player;
+    }
+
+    public void Place(Vector2 place) {
+        print("Moved left stick");
+        movePos = place;
+        //OnPlacement(movePos);
+    }
+
+    public void Navigate(int i, Player _player) {
         print("Pressed button RB or LB");
-        OnNavigate(i);        
+        OnNavigate(i, _player);        
     }
 
-    public void Select() {
+
+    public void Select(Player _player) {
         print("Pressed button A");
-        OnSelect();
+        OnSelect(_player);
     }
 
-    public void Cancel() {
+    public void Cancel(Player _player) {
         print("Pressed button B");
-        OnCancel();
+        OnCancel(_player);
     }
 
     private void OnEnable() {
@@ -62,6 +75,7 @@ public class PlayerInput : MonoBehaviour {
     private void OnDisable() {
         controls.Disable();
     }
+
 
 
 }

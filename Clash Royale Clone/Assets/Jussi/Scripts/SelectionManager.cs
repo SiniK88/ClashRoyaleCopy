@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectionManager : MonoBehaviour {    
+public class SelectionManager : MonoBehaviour {
+
+    GameInitializer gameInit;
 
     private void OnEnable() {
         PlayerInput.OnNavigate += OnChangeSelection; //Pressed RB or LB
@@ -18,11 +20,20 @@ public class SelectionManager : MonoBehaviour {
     void Start() {        
         selectables = GameObject.FindObjectsOfType<Selectable>();
         lastSelected = Array.Find(selectables, selectable => selectable.isSelectable);
+
+        gameInit = FindObjectOfType<GameInitializer>();
     }
     
 
-    public void OnChangeSelection(int dir) {
+    public void OnChangeSelection(int dir, Player player) {
         Selectable selected = lastSelected;
+
+
+        if(player == gameInit.players[0]) {
+            print("Player 0 pressed a button");
+        } else if(player == gameInit.players[1]) {
+            print("Player 1 pressed a button");
+        }
  
         if (selected != null && selected.IsSelected) { //This is the normal situation: we have a selection active (non-null) and said selection IsSelected. 
             HashSet<Selectable> visited = new HashSet<Selectable>();

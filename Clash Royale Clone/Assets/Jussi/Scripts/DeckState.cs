@@ -16,15 +16,6 @@ public class DeckState {
 
         cards = randomCards;
     }
-    
-    //public List<Card> RandomDeck() {
-
-    //    List<Card> randomCards = new List<Card>();
-    //    for (int i = 0; i < MAX_CARDS_IN_DECK; i++) {
-    //        cards.Add(Card.RandomCard());
-    //    }
-    //    return randomCards;
-    //}
 
     public Card RandomCardFromDeck() {
         int random = Random.Range(0, cards.Count);

@@ -8,7 +8,7 @@ public class CardVisualizer : MonoBehaviour
 
     public List<Player> players;
     public List<GameObject> cardPositions;
-    public List<Renderer> renderers;
+    public List<SpriteRenderer> renderers;
 
     int MAX_CARDS_IN_HAND;
 
@@ -21,7 +21,7 @@ public class CardVisualizer : MonoBehaviour
         for(int i = 0; i < MAX_CARDS_IN_HAND; i++) {
             GameObject go = cardPositions[i];
             go.AddComponent<Selectable>();
-            renderers.Add(go.GetComponent<Renderer>());
+            renderers.Add(go.GetComponent<SpriteRenderer>());
         }
         for (int i = 0; i < MAX_CARDS_IN_HAND; i++) {
             Selectable s = cardPositions[i].GetComponent<Selectable>();
