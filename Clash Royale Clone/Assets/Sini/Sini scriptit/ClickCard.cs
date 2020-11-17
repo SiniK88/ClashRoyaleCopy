@@ -13,7 +13,7 @@ public class ClickCard : MonoBehaviour
     private void Awake()
     {
         placerObject = GameObject.Find("PlacerObject");
-        rend = placerObject.GetComponent<Renderer>();
+        //rend = placerObject.GetComponent<Renderer>();
         //knight = Resources.Load<Sprite>("Clashknightfront");
     }
 
@@ -31,7 +31,7 @@ public class ClickCard : MonoBehaviour
                     Debug.Log("Card");
                     // do something to placerobject, call PlacerScript
                     placerScript.ChangeSprite();
-                    placerObject.gameObject.tag = "P1"; 
+                    //placerObject.gameObject.tag = "P1"; 
                     //GetComponent<PlacerScript>().ChangeSprite(); 
                 }
                 else
