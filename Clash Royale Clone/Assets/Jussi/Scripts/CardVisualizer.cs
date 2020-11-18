@@ -7,27 +7,41 @@ public class CardVisualizer : MonoBehaviour
     GameInitializer gameInit;
 
     public List<Player> players;
-    public List<GameObject> cardPositions;
-    public List<SpriteRenderer> renderers;
-
-    int MAX_CARDS_IN_HAND;
+    public List<GameObject> cardPositionsP1;
+    public List<GameObject> cardPositionsP2;
+    List<List<GameObject>> playerCardPositions = new List<List<GameObject>>();
+    public List<SpriteRenderer> renderersP1;
+    public List<SpriteRenderer> renderersP2;
+    List<List<SpriteRenderer>> playerCardRenderers = new List<List<SpriteRenderer>>();
 
     private void Start() {
+        playerCardPositions.Add(cardPositionsP1);
+        playerCardPositions.Add(cardPositionsP2);
+        playerCardRenderers.Add(renderersP1);
+        playerCardRenderers.Add(renderersP2);
         gameInit = FindObjectOfType<GameInitializer>();
         players = gameInit.players;
 
-        MAX_CARDS_IN_HAND = players[0].handState.GetMaxCards();
+        for(int i = 0; i < players.Count; i++) {
 
-        for(int i = 0; i < MAX_CARDS_IN_HAND; i++) {
-            GameObject go = cardPositions[i];
-            go.AddComponent<Selectable>();
-            renderers.Add(go.GetComponent<SpriteRenderer>());
+            int MAX_CARDS_IN_HAND = players[i].handState.GetMaxCards();
+
+            for (int k = 0; k < MAX_CARDS_IN_HAND; k++) {
+                GameObject go = playerCardPositions[i][k];
+                go.AddComponent<Selectable>();
+
+                playerCardRenderers[i].Add(go.GetComponent<SpriteRenderer>());
+            }
+            for (int k = 0; k < MAX_CARDS_IN_HAND; k++) {
+                string playerID = "Player" + (i + 1).ToString();
+                Selectable s = playerCardPositions[i][k].GetComponent<Selectable>();
+                s.playerID = playerID;
+                s.previous = playerCardPositions[i][(k - 1 + MAX_CARDS_IN_HAND) % MAX_CARDS_IN_HAND].GetComponent<Selectable>();
+                s.next = playerCardPositions[i][(k + 1) % MAX_CARDS_IN_HAND].GetComponent<Selectable>();
+            }
         }
-        for (int i = 0; i < MAX_CARDS_IN_HAND; i++) {
-            Selectable s = cardPositions[i].GetComponent<Selectable>();
-            s.previous = cardPositions[(i - 1 + MAX_CARDS_IN_HAND) % MAX_CARDS_IN_HAND].GetComponent<Selectable>();
-            s.next = cardPositions[(i + 1) % MAX_CARDS_IN_HAND].GetComponent<Selectable>();
-        }
+
+        
 
         UpdateCardVisuals();
         
@@ -53,10 +67,16 @@ public class CardVisualizer : MonoBehaviour
     }
 
     public void UpdateCardVisuals() {
-        for(int i = 0; i < MAX_CARDS_IN_HAND; i++) {
-            Card card = players[0].handState.GetCardInIndex(i);
-            renderers[i].material.color = GetCardColor(card.effect); //This could be the card image or any other instance visual
+
+        for(int i = 0; i < players.Count; i++) {
+            int MAX_CARDS_IN_HAND = players[i].handState.GetMaxCards();
+
+            for (int k = 0; k < MAX_CARDS_IN_HAND; k++) {
+                Card card = players[i].handState.GetCardInIndex(k);
+                playerCardRenderers[i][k].material.color = GetCardColor(card.effect); //This could be the card image or any other instance visual
+            }
         }
+        
     }
 
 

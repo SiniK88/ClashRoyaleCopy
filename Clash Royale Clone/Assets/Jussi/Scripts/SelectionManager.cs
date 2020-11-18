@@ -8,31 +8,37 @@ public class SelectionManager : MonoBehaviour {
     GameInitializer gameInit;
 
     private void OnEnable() {
-        PlayerInput.OnNavigate += OnChangeSelection; //Pressed RB or LB
+        PlayerController.OnNavigate += OnChangeSelection; //Pressed RB or LB
     }
     private void OnDisable() {
-        PlayerInput.OnNavigate -= OnChangeSelection;
+        PlayerController.OnNavigate -= OnChangeSelection;
     }
 
-    private Selectable lastSelected = null;
+    Selectable lastSelected = null;
     Selectable[] selectables;
+    Selectable lastSelectedP1;
+    Selectable lastSelectedP2;
 
     void Start() {        
         selectables = GameObject.FindObjectsOfType<Selectable>();
-        lastSelected = Array.Find(selectables, selectable => selectable.isSelectable);
-
+        lastSelectedP1 = Array.Find(selectables, selectable => selectable.isSelectable && selectable.playerID.Equals("Player1"));
+        lastSelectedP2 = Array.Find(selectables, selectable => selectable.isSelectable && selectable.playerID.Equals("Player2"));
         gameInit = FindObjectOfType<GameInitializer>();
     }
     
 
-    public void OnChangeSelection(int dir, Player player) {
-        Selectable selected = lastSelected;
+    public void OnChangeSelection(int dir, string playerID) {
+        Selectable selected = null; //this changes along the method
+        Selectable lastSelected = null; //this stays the same until the last part
 
-
-        if(player == gameInit.players[0]) {
-            print("Player 0 pressed a button");
-        } else if(player == gameInit.players[1]) {
+        if(playerID.Equals("Player1")) {
             print("Player 1 pressed a button");
+            selected = lastSelectedP1;
+            lastSelected = lastSelectedP1;
+        } else if(playerID.Equals("Player2")) {
+            print("Player 2 pressed a button");
+            selected = lastSelectedP2;
+            lastSelected = lastSelectedP2;
         }
  
         if (selected != null && selected.IsSelected) { //This is the normal situation: we have a selection active (non-null) and said selection IsSelected. 
@@ -58,10 +64,10 @@ public class SelectionManager : MonoBehaviour {
             }
         }
 
-        if (selected == null ||( selected.isSelectable == false)) {
+        if (selected == null || (selected.isSelectable == false)) {
             // if we don't have a valid next selectable, select first item in array of all selectables
             RefreshSelectables();
-            selected = Array.Find<Selectable>(selectables, selectable => selectable.isSelectable);
+            selected = Array.Find<Selectable>(selectables, selectable => selectable.isSelectable && selectable.playerID.Equals(playerID));
         }
         if (selected != null) {
             if (lastSelected != null) {
@@ -70,6 +76,13 @@ public class SelectionManager : MonoBehaviour {
             selected.IsSelected = true;
             lastSelected = selected;
         }
+
+        if (playerID.Equals("Player1")) {
+            lastSelectedP1 = lastSelected;
+        } else if (playerID.Equals("Player2")) {
+            lastSelectedP2 = lastSelected;
+        }
+
     }
 
     public void RefreshSelectables() {

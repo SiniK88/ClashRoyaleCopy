@@ -7,6 +7,8 @@ public class Selectable : MonoBehaviour
     public Selectable next;
     public Selectable previous;
 
+    public string playerID;
+
     public bool isSelectable = true;
     private bool isSelected = false;
 

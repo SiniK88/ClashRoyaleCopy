@@ -8,10 +8,10 @@ public class GameInitializer : MonoBehaviour
     public Player player1;
     public Player player2;
     public List<Player> players = new List<Player>();
-    public GameObject playerInput;
-    PlayerInputManager playerInputManager;
+    public GameObject playerController;
 
-    bool playersIsHuman = true;
+    bool playersIsHuman = true;   
+
 
     private void Awake() {
         player1 = new Player(playersIsHuman);
@@ -21,10 +21,11 @@ public class GameInitializer : MonoBehaviour
 
 
         for (int i = 0; i < players.Count; i++) {
-            GameObject newPlayer = PlayerInput.Instantiate(playerInput);
-            PlayerInput newPlayerInput = newPlayer.GetComponent<PlayerInput>();
-            newPlayerInput.SetPlayer(players[i]);
-            print("Playerobject: " + players[i]);
+            GameObject newPlayer = Instantiate(playerController);
+            PlayerController newPlayerController = newPlayer.GetComponent<PlayerController>();
+            newPlayer.name = "Player" + (i+1).ToString();
+            newPlayerController.AssignPlayerID();
+            print("Instantiated a new object named: " + newPlayer.name);
         }
     }
 }
