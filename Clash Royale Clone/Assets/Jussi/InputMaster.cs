@@ -19,7 +19,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
             ""id"": ""952f1b17-f126-450e-8a40-b029ca4ef015"",
             ""actions"": [
                 {
-                    ""name"": ""Select"",
+                    ""name"": ""Click"",
                     ""type"": ""Button"",
                     ""id"": ""e6ace1b8-693c-45a9-b214-b307e9f01128"",
                     ""expectedControlType"": ""Button"",
@@ -67,7 +67,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Xbox One Control Scheme"",
-                    ""action"": ""Select"",
+                    ""action"": ""Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -178,7 +178,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Select = m_Player.FindAction("Select", throwIfNotFound: true);
+        m_Player_Click = m_Player.FindAction("Click", throwIfNotFound: true);
         m_Player_Place = m_Player.FindAction("Place", throwIfNotFound: true);
         m_Player_Cancel = m_Player.FindAction("Cancel", throwIfNotFound: true);
         m_Player_SelectionMinus = m_Player.FindAction("SelectionMinus", throwIfNotFound: true);
@@ -232,7 +232,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     // Player
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
-    private readonly InputAction m_Player_Select;
+    private readonly InputAction m_Player_Click;
     private readonly InputAction m_Player_Place;
     private readonly InputAction m_Player_Cancel;
     private readonly InputAction m_Player_SelectionMinus;
@@ -241,7 +241,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     {
         private @InputMaster m_Wrapper;
         public PlayerActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Select => m_Wrapper.m_Player_Select;
+        public InputAction @Click => m_Wrapper.m_Player_Click;
         public InputAction @Place => m_Wrapper.m_Player_Place;
         public InputAction @Cancel => m_Wrapper.m_Player_Cancel;
         public InputAction @SelectionMinus => m_Wrapper.m_Player_SelectionMinus;
@@ -255,9 +255,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
             {
-                @Select.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelect;
-                @Select.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelect;
-                @Select.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelect;
+                @Click.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClick;
+                @Click.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClick;
+                @Click.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClick;
                 @Place.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlace;
                 @Place.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlace;
                 @Place.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlace;
@@ -274,9 +274,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Select.started += instance.OnSelect;
-                @Select.performed += instance.OnSelect;
-                @Select.canceled += instance.OnSelect;
+                @Click.started += instance.OnClick;
+                @Click.performed += instance.OnClick;
+                @Click.canceled += instance.OnClick;
                 @Place.started += instance.OnPlace;
                 @Place.performed += instance.OnPlace;
                 @Place.canceled += instance.OnPlace;
@@ -304,7 +304,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     }
     public interface IPlayerActions
     {
-        void OnSelect(InputAction.CallbackContext context);
+        void OnClick(InputAction.CallbackContext context);
         void OnPlace(InputAction.CallbackContext context);
         void OnCancel(InputAction.CallbackContext context);
         void OnSelectionMinus(InputAction.CallbackContext context);

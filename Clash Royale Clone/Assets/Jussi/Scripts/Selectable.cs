@@ -12,18 +12,37 @@ public class Selectable : MonoBehaviour
     public bool isSelectable = true;
     private bool isSelected = false;
 
-    private void VisualUpdate() {
+    private bool isClicked = false; //When this Selectable is selected and also clicked with A- button.
+
+    private void SelectionVisual() {
         if (isSelected) {
             this.transform.localScale = Vector3.one * 0.13f;
         } else {
             this.transform.localScale = Vector3.one * 0.1f;
         }
     }
+
+    private void ClickVisual() {
+        if (isClicked) {
+            this.transform.position += Vector3.forward * 3f;
+        } else {
+            this.transform.position -= Vector3.forward * 3f;
+        }
+    }
+
     public bool IsSelected { 
         get => isSelected;
         set {
             isSelected = value;
-            VisualUpdate();
+            SelectionVisual();
+        }
+    }
+
+    public bool IsClicked {
+        get => isClicked;
+        set {
+            isClicked = value;
+            ClickVisual();
         }
     }
 }

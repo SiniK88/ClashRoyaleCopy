@@ -12,22 +12,33 @@ public class PlayerController : MonoBehaviour
     public delegate void NavigateAction(int i, string id);
     public static event NavigateAction OnNavigate;
 
+    public delegate void ClickAction(string id);
+    public static event ClickAction OnClickA;
+
+    public delegate void PlaceAction(Vector2 move, string id);
+    public static event PlaceAction OnPlacement;
+
     private void Awake() {
-    }    
+    }  
+
+    public void OnPlace(InputValue input) {
+        Vector2 cursorMove = input.Get<Vector2>();
+        OnPlacement(cursorMove, playerID);
+    }
+
+    public void OnClick(InputValue input) {
+        OnClickA(playerID);
+    }
 
     public void OnSelectionPlus(InputValue input) {
-        print("Pressed RB");
         OnNavigate(1, playerID);
     }
 
     public void OnSelectionMinus(InputValue input) {
-        print("Pressed LB");
         OnNavigate(-1, playerID);
     }
 
     public void AssignPlayerID() {
         playerID = gameObject.name;
-    }
-
-
+    } 
 }

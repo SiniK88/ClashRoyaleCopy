@@ -6,7 +6,7 @@
             "id": "952f1b17-f126-450e-8a40-b029ca4ef015",
             "actions": [
                 {
-                    "name": "Select",
+                    "name": "Click",
                     "type": "Button",
                     "id": "e6ace1b8-693c-45a9-b214-b307e9f01128",
                     "expectedControlType": "Button",
@@ -54,7 +54,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Xbox One Control Scheme",
-                    "action": "Select",
+                    "action": "Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

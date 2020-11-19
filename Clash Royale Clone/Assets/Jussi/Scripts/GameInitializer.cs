@@ -9,6 +9,7 @@ public class GameInitializer : MonoBehaviour
     public Player player2;
     public List<Player> players = new List<Player>();
     public GameObject playerController;
+    public GameObject playerCursor;
 
     bool playersIsHuman = true;   
 
@@ -21,11 +22,18 @@ public class GameInitializer : MonoBehaviour
 
 
         for (int i = 0; i < players.Count; i++) {
+            
+            //Create an individual input system for each player
             GameObject newPlayer = Instantiate(playerController);
             PlayerController newPlayerController = newPlayer.GetComponent<PlayerController>();
             newPlayer.name = "Player" + (i+1).ToString();
-            newPlayerController.AssignPlayerID();
-            print("Instantiated a new object named: " + newPlayer.name);
+            newPlayerController.playerID = "Player" + (i + 1).ToString();
+
+            //Create an individual cursor for each player
+            GameObject newCursor = Instantiate(playerCursor);
+            PlacementCursor placementCursor = newCursor.GetComponent<PlacementCursor>();
+            newCursor.name = "CursorP" + (i + 1).ToString();
+            placementCursor.playerID = "Player" + (i + 1).ToString();
         }
     }
 }

@@ -9,15 +9,20 @@ public class SelectionManager : MonoBehaviour {
 
     private void OnEnable() {
         PlayerController.OnNavigate += OnChangeSelection; //Pressed RB or LB
+        PlayerController.OnClickA += OnClickAction;
     }
     private void OnDisable() {
         PlayerController.OnNavigate -= OnChangeSelection;
+        PlayerController.OnClickA -= OnClickAction;
     }
 
     Selectable lastSelected = null;
     Selectable[] selectables;
     Selectable lastSelectedP1;
     Selectable lastSelectedP2;
+
+    bool clickedCardP1 = false;
+    bool clickedCardP2 = false;
 
     void Start() {        
         selectables = GameObject.FindObjectsOfType<Selectable>();
@@ -82,6 +87,26 @@ public class SelectionManager : MonoBehaviour {
         } else if (playerID.Equals("Player2")) {
             lastSelectedP2 = lastSelected;
         }
+
+    }
+
+    public void OnClickAction(string playerID) {
+
+        bool clicked = false; //Set to something. It should be set correctly in the next step
+
+        if (playerID.Equals("Player1")) {
+            clicked = clickedCardP1;
+        } else if (playerID.Equals("Player2")) {
+            clicked = clickedCardP2;
+        }
+
+        if (!clicked) {
+            Selectable currentSelection = Array.Find(selectables, selectable => selectable.IsSelected && selectable.playerID.Equals(playerID));
+            currentSelection.IsClicked = true;
+            print("Got here");
+        }
+
+        
 
     }
 

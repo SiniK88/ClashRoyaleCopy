@@ -354,6 +354,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8897048080203629143, guid: aeb64a91cb199fa499d30bb3379d961c, type: 3}
     - target: {fileID: 918394525216967843, guid: 03714f96729a0614bb783e7a99236610, type: 3}
+      propertyPath: playerCursor
+      value: 
+      objectReference: {fileID: 3708326824166888213, guid: 301301d35abf8cc4a9b843dd2463984b, type: 3}
+    - target: {fileID: 918394525216967843, guid: 03714f96729a0614bb783e7a99236610, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 5015764585049275981, guid: ed2c57e8aa32a374eb446a29a1d2133c, type: 3}
