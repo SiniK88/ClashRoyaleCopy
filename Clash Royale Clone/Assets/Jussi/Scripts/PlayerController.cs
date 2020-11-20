@@ -38,7 +38,4 @@ public class PlayerController : MonoBehaviour
         OnNavigate(-1, playerID);
     }
 
-    public void AssignPlayerID() {
-        playerID = gameObject.name;
-    } 
 }
