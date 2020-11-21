@@ -171,6 +171,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerMaxHP: 100
   towercurHP: 100
+--- !u!114 &328439436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328439430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3303ca6ad1cc72043a9dd41e1e7c95eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerMaxHP: 100
+  towercurHP: 100
 --- !u!1 &420897638 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8976550291669502504, guid: 3bf8ee32032e41b46a8a525a68358d85, type: 3}
@@ -188,6 +202,77 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 420897638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3303ca6ad1cc72043a9dd41e1e7c95eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerMaxHP: 100
+  towercurHP: 100
+--- !u!114 &420897644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420897638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3303ca6ad1cc72043a9dd41e1e7c95eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerMaxHP: 100
+  towercurHP: 100
+--- !u!1 &1903790521 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7065897986192173899, guid: 3bf8ee32032e41b46a8a525a68358d85, type: 3}
+  m_PrefabInstance: {fileID: 7303029605948887491}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1903790526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1903790521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3303ca6ad1cc72043a9dd41e1e7c95eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerMaxHP: 100
+  towercurHP: 100
+--- !u!1 &1943720504 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 241166570458056773, guid: 3bf8ee32032e41b46a8a525a68358d85, type: 3}
+  m_PrefabInstance: {fileID: 7303029605948887491}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1943720509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943720504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3303ca6ad1cc72043a9dd41e1e7c95eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerMaxHP: 100
+  towercurHP: 100
+--- !u!1 &2007852100 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5256903543225498393, guid: 3bf8ee32032e41b46a8a525a68358d85, type: 3}
+  m_PrefabInstance: {fileID: 7303029605948887491}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2007852102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007852100}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3303ca6ad1cc72043a9dd41e1e7c95eb, type: 3}
