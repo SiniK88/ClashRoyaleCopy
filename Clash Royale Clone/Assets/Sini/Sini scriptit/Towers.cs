@@ -6,7 +6,7 @@ public class Towers : MonoBehaviour
 {
     public int towerMaxHP = 100;
     public int towercurHP = 100;
-
+    bool isDestroyed =  false; 
 
 
     // Update is called once per frame
@@ -15,7 +15,10 @@ public class Towers : MonoBehaviour
         if(towerMaxHP <= 0)
         {
             Destroy(gameObject);
+            isDestroyed = true; 
         }
+        
+
     }
 
     public void HurtEnemy(int damageToGive)

@@ -16,17 +16,15 @@ public class GiantScript : MonoBehaviour
     float waypointTolerance = 1f;
 
     public int giantHP = 20;
-    public int giantAttackPower = 100;
+    public int giantAttackPower = 20;
     public float hitTime = 2; //time in seconds between each hit
     float curTime = 0; //time in seconds since last hit
 
-    public GameObject tower2;
-    int tower2hp = 100; 
 
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        nextPoint = FindClosestWaypoint();
+        nextPoint = ClosestPoint();
         //vis = GetComponent<VisibilityChecker>();
     }
 
@@ -61,20 +59,24 @@ public class GiantScript : MonoBehaviour
 
 
 
-    int FindClosestWaypoint()
+
+    public int ClosestPoint()
     {
-        if (waypoints.Count == 0) return -1;
-        int closest = 0;
-        float lastDist = Vector3.Distance(this.transform.position, waypoints[0].transform.position);
-        for(int i = 1; i < waypoints.Count; i++)
+
+        // this works, finds the closest point
+        int j = 0;
+        var smallest = Vector3.Distance(agent.transform.position, waypoints[0].transform.position);
+
+        for (var i = 1; i < waypoints.Count; i++)
         {
-            float thisDist = Vector3.Distance(this.transform.position, waypoints[i].transform.position);
-            if(lastDist > thisDist && i != nextPoint)
+            var dist = Vector3.Distance(agent.transform.position, waypoints[i].transform.position);
+            if (dist < smallest)
             {
-                closest = i;
+                smallest = dist;
+                j = i;
             }
         }
-        return closest;
+        return j;
     }
 
     // Update is called once per frame
@@ -86,8 +88,14 @@ public class GiantScript : MonoBehaviour
             if (CloseEnoughToWaypoint())
             {
                 // lets try to get hp of tower we are close to
-                 waypointsGo[nextPoint].GetComponent<Towers>().HurtEnemy(giantAttackPower);
                 currentState = MinionState.Attack;
+                waypointsGo[nextPoint].GetComponent<Towers>().HurtEnemy(giantAttackPower);
+                waypointsGo.Remove(waypointsGo[nextPoint]);
+
+
+                // GetComponent<Towers>().
+                // after tower is destroyed,search closest point again
+
 
                 //nextPoint++;
                 if (nextPoint > waypoints.Count - 1)
@@ -102,6 +110,7 @@ public class GiantScript : MonoBehaviour
         if(currentState == MinionState.Attack)
         {
             attack();
+
             // minion stops
             // starts attacking and changes animation to attack animation
             // if waypoint "castle" is destroyed, starts to move towards next closest castle
@@ -113,6 +122,7 @@ public class GiantScript : MonoBehaviour
     void attack()
     {
         print(" starts attacking");
+        
         //int towerhp = waypointsGo[nextPoint].GetComponent<Towers>().towercurHP;
         //towerhp -= giantAttackPower;
         // start to attack waypoint that you are closest to
