@@ -18,8 +18,12 @@ public class PlacementCursor : MonoBehaviour {
     public Vector3 moveSpeed = Vector3.zero;
     float cursorSpeed = 5f;
 
+    SpriteRenderer rend;
+
     private void Awake() {
         gameObject.transform.position = initialPos;
+        rend = GetComponent<SpriteRenderer>();
+        rend.enabled = false;
     }
 
     private void Update() {
@@ -34,5 +38,15 @@ public class PlacementCursor : MonoBehaviour {
 
     public void ResetCursor() {
         gameObject.transform.position = initialPos;
+    }
+
+    public void AddCursorObject(GameObject go) {
+        Instantiate(go, gameObject.transform);
+    }
+
+    public void DeleteCursorObject() {
+        foreach(Transform child in transform) {
+            GameObject.Destroy(child.gameObject);
+        }
     }
 }

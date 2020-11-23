@@ -5,112 +5,168 @@ using UnityEngine;
 
 public class SelectionManager : MonoBehaviour {
 
-    GameInitializer gameInit;
+    //This is a player-specific selection manager!! Each player has it's own, meaning, that we don't have to cross-check PlayerID's all the time. Each SelectionManager gets initialized in GameInitializer
+
+    public string _playerID;
 
     private void OnEnable() {
         PlayerController.OnNavigate += OnChangeSelection; //Pressed RB or LB
         PlayerController.OnClickA += OnClickAction;
+        PlayerController.OnCancelB += OnCancelAction;
     }
     private void OnDisable() {
         PlayerController.OnNavigate -= OnChangeSelection;
         PlayerController.OnClickA -= OnClickAction;
+        PlayerController.OnCancelB -= OnCancelAction;
     }
 
+    GameInitializer gameInit;
+    List<Player> players;
+    CardTypeContainer cardTypeContainer;
+    List<CardType> cardTypes;
+    PlacementCursor cursor;
+
+    Selectable selected = null;
     Selectable lastSelected = null;
-    Selectable[] selectables;
-    Selectable lastSelectedP1;
-    Selectable lastSelectedP2;
+    Selectable[] selectables;   
 
-    bool clickedCardP1 = false;
-    bool clickedCardP2 = false;
+    bool clickedCard = false;
 
-    void Start() {        
-        selectables = GameObject.FindObjectsOfType<Selectable>();
-        lastSelectedP1 = Array.Find(selectables, selectable => selectable.isSelectable && selectable.playerID.Equals("Player1"));
-        lastSelectedP2 = Array.Find(selectables, selectable => selectable.isSelectable && selectable.playerID.Equals("Player2"));
+
+    void Start() { //Most of the stuff below need to happen in Start(). That's because a lot of stuff is initialized in Awake()
         gameInit = FindObjectOfType<GameInitializer>();
+        players = gameInit.players; //List of all the Player-objects.
+        cardTypeContainer = FindObjectOfType<CardTypeContainer>();
+        cardTypes = cardTypeContainer.cardTypes;
+
+        PlacementCursor[] cursors = FindObjectsOfType<PlacementCursor>();
+        foreach(PlacementCursor c in cursors) {
+            if (c.playerID.Equals(_playerID)) {
+                cursor = c;
+                break;
+            }
+        }
+
+        RefreshSelectables();
+        lastSelected = Array.Find(selectables, selectable => selectable.isSelectable);
     }
     
 
-    public void OnChangeSelection(int dir, string playerID) {
-        Selectable selected = null; //this changes along the method
-        Selectable lastSelected = null; //this stays the same until the last part
+    public void OnChangeSelection(int dir, string playerID) { //I still couldn't read the if-statements below in clear english. Good luck!
 
-        if(playerID.Equals("Player1")) {
-            print("Player 1 pressed a button");
-            selected = lastSelectedP1;
-            lastSelected = lastSelectedP1;
-        } else if(playerID.Equals("Player2")) {
-            print("Player 2 pressed a button");
-            selected = lastSelectedP2;
-            lastSelected = lastSelectedP2;
-        }
- 
-        if (selected != null && selected.IsSelected) { //This is the normal situation: we have a selection active (non-null) and said selection IsSelected. 
-            HashSet<Selectable> visited = new HashSet<Selectable>();
-            if (dir > 0) {
-                visited.Add(selected);
-                selected = selected.next;
-                while (selected != null && selected.isSelectable == false && (!visited.Contains(selected))) { 
-                    /*We basically make sure that the "selected.next" is actually selectable (isSelectable == true), 
-                    or else we skip to the next one. The Hashset shouldn't also contain the selected itself, meaning that it will choose itself if it's the only one available:
-                    The loop ends when the selected itself is in-fact in the Hashset, and thus keep the selection as itself. Meaning that selected is the same as selected.next*/
+        if (playerID.Equals(_playerID)) {
+
+            if (clickedCard) {
+                UndoClickOperations();
+            }
+
+            selected = lastSelected;
+
+            if (selected != null && selected.IsSelected) { //This is the normal situation: we have a selection active (non-null) and said selection IsSelected. 
+                HashSet<Selectable> visited = new HashSet<Selectable>();
+                if (dir > 0) {
                     visited.Add(selected);
                     selected = selected.next;
+                    while (selected != null && selected.isSelectable == false && (!visited.Contains(selected))) {
+                        /*We basically make sure that the "selected.next" is actually selectable (isSelectable == true), 
+                        or else we skip to the next one. The Hashset shouldn't also contain the selected itself, meaning that it will choose itself if it's the only one available:
+                        The loop ends when the selected itself is in-fact in the Hashset, and thus keep the selection as itself. Meaning that selected is the same as selected.next*/
+                        visited.Add(selected);
+                        selected = selected.next;
+                    }
                 }
-            }
-            if (dir < 0) {
-                visited.Add(selected);
-                selected = selected.previous;
-                while (selected != null && selected.isSelectable == false && (!visited.Contains(selected))) {
+                if (dir < 0) {
                     visited.Add(selected);
                     selected = selected.previous;
+                    while (selected != null && selected.isSelectable == false && (!visited.Contains(selected))) {
+                        visited.Add(selected);
+                        selected = selected.previous;
+                    }
                 }
             }
-        }
 
-        if (selected == null || (selected.isSelectable == false)) {
-            // if we don't have a valid next selectable, select first item in array of all selectables
-            RefreshSelectables();
-            selected = Array.Find<Selectable>(selectables, selectable => selectable.isSelectable && selectable.playerID.Equals(playerID));
-        }
-        if (selected != null) {
-            if (lastSelected != null) {
-                lastSelected.IsSelected = false;
+            if (selected == null || (selected.isSelectable == false)) {
+                // if we don't have a valid next selectable, select first item in array of all selectables
+                RefreshSelectables();
+                selected = Array.Find<Selectable>(selectables, selectable => selectable.isSelectable);
             }
-            selected.IsSelected = true;
-            lastSelected = selected;
-        }
-
-        if (playerID.Equals("Player1")) {
-            lastSelectedP1 = lastSelected;
-        } else if (playerID.Equals("Player2")) {
-            lastSelectedP2 = lastSelected;
-        }
-
+            if (selected != null) {
+                if (lastSelected != null) {
+                    lastSelected.IsSelected = false;
+                }
+                selected.IsSelected = true;
+                lastSelected = selected;
+            }
+        }        
     }
 
     public void OnClickAction(string playerID) {
 
-        bool clicked = false; //Set to something. It should be set correctly in the next step
+        if (playerID.Equals(_playerID)) {
 
-        if (playerID.Equals("Player1")) {
-            clicked = clickedCardP1;
-        } else if (playerID.Equals("Player2")) {
-            clicked = clickedCardP2;
+            int playerIndex = (playerID.Equals("Player1") ? 0 : 1);
+            Selectable currentSelection = Array.Find(selectables, selectable => selectable.IsSelected);
+
+            if (!clickedCard) {                
+                if(currentSelection != null) {
+                    currentSelection.IsClicked = true;
+                    clickedCard = true;
+
+                    CardType currentCardType = GetCardType(currentSelection, playerIndex);
+                    cursor.AddCursorObject(currentCardType.placerVisuals);
+
+                } else {
+                    print("Can't click any card: null");
+                }                
+            } else if (clickedCard) {
+                UndoClickOperations();
+            }
+        }        
+    }
+
+    public void OnCancelAction(string playerID) {
+        Selectable currentSelection = Array.Find(selectables, selectable => selectable.IsSelected);
+
+        if (playerID.Equals(_playerID)) {
+            if (clickedCard) {
+                UndoClickOperations();
+            }
         }
+    }
 
-        if (!clicked) {
-            Selectable currentSelection = Array.Find(selectables, selectable => selectable.IsSelected && selectable.playerID.Equals(playerID));
-            currentSelection.IsClicked = true;
-            print("Got here");
-        }
-
-        
-
+    public void UndoClickOperations() {
+        Selectable currentSelection = Array.Find(selectables, selectable => selectable.IsSelected);
+        cursor.DeleteCursorObject();
+        cursor.ResetCursor();
+        currentSelection.IsClicked = false;
+        clickedCard = false;
     }
 
     public void RefreshSelectables() {
-        selectables = GameObject.FindObjectsOfType<Selectable>();
+        Selectable[] allSelectables = GameObject.FindObjectsOfType<Selectable>();
+        List<Selectable> playerSelectables = new List<Selectable>();
+        foreach(Selectable s in allSelectables) {
+            if (s.playerID.Equals(_playerID)) {
+                playerSelectables.Add(s);
+            }
+        }
+        selectables = playerSelectables.ToArray();
+    }
+    public CardType GetCardType(Selectable _currentSelection, int _playerIndex) {        
+
+        int selectableIndex = _currentSelection.currentIndex;
+        Card currentCard = players[_playerIndex].handState.GetCardInIndex(selectableIndex);
+        CardType _currentCardType = null;
+
+        for (int i = 0; i < cardTypes.Count; i++) { 
+            if(currentCard.effect == cardTypes[i].cardType) { //Finds the CardType which has the same Effect enum state as the Card.
+                _currentCardType = cardTypes[i];
+                break; //no need to loop the rest, since only one instance of each cardtype should exist
+            } 
+        }
+
+        return _currentCardType;
     }
 }
+
+

@@ -22,11 +22,11 @@ TagManager:
   - Unplacable
   - P1
   - P2
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Tower
+  - Enemy
+  - Obstacle
+  - TerritoryP1
+  - TerritoryP2
   - 
   - 
   - 

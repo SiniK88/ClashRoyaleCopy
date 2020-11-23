@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class CardVisualizer : MonoBehaviour
 {
-    GameInitializer gameInit;
+    GameInitializer gameInit;    
+    CardTypeContainer cardTypeContainer;
+    List<CardType> cardTypes;
 
     public List<Player> players;
     public List<GameObject> cardPositionsP1;
@@ -13,6 +15,11 @@ public class CardVisualizer : MonoBehaviour
     public List<SpriteRenderer> renderersP1;
     public List<SpriteRenderer> renderersP2;
     List<List<SpriteRenderer>> playerCardRenderers = new List<List<SpriteRenderer>>();
+
+    private void Awake() {
+        cardTypeContainer = FindObjectOfType<CardTypeContainer>();
+        cardTypes = cardTypeContainer.cardTypes;
+    }
 
     private void Start() {
         playerCardPositions.Add(cardPositionsP1);
@@ -36,6 +43,7 @@ public class CardVisualizer : MonoBehaviour
             for (int k = 0; k < MAX_CARDS_IN_HAND; k++) {
                 string playerID = "Player" + (i + 1).ToString();
                 Selectable s = playerCardPositions[i][k].GetComponent<Selectable>();
+                s.currentIndex = k;
                 s.playerID = playerID;
                 s.previous = playerCardPositions[i][(k - 1 + MAX_CARDS_IN_HAND) % MAX_CARDS_IN_HAND].GetComponent<Selectable>();
                 s.next = playerCardPositions[i][(k + 1) % MAX_CARDS_IN_HAND].GetComponent<Selectable>();
@@ -47,16 +55,16 @@ public class CardVisualizer : MonoBehaviour
 
     private Color GetCardColor(Card.Effect effect) {
         switch (effect) {
-            case Card.Effect.A: {
+            case Card.Effect.Tank: {
                     return Color.red;
                 }
-            case Card.Effect.B: {
+            case Card.Effect.Knight: {
                     return Color.yellow;
                 }
-            case Card.Effect.C: {
+            case Card.Effect.Archer: {
                     return Color.green;
                 }
-            case Card.Effect.D: {
+            case Card.Effect.DarkKnight: {
                     return Color.blue;
                 }
             default:
@@ -71,7 +79,25 @@ public class CardVisualizer : MonoBehaviour
 
             for (int k = 0; k < MAX_CARDS_IN_HAND; k++) {
                 Card card = players[i].handState.GetCardInIndex(k);
-                playerCardRenderers[i][k].material.color = GetCardColor(card.effect); //This could be the card image or any other instance visual
+                Card.Effect currentEffect = card.effect;
+                CardType currentCard = null;
+                for(int j = 0; j < cardTypes.Count; j++) {
+                    if(cardTypes[j].cardType == currentEffect) {
+                        currentCard = cardTypes[j];
+                        break;
+                    } else {
+                        continue;
+                    }
+                }
+                if(currentCard != null) {
+                    playerCardRenderers[i][k].sprite = currentCard.artwork;
+                } else {
+                    playerCardRenderers[i][k].material.color = GetCardColor(card.effect);
+                }
+                
+                   
+
+                 //This could be the card image or any other instance visual
             }
         }        
     }

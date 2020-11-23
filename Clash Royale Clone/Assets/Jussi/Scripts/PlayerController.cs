@@ -15,11 +15,18 @@ public class PlayerController : MonoBehaviour
     public delegate void ClickAction(string id);
     public static event ClickAction OnClickA;
 
+    public delegate void CancelAction(string id);
+    public static event CancelAction OnCancelB;
+
     public delegate void PlaceAction(Vector2 move, string id);
     public static event PlaceAction OnPlacement;
 
     private void Awake() {
     }  
+
+    public void OnCancel(InputValue input) {
+        OnCancelB(playerID);
+    }
 
     public void OnPlace(InputValue input) {
         Vector2 cursorMove = input.Get<Vector2>();

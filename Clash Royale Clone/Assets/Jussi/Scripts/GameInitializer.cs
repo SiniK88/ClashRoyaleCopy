@@ -22,18 +22,26 @@ public class GameInitializer : MonoBehaviour
 
 
         for (int i = 0; i < players.Count; i++) {
+
+            //Set the playerID in the Player-object
+            string newPlayerID = ("Player" + (i + 1).ToString());
+            players[i].SetPlayerID(newPlayerID);
             
             //Create an individual input system for each player
             GameObject newPlayer = Instantiate(playerController);
             PlayerController newPlayerController = newPlayer.GetComponent<PlayerController>();
-            newPlayer.name = "Player" + (i+1).ToString();
-            newPlayerController.playerID = "Player" + (i + 1).ToString();
+            newPlayer.name = newPlayerID;
+            newPlayerController.playerID = newPlayerID;
+
+            //Add a SelectionManager component to each player
+            newPlayer.AddComponent<SelectionManager>();
+            newPlayer.GetComponent<SelectionManager>()._playerID = newPlayerID;
 
             //Create an individual cursor for each player
             GameObject newCursor = Instantiate(playerCursor);
             PlacementCursor placementCursor = newCursor.GetComponent<PlacementCursor>();
             newCursor.name = "CursorP" + (i + 1).ToString();
-            placementCursor.playerID = "Player" + (i + 1).ToString();
+            placementCursor.playerID = newPlayerID;
         }
     }
 }

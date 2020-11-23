@@ -7,6 +7,8 @@ public class Selectable : MonoBehaviour
     public Selectable next;
     public Selectable previous;
 
+    public int currentIndex;
+
     public string playerID;
 
     public bool isSelectable = true;
@@ -24,9 +26,9 @@ public class Selectable : MonoBehaviour
 
     private void ClickVisual() {
         if (isClicked) {
-            this.transform.position += Vector3.forward * 3f;
+            this.transform.position += Vector3.forward * 1f;
         } else {
-            this.transform.position -= Vector3.forward * 3f;
+            this.transform.position -= Vector3.forward * 1f;
         }
     }
 
