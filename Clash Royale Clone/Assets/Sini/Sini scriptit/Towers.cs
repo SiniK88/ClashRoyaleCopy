@@ -14,7 +14,8 @@ public class Towers : MonoBehaviour
     {
         if(towerMaxHP <= 0)
         {
-            Destroy(gameObject);
+            GetComponent<MeshRenderer>().enabled = false;
+            //Destroy(gameObject);
             isDestroyed = true; 
         }
         

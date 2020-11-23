@@ -20,12 +20,16 @@ public class GiantScript : MonoBehaviour
     public float hitTime = 2; //time in seconds between each hit
     float curTime = 0; //time in seconds since last hit
 
+    private Towers towerhp; 
+
 
     void Awake()
     {
+         
         agent = GetComponent<NavMeshAgent>();
         nextPoint = ClosestPoint();
         //vis = GetComponent<VisibilityChecker>();
+        towerhp = waypointsGo[nextPoint].GetComponent<Towers>();
     }
 
 
@@ -87,21 +91,40 @@ public class GiantScript : MonoBehaviour
 
             if (CloseEnoughToWaypoint())
             {
-                // lets try to get hp of tower we are close to
-                currentState = MinionState.Attack;
-                waypointsGo[nextPoint].GetComponent<Towers>().HurtEnemy(giantAttackPower);
-                waypointsGo.Remove(waypointsGo[nextPoint]);
 
+                    curTime += Time.deltaTime;
+                    if (curTime >= hitTime && towerhp.towerMaxHP > 0)
+                    {
+                        //currentState = MinionState.Attack;
+                        towerhp.towerMaxHP -= giantAttackPower;
+                        //waypointsGo[nextPoint].GetComponent<Towers>().HurtEnemy(giantAttackPower);
 
-                // GetComponent<Towers>().
-                // after tower is destroyed,search closest point again
+                        curTime = 0;
 
-
-                //nextPoint++;
-                if (nextPoint > waypoints.Count - 1)
-                {
-                    nextPoint = 0;
+                    if (towerhp.towerMaxHP <= 0)
+                    {
+                        nextPoint++;
+                        if (nextPoint > waypoints.Count - 1)
+                        {
+                            nextPoint = 0;
+                        }
+                        towerhp = waypointsGo[nextPoint].GetComponent<Towers>();
+                    }
                 }
+
+                    //waypointsGo.Remove(waypointsGo[nextPoint]);
+                    //nextPoint = ClosestPoint();
+                    //ContinuePatrol();
+
+                    //waypointsGo.Remove(waypointsGo[nextPoint]);
+
+
+                    // GetComponent<Towers>().
+                    // after tower is destroyed,search closest point again
+
+
+                    //nextPoint++;
+
                 // nextPoint %= waypoints.Count;
             }
             ContinuePatrol();
