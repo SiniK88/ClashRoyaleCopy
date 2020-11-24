@@ -762,6 +762,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: CardTypeContainer
       objectReference: {fileID: 0}
+    - target: {fileID: 9157699011053356378, guid: d21cc23e17f244b4196292305354ec46, type: 3}
+      propertyPath: cardTypes.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9157699011053356378, guid: d21cc23e17f244b4196292305354ec46, type: 3}
+      propertyPath: cardTypes.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2cc35ba48e81bb5479707b998bcd631f, type: 2}
     - target: {fileID: 9157699011053356379, guid: d21cc23e17f244b4196292305354ec46, type: 3}
       propertyPath: m_RootOrder
       value: 8

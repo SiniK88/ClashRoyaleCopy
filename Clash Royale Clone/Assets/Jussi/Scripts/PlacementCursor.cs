@@ -36,6 +36,10 @@ public class PlacementCursor : MonoBehaviour {
         }
     }
 
+    public Vector3 GetPosition() {
+        return transform.position;
+    }
+
     public void ResetCursor() {
         gameObject.transform.position = initialPos;
     }

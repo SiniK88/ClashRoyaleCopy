@@ -7,7 +7,8 @@ public class SelectionManager : MonoBehaviour {
 
     //This is a player-specific selection manager!! Each player has it's own, meaning, that we don't have to cross-check PlayerID's all the time. Each SelectionManager gets initialized in GameInitializer
 
-    public string _playerID;
+    public delegate void CardPlaced(int playerIndex, int cardIndex, int manaCost);
+    public static event CardPlaced OnPlaceCard;
 
     private void OnEnable() {
         PlayerController.OnNavigate += OnChangeSelection; //Pressed RB or LB
@@ -19,6 +20,8 @@ public class SelectionManager : MonoBehaviour {
         PlayerController.OnClickA -= OnClickAction;
         PlayerController.OnCancelB -= OnCancelAction;
     }
+
+    public string _playerID;
 
     GameInitializer gameInit;
     List<Player> players;
@@ -100,26 +103,35 @@ public class SelectionManager : MonoBehaviour {
         }        
     }
 
-    public void OnClickAction(string playerID) {
+    public void OnClickAction(string playerID) { //Handles all the logic behind pressing the "A" button on controller
 
         if (playerID.Equals(_playerID)) {
 
             int playerIndex = (playerID.Equals("Player1") ? 0 : 1);
             Selectable currentSelection = Array.Find(selectables, selectable => selectable.IsSelected);
+            CardType currentCardType = GetCardType(currentSelection, playerIndex);
 
-            if (!clickedCard) {                
-                if(currentSelection != null) {
+            if (!clickedCard) {              
+                if(currentSelection != null && currentCardType.manaCost < 9000) { //Manacost condition needs to be fitted to some PlayerStat
                     currentSelection.IsClicked = true;
-                    clickedCard = true;
-
-                    CardType currentCardType = GetCardType(currentSelection, playerIndex);
-                    cursor.AddCursorObject(currentCardType.placerVisuals);
-
+                    clickedCard = true;                    
+                    cursor.AddCursorObject(currentCardType.placerVisuals); //One more parameter needs to handle the LayerMask
                 } else {
                     print("Can't click any card: null");
                 }                
             } else if (clickedCard) {
-                UndoClickOperations();
+                //Initialize the spawn
+                GameObject finalForm = currentCardType.finalForm;
+                Vector3 spawnPos = cursor.GetPosition();
+                UndoClickOperations(); //Cursor can be neglected / removed from here.
+
+                //Instantiate the spawn at correct location
+                Instantiate(finalForm, spawnPos, Quaternion.identity); //Fix rotation. Also somehow give a player ID to the minion
+
+                //Remove current card from hand
+                //Draw a new card
+                OnPlaceCard(playerIndex, currentSelection.currentIndex, currentCardType.manaCost);
+
             }
         }        
     }
@@ -152,6 +164,7 @@ public class SelectionManager : MonoBehaviour {
         }
         selectables = playerSelectables.ToArray();
     }
+
     public CardType GetCardType(Selectable _currentSelection, int _playerIndex) {        
 
         int selectableIndex = _currentSelection.currentIndex;
@@ -164,7 +177,6 @@ public class SelectionManager : MonoBehaviour {
                 break; //no need to loop the rest, since only one instance of each cardtype should exist
             } 
         }
-
         return _currentCardType;
     }
 }
