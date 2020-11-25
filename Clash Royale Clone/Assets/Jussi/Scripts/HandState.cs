@@ -9,13 +9,16 @@ public class HandState
 
     private List<Card> cards;
     private Card selected;
+    private DeckState deckState;
     public Card GetSelected() {
         return selected;
     }
-    public HandState (DeckState deckState) {
+    public HandState (DeckState _deckState) {
+        deckState = _deckState;
         cards = new List<Card>();
+
         for (int i = 0; i< CARDS_INITIALLY; i++) {
-            Card card = deckState.RandomCardFromDeck();
+            Card card = deckState.NextCardFromDeck();
             card.state = Card.State.IN_HAND;
             cards.Add(card);
         }
@@ -31,6 +34,15 @@ public class HandState
 
     public int GetMaxCards() {
         return MAX_CARDS_IN_HAND;
+    }    
+
+    public void RemoveCardFromIndex(int cardIndex) {
+        cards.RemoveAt(cardIndex);
+    }
+
+    public void DrawCardIntoIndex(int cardIndex, Card card) {
+        card.state = Card.State.IN_HAND;
+        cards.Insert(cardIndex, card);
     }
 
 }

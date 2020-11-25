@@ -10,14 +10,13 @@ public class Player {
     private string playerID = "DefaultPlayerID";
     public bool isHuman;    
 
-    public Player(bool _isHuman) {
+    public Player(bool _isHuman, List<Card> deckCards) {
         isHuman = _isHuman;
-        deckState = new DeckState();
+        deckState = new DeckState(deckCards);
         handState = new HandState(deckState);
     }
 
     public void SetPlayerID(string _playerID) {
         this.playerID = _playerID;
     }
-
 }

@@ -48,29 +48,9 @@ public class CardVisualizer : MonoBehaviour
                 s.previous = playerCardPositions[i][(k - 1 + MAX_CARDS_IN_HAND) % MAX_CARDS_IN_HAND].GetComponent<Selectable>();
                 s.next = playerCardPositions[i][(k + 1) % MAX_CARDS_IN_HAND].GetComponent<Selectable>();
             }
-        }       
-
+        }    
         UpdateCardVisuals();        
-    }
-
-    private Color GetCardColor(Card.Effect effect) {
-        switch (effect) {
-            case Card.Effect.Tank: {
-                    return Color.red;
-                }
-            case Card.Effect.Knight: {
-                    return Color.yellow;
-                }
-            case Card.Effect.Archer: {
-                    return Color.green;
-                }
-            case Card.Effect.DarkKnight: {
-                    return Color.blue;
-                }
-            default:
-                return Color.white;
-        }
-    }
+    }    
 
     public void UpdateCardVisuals() {
 
@@ -92,13 +72,28 @@ public class CardVisualizer : MonoBehaviour
                 if(currentCard != null) {
                     playerCardRenderers[i][k].sprite = currentCard.artwork;
                 } else {
-                    playerCardRenderers[i][k].material.color = GetCardColor(card.effect);
+                    Debug.Log("Currentcard is null");
                 }
-                
-                   
-
-                 //This could be the card image or any other instance visual
             }
         }        
     }
+
+    //private Color GetCardColor(Card.Effect effect) {
+    //    switch (effect) {
+    //        case Card.Effect.Tank: {
+    //                return Color.red;
+    //            }
+    //        case Card.Effect.Knight: {
+    //                return Color.yellow;
+    //            }
+    //        case Card.Effect.Archer: {
+    //                return Color.green;
+    //            }
+    //        case Card.Effect.DarkKnight: {
+    //                return Color.blue;
+    //            }
+    //        default:
+    //            return Color.white;
+    //    }
+    //}
 }

@@ -4,24 +4,29 @@ using UnityEngine;
 
 public class DeckState {
 
-    public static readonly int MAX_CARDS_IN_DECK = 25;
+    public static readonly int MAX_CARDS_IN_DECK = 5;
     public List<Card> cards;
     
-    public DeckState() {
-        //For now, this creates a deck consisting of 25 random cards
-        List<Card> randomCards = new List<Card>();
-        for (int i = 0; i < MAX_CARDS_IN_DECK; i++) {
-            randomCards.Add(Card.RandomCard());
-        }
+    public DeckState(List<Card> deckCards) {
+        cards = deckCards;
+    }
 
-        cards = randomCards;
+    public Card NextCardFromDeck() {
+        Card nextCard = cards[cards.Count - 1];
+        cards.RemoveAt(cards.Count - 1);
+        return nextCard;
+    }
+
+    public void InsertPlacedCardIntoDeck(Card card) {
+        card.state = Card.State.IN_DECK;
+        cards.Insert(0, card);
     }
 
     public Card RandomCardFromDeck() {
         int random = Random.Range(0, cards.Count);
         Card handCard = cards[random];
         cards.RemoveAt(random);
-        return handCard;        
+        return handCard;
     }
 
     public void FillDeckWithCards(List<Card> _cards) {

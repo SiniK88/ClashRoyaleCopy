@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Card {
     public enum Effect {
-        Tank, Knight, Archer, DarkKnight
+        Tank, Knight, Archer, DarkKnight, InfernoDragon
     }
     public enum State {
         IN_DECK, IN_HAND
