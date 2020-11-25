@@ -78,6 +78,8 @@ public class GameInitializer : MonoBehaviour
         print("Now wwe operate!");
 
         //Manacost operations here...
+
+        //Gamelogic handling the card rotation: manipulates the handstate and deckstate
         Player currentPlayer = players[_playerIndex];
         Card placedCard = currentPlayer.handState.GetCardInIndex(_cardIndex);
 
@@ -88,7 +90,6 @@ public class GameInitializer : MonoBehaviour
         currentPlayer.handState.DrawCardIntoIndex(_cardIndex, nextCard);
 
         //Now visual stuff
-
         cardVisualizer.UpdateCardVisuals();
 
     }

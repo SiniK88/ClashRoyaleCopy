@@ -19,5 +19,4 @@ public class Player {
     public void SetPlayerID(string _playerID) {
         this.playerID = _playerID;
     }
-
 }
