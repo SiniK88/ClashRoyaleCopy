@@ -248,7 +248,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 380972414288678511, guid: 65b930ba9bec7c44f86b0c014b08af22, type: 3}
       propertyPath: giantAttackPower
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 380972414288678511, guid: 65b930ba9bec7c44f86b0c014b08af22, type: 3}
       propertyPath: waypointsGo.Array.size
@@ -281,6 +281,10 @@ PrefabInstance:
     - target: {fileID: 380972414288678513, guid: 65b930ba9bec7c44f86b0c014b08af22, type: 3}
       propertyPath: m_Name
       value: unit (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 380972414288678513, guid: 65b930ba9bec7c44f86b0c014b08af22, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65b930ba9bec7c44f86b0c014b08af22, type: 3}
@@ -394,7 +398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 380972414288678511, guid: 65b930ba9bec7c44f86b0c014b08af22, type: 3}
       propertyPath: giantAttackPower
-      value: 100
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 380972414288678511, guid: 65b930ba9bec7c44f86b0c014b08af22, type: 3}
       propertyPath: waypointsGo.Array.size

@@ -13,7 +13,7 @@ public class GiantScript : MonoBehaviour
     public List<GameObject> waypointsGo;
     int nextPoint = 0;
     public float patrolSpeed = 1f;
-    float waypointTolerance = 1f;
+    float waypointTolerance = 1.5f;
 
     public int giantHP = 20;
     public int giantAttackPower = 20;
@@ -70,8 +70,6 @@ public class GiantScript : MonoBehaviour
         // this works, finds the closest point
         int j = 0;
 
-            {
-
                 var smallest = Vector3.Distance(agent.transform.position, waypoints[0].transform.position);
 
                 for (var i = 1; i < waypoints.Count; i++)
@@ -85,8 +83,6 @@ public class GiantScript : MonoBehaviour
                 }
                 return j;
 
-            }
-        
     }
 
         // Update is called once per frame
@@ -117,7 +113,6 @@ public class GiantScript : MonoBehaviour
                         //waypointsGo[nextPoint].GetComponent<Towers>().HurtEnemy(giantAttackPower);
 
                         curTime = 0;
-
 
                     }
 
@@ -161,8 +156,13 @@ public class GiantScript : MonoBehaviour
         }
 
 
-
-
-
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow; // gizmos show in editor
+        Gizmos.DrawWireSphere(transform.position, waypointTolerance);
     }
+
+
+
+}
  // class
