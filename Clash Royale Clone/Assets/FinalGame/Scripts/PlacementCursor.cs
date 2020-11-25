@@ -32,7 +32,7 @@ public class PlacementCursor : MonoBehaviour {
 
     public void MoveCursor(Vector2 move, string _playerID) {
         if (_playerID.Equals(playerID)) {
-            moveSpeed = new Vector3(move.x, 0, move.y);
+            moveSpeed = new Vector3(move.x, move.y, 0);
         }
     }
 

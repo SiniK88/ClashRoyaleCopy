@@ -43,9 +43,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f85952449fbdc4189e8977964a8981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardPositions:
+  cardPositionsP1:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  renderers: []
+  cardPositionsP2:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  renderersP1: []
+  renderersP2: []
