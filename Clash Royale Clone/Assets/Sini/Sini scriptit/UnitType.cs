@@ -13,10 +13,4 @@ public class UnitType : ScriptableObject {
     public int attackPower;
     public string playerID;
 
-    private Transform transform;
-
-    private void Awake() {
-        
-    }
-
 }
