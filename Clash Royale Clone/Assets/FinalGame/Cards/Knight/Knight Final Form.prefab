@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 25891078163595445}
   - component: {fileID: 7388614861986932991}
   m_Layer: 0
-  m_Name: Final Form
+  m_Name: Knight Final Form
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3341547094592729355}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &25891078163595445
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -19,5 +19,5 @@ MonoBehaviour:
   disallowedPlacements:
     serializedVersion: 2
     m_Bits: 58368
-  placerVisuals: {fileID: 8374351617272225170, guid: feb6ddbcfde94a14dab83c64f735e7e2, type: 3}
+  placerVisuals: {fileID: 1688381474393727592, guid: 7c6a124c90ec9a4409b79ba4a1c72209, type: 3}
   finalForm: {fileID: 7945039312733792507, guid: 9eb484a5d29d7924aa11d9abf3e5bf70, type: 3}

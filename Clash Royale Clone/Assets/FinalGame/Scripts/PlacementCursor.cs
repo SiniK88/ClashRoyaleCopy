@@ -26,7 +26,21 @@ public class PlacementCursor : MonoBehaviour {
         rend.enabled = false;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision) {
+        print("Cursor entered trigger");
+    }
+
+    private void OnTriggerStay2D(Collider2D collision) {
+        print("Cursor is inside trigger");
+        print(collision.gameObject.layer);
+    }
+
+    private void OnTriggerExit2D(Collider2D collision) {
+        print("Cursor exited the trigger");
+    }
+
     private void Update() {
+
         gameObject.transform.position += moveSpeed * cursorSpeed * Time.deltaTime;
     }
 
