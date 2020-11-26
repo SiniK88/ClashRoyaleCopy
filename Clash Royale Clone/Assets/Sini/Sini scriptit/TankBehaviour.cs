@@ -24,6 +24,7 @@ public class TankBehaviour : MonoBehaviour
         nextPoint = ClosestPoint();
         towerhp = waypoints[nextPoint].GetComponent<Towers>();
         unitStats = gameObject.GetComponent<UnitStats>(); // unitStats from different script
+        //agent.stoppingDistance = 0;
     }
 
     void ContinuePatrol() {
@@ -31,9 +32,18 @@ public class TankBehaviour : MonoBehaviour
         agent.SetDestination(waypoints[nextPoint].position);
     }
 
+    void StopPatrol() {
+       
+    }
+
     bool CloseEnoughToWaypoint() {
+        
         return Vector3.Distance(transform.position, waypoints[nextPoint].position)
             < waypointTolerance;
+    }
+
+    void StoppingDistance() {
+
     }
 
     public int ClosestPoint() {
@@ -53,6 +63,8 @@ public class TankBehaviour : MonoBehaviour
     void Update() {
         if (currentState == TankState.Move) {
             if (CloseEnoughToWaypoint()) {
+                agent.velocity = Vector3.zero;
+                //agent.transform.position = waypoints[nextPoint].position;
                 if (towerhp.towerMaxHP <= 0) {
                     // we have decided that last tower is element 2. Not the best way, could be good to redo this at some point
                     nextPoint = 2;
@@ -69,10 +81,13 @@ public class TankBehaviour : MonoBehaviour
 
             }
             ContinuePatrol();
-        }
+
+
+            }
 
         if (currentState == TankState.Attack) {
-            attack();
+
+            //attack();
             // minion stops
             // starts attacking and changes animation to attack animation
             // if waypoint "castle" is destroyed, starts to move towards next closest castle
