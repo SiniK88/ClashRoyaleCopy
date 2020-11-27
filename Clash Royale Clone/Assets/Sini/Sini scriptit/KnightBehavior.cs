@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum TankState { Move, Attack };
+public enum KnightState { Move, Attack, Chase };
 
-public class TankBehaviour : MonoBehaviour
+public class KnightBehavior : MonoBehaviour
 {
-    TankState currentState = TankState.Move;
+    // similar to agents code. Looks for close enemies. At this point, always goes for closest enemy, even if there already is an enemy
+    KnightState currentState = KnightState.Move;
     private NavMeshAgent agent;
     public List<Transform> waypoints;
     int nextPoint = 0;
@@ -17,9 +18,12 @@ public class TankBehaviour : MonoBehaviour
     float curTime = 0; //time in seconds since last hit
 
     private Towers towerhp;
-    private UnitStats unitStats; 
+    private UnitStats unitStats;
+
+    EnemyPlayers enem; 
 
     void Awake() {
+        enem = GetComponent<EnemyPlayers>();
         agent = GetComponent<NavMeshAgent>();
         nextPoint = ClosestPoint();
         towerhp = waypoints[nextPoint].GetComponent<Towers>();
@@ -32,19 +36,13 @@ public class TankBehaviour : MonoBehaviour
         agent.SetDestination(waypoints[nextPoint].position);
     }
 
-    void StopPatrol() {
-       
-    }
 
     bool CloseEnoughToWaypoint() {
-        
+
         return Vector3.Distance(transform.position, waypoints[nextPoint].position)
             < waypointTolerance;
     }
 
-    void StoppingDistance() {
-
-    }
 
     public int ClosestPoint() {
         // this works, finds the closest point
@@ -60,8 +58,29 @@ public class TankBehaviour : MonoBehaviour
         return j;
     }
 
+    Transform FindClosest(List<Transform> targets) {
+        Transform closest = targets[0];
+        foreach (var t in targets) {
+            if (Vector3.Distance(transform.position, t.position) <
+               Vector3.Distance(transform.position, closest.position)) {
+                closest = t;
+            }
+        }
+        return closest;
+    }
+
+
     void Update() {
-        if (currentState == TankState.Move) {
+        var enemies = enem.CloseEnemies();
+        if (enemies.Count > 0) {
+            currentState = KnightState.Chase;
+            agent.enabled = true;
+        } else if (currentState == KnightState.Chase) {
+            var closest = FindClosest(enemies);
+            agent.SetDestination(closest.position);
+        }
+
+        if (currentState == KnightState.Move) {
             if (CloseEnoughToWaypoint()) {
                 agent.velocity = Vector3.zero;
                 //agent.transform.position = waypoints[nextPoint].position;
@@ -80,12 +99,15 @@ public class TankBehaviour : MonoBehaviour
                 }
 
             }
+            
             ContinuePatrol();
+        } else if (currentState == KnightState.Chase) {
+            var closest = FindClosest(enemies);
+            agent.SetDestination(closest.position);
+        }
 
 
-            }
-
-        if (currentState == TankState.Attack) {
+        if (currentState == KnightState.Attack) {
 
             //attack();
             // minion stops
@@ -101,10 +123,12 @@ public class TankBehaviour : MonoBehaviour
         // start to attack waypoint that you are closest to
     }
 
-    private void OnDrawGizmos() {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, waypointTolerance);
-    }
+    //private void OnDrawGizmos() {
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position, waypointTolerance);
+    //}
+
+
 
 
 }// class
