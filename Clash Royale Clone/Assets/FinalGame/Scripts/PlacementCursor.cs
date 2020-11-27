@@ -20,28 +20,32 @@ public class PlacementCursor : MonoBehaviour {
 
     SpriteRenderer rend;
 
+    Vector3 previousPos = Vector3.zero;
+
     private void Awake() {
         gameObject.transform.position = initialPos;
         rend = GetComponent<SpriteRenderer>();
         rend.enabled = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        print("Cursor entered trigger");
-    }
+    private void Update() {     
 
-    private void OnTriggerStay2D(Collider2D collision) {
-        print("Cursor is inside trigger");
-        print(collision.gameObject.layer);
-    }
+        Collider2D[] colliders = Physics2D.OverlapPointAll(transform.position);
 
-    private void OnTriggerExit2D(Collider2D collision) {
-        print("Cursor exited the trigger");
-    }
+        bool isObstacle = false;
 
-    private void Update() {
+        foreach(Collider2D c in colliders) {
+            print(c.gameObject.name);
+            
+        }
 
-        gameObject.transform.position += moveSpeed * cursorSpeed * Time.deltaTime;
+        if(isObstacle == false) {
+            previousPos = gameObject.transform.position;
+            gameObject.transform.position += moveSpeed * cursorSpeed * Time.deltaTime;
+        } else {
+            gameObject.transform.position = previousPos;
+            isObstacle = false;
+        }
     }
 
     public void MoveCursor(Vector2 move, string _playerID) {
