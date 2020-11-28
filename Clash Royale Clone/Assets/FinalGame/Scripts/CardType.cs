@@ -16,6 +16,7 @@ public class CardType : ScriptableObject {
     public int manaCost;
     public LayerMask disallowedPlacements; //Where the object can be placed
 
-    public GameObject placerVisuals; //How the object looks mid-placement
+    public GameObject placerVisuals; //Continuous cursor, which is limited only by the borders
+    public GameObject placerGhostVisuals; //Discrete cursor, which shows where the unit will be dropped
     public GameObject finalForm; //The actual minion or spell
 }

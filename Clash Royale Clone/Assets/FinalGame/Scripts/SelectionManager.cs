@@ -115,14 +115,14 @@ public class SelectionManager : MonoBehaviour {
                 if(currentSelection != null && currentCardType.manaCost < 9000) { //Manacost condition needs to be fitted to some PlayerStat
                     currentSelection.IsClicked = true;
                     clickedCard = true;                    
-                    cursor.AddCursorObject(currentCardType.placerVisuals); //One more parameter needs to handle the LayerMask
+                    cursor.AddCursorObject(currentCardType.placerVisuals, currentCardType.placerGhostVisuals); //One more parameter needs to handle the LayerMask
                 } else {
                     print("Can't click any card: null");
                 }                
             } else if (clickedCard) {
                 //Initialize the spawn
                 GameObject finalForm = currentCardType.finalForm;
-                Vector3 spawnPos = cursor.GetPosition();
+                Vector3 spawnPos = cursor.GetNodePosition();
                 UndoClickOperations(); //Cursor can be neglected / removed from here.
 
                 //Instantiate the spawn at correct location
@@ -148,7 +148,7 @@ public class SelectionManager : MonoBehaviour {
 
     public void UndoClickOperations() {
         Selectable currentSelection = Array.Find(selectables, selectable => selectable.IsSelected);
-        cursor.DeleteCursorObject();
+        cursor.DeleteCursorObjects();
         cursor.ResetCursor();
         currentSelection.IsClicked = false;
         clickedCard = false;

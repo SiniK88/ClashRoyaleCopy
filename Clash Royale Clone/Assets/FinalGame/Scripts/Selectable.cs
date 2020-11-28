@@ -26,9 +26,9 @@ public class Selectable : MonoBehaviour
 
     private void ClickVisual() {
         if (isClicked) {
-            this.transform.position += Vector3.forward * 1f;
+            this.transform.position += Vector3.up * 1f;
         } else {
-            this.transform.position -= Vector3.forward * 1f;
+            this.transform.position -= Vector3.up * 1f;
         }
     }
 

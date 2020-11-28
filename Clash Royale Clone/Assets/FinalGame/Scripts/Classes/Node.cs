@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Node {
 
-	public bool walkable;
+	public enum NodeState {
+		Border, Battlefield, Obstacle, NoState
+    }
+
+	public NodeState nodeState = NodeState.NoState;
 	public Vector3 worldPosition;
 
-	public Node(bool _walkable, Vector3 _worldPos) {
-		walkable = _walkable;
+	public Node(NodeState _nodeState, Vector3 _worldPos) {
+		nodeState = _nodeState;
 		worldPosition = _worldPos;
 	}
 }

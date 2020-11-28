@@ -17,16 +17,16 @@ TagManager:
   - UI
   - 
   - 
-  - CardSet
-  - PlacementGrid
-  - Unplacable
-  - P1
-  - P2
-  - Tower
-  - Enemy
+  - Battlefield
   - Obstacle
-  - TerritoryP1
-  - TerritoryP2
+  - Border
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
