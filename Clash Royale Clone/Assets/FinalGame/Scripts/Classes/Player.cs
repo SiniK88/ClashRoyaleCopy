@@ -8,7 +8,8 @@ public class Player {
     public HandState handState;
 
     private string playerID = "DefaultPlayerID";
-    public bool isHuman;    
+    public bool isHuman;
+    private float mana = 30f;
 
     public Player(bool _isHuman, List<Card> deckCards) {
         isHuman = _isHuman;
@@ -18,5 +19,17 @@ public class Player {
 
     public void SetPlayerID(string _playerID) {
         this.playerID = _playerID;
+    }
+
+    public void AddMana(float _manaIncrease) {        
+        mana = Mathf.Clamp(mana + _manaIncrease, 0f,100f);        
+    }
+
+    public void RemoveMana(float _manaCost) {
+        mana -= _manaCost;
+    }
+
+    public float GetMana() {
+        return mana;
     }
 }

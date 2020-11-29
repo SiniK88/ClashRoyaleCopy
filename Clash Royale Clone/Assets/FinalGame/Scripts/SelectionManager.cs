@@ -112,7 +112,7 @@ public class SelectionManager : MonoBehaviour {
             CardType currentCardType = GetCardType(currentSelection, playerIndex);
 
             if (!clickedCard) {              
-                if(currentSelection != null && currentCardType.manaCost < 9000) { //Manacost condition needs to be fitted to some PlayerStat
+                if(currentSelection != null && currentCardType.manaCost < players[playerIndex].GetMana()) { //Manacost condition needs to be fitted to some PlayerStat
                     currentSelection.IsClicked = true;
                     clickedCard = true;                    
                     cursor.AddCursorObject(currentCardType.placerVisuals, currentCardType.placerGhostVisuals); //One more parameter needs to handle the LayerMask
