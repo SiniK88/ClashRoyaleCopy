@@ -15,7 +15,7 @@ MonoBehaviour:
   cardType: 3
   cardName: DarkKnight
   artwork: {fileID: 21300000, guid: d5072cc8ef996a344b9101cfd71ffd57, type: 3}
-  manaCost: 7
+  manaCost: 10
   disallowedPlacements:
     serializedVersion: 2
     m_Bits: 58368

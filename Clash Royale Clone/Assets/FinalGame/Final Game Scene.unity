@@ -1371,11 +1371,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7898178285749398817, guid: 0ee2116bc3d07624c977ff9426d5dfc0, type: 3}
       propertyPath: nodeLengthX
-      value: 0.2
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7898178285749398817, guid: 0ee2116bc3d07624c977ff9426d5dfc0, type: 3}
       propertyPath: nodeLengthY
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7898178285749398817, guid: 0ee2116bc3d07624c977ff9426d5dfc0, type: 3}
       propertyPath: gridWorldSize.x
