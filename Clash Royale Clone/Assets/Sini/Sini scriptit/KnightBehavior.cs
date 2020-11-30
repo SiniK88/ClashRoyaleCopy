@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum KnightState { Move, Attack, Chase };
+public enum KnightState { Move, Attack, Chase, Investigate };
 
 public class KnightBehavior : MonoBehaviour
 {
@@ -13,9 +13,11 @@ public class KnightBehavior : MonoBehaviour
     public List<Transform> waypoints;
     int nextPoint = 0;
     public float patrolSpeed = 1f;
-    float waypointTolerance = 1f;
-    public float hitTime = 2; //time in seconds between each hit
+    float waypointTolerance = 2f;
+    public float hitTime = 1; //time in seconds between each hit
     float curTime = 0; //time in seconds since last hit
+    public float investigationTime = 0.01f;
+    float investigationTimer = 0;
 
     private Towers towerhp;
     private UnitStats unitStats;
@@ -29,6 +31,7 @@ public class KnightBehavior : MonoBehaviour
         towerhp = waypoints[nextPoint].GetComponent<Towers>();
         unitStats = gameObject.GetComponent<UnitStats>(); // unitStats from different script
         //agent.stoppingDistance = 0;
+        ContinuePatrol();
     }
 
     void ContinuePatrol() {
@@ -42,6 +45,8 @@ public class KnightBehavior : MonoBehaviour
         return Vector3.Distance(transform.position, waypoints[nextPoint].position)
             < waypointTolerance;
     }
+
+  
 
 
     public int ClosestPoint() {
@@ -70,14 +75,25 @@ public class KnightBehavior : MonoBehaviour
     }
 
 
+
+
     void Update() {
         var enemies = enem.CloseEnemies();
         if (enemies.Count > 0) {
             currentState = KnightState.Chase;
             agent.enabled = true;
+        } else if (currentState == KnightState.Investigate) {
+                if (investigationTimer > 0) {
+                    investigationTimer -= Time.deltaTime;
+                    if (investigationTimer < 0) {
+                        agent.enabled = true;
+                        currentState = KnightState.Move;
+                    }
+                }
         } else if (currentState == KnightState.Chase) {
-            var closest = FindClosest(enemies);
-            agent.SetDestination(closest.position);
+            currentState = KnightState.Investigate;
+            investigationTimer = investigationTime;
+            agent.enabled = false;
         }
 
         if (currentState == KnightState.Move) {
@@ -97,13 +113,33 @@ public class KnightBehavior : MonoBehaviour
                     towerhp.towerMaxHP -= unitStats.attackPower;
                     curTime = curTime - hitTime;
                 }
-
             }
-            
             ContinuePatrol();
+
         } else if (currentState == KnightState.Chase) {
+
             var closest = FindClosest(enemies);
+            if (closest == null) {
+                currentState = KnightState.Move;
+            }
+            var enemyHealth = closest.GetComponent<UnitStats>().health;
+
             agent.SetDestination(closest.position);
+            if(Vector3.Distance(transform.position, closest.position)< waypointTolerance && closest != null) {
+                print("is there any enemy health close" + enemyHealth);
+
+                if(closest.GetComponent<UnitStats>().health <= 0 && closest != null) {
+                    currentState = KnightState.Chase;
+                }
+
+                curTime += Time.deltaTime;
+                if (curTime >= hitTime && enemyHealth > 0 && closest != null) {
+                    closest.GetComponent<UnitStats>().health -= unitStats.attackPower;
+                    curTime = curTime - hitTime;
+                }
+            }
+
+
         }
 
 

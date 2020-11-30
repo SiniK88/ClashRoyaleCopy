@@ -9,7 +9,7 @@ public class EnemyPlayers : MonoBehaviour
     List<Transform> allEnemies = new List<Transform>();
 
     public GameObject[] enemies;
-    public float maxSightDistance = 1f;
+    public float maxSightDistance = 1.3f;
     public float maxSightAngle = 180f;
 
 

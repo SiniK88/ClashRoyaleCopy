@@ -16,4 +16,13 @@ public class UnitStats : MonoBehaviour
 
     }
 
+    void Update() {
+            if (health <= 0) {
+
+                //GetComponent<MeshRenderer>().enabled = false;
+                Destroy(this.gameObject);
+            }
+    }
+
+
 }
