@@ -13,7 +13,7 @@ public class CardType : ScriptableObject {
 
     public Sprite artwork;
 
-    public int manaCost;
+    public float manaCost;
     public LayerMask disallowedPlacements; //Where the object can be placed
 
     public GameObject placerVisuals; //Continuous cursor, which is limited only by the borders

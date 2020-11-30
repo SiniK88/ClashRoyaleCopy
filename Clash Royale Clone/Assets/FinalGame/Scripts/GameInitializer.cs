@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class GameInitializer : MonoBehaviour
 {
@@ -73,11 +72,7 @@ public class GameInitializer : MonoBehaviour
         SelectionManager.OnPlaceCard -= OnCardPlacement;
     }
 
-    public void OnCardPlacement(int _playerIndex, int _cardIndex, int _manaCost) {
-
-        print("Now wwe operate!");
-
-        //Manacost operations here...
+    public void OnCardPlacement(int _playerIndex, int _cardIndex) {
 
         //Gamelogic handling the card rotation: manipulates the handstate and deckstate
         Player currentPlayer = players[_playerIndex];
@@ -92,5 +87,11 @@ public class GameInitializer : MonoBehaviour
         //Now visual stuff
         cardVisualizer.UpdateCardVisuals();
 
+    }
+
+    private void Update() {
+
+        print("Player 1 Mana is: " + player1.GetMana());
+        print("Player 2 Mana is: " + player2.GetMana());
     }
 }

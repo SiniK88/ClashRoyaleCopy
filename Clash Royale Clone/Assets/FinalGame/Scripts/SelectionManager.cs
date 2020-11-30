@@ -7,7 +7,7 @@ public class SelectionManager : MonoBehaviour {
 
     //This is a player-specific selection manager!! Each player has it's own, meaning, that we don't have to cross-check PlayerID's all the time. Each SelectionManager gets initialized in GameInitializer
 
-    public delegate void CardPlaced(int playerIndex, int cardIndex, int manaCost);
+    public delegate void CardPlaced(int playerIndex, int cardIndex);
     public static event CardPlaced OnPlaceCard;
 
     private void OnEnable() {
@@ -117,7 +117,7 @@ public class SelectionManager : MonoBehaviour {
                     clickedCard = true;                    
                     cursor.AddCursorObject(currentCardType.placerVisuals, currentCardType.placerGhostVisuals); //One more parameter needs to handle the LayerMask
                 } else {
-                    print("Can't click any card: null");
+                    print("Not Enough Mana! Current mana is: " + players[playerIndex].GetMana() + "\nManacost is: " + currentCardType.manaCost);
                 }                
             } else if (clickedCard) {
                 //Initialize the spawn
@@ -128,9 +128,11 @@ public class SelectionManager : MonoBehaviour {
                 //Instantiate the spawn at correct location
                 Instantiate(finalForm, spawnPos, Quaternion.identity); //Fix rotation. Also somehow give a player ID to the minion
 
-                //Remove current card from hand
-                //Draw a new card
-                OnPlaceCard(playerIndex, currentSelection.currentIndex, currentCardType.manaCost);
+                //Substract the card manacost from player manapool
+                players[playerIndex].RemoveMana(currentCardType.manaCost);
+
+                //Remove current card from hand and draw a new card
+                OnPlaceCard(playerIndex, currentSelection.currentIndex);
 
             }
         }        
