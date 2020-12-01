@@ -12,12 +12,14 @@ public class KnightBehavior : MonoBehaviour
     private NavMeshAgent agent;
     public List<Transform> waypoints;
     int nextPoint = 0;
+    public int attackpower = 2;
     public float patrolSpeed = 1f;
     float waypointTolerance = 2f;
     public float hitTime = 1; //time in seconds between each hit
     float curTime = 0; //time in seconds since last hit
     public float investigationTime = 0.01f;
     float investigationTimer = 0;
+
 
     private Towers towerhp;
     private UnitStats unitStats;
@@ -116,6 +118,7 @@ public class KnightBehavior : MonoBehaviour
             }
             ContinuePatrol();
 
+
         } else if (currentState == KnightState.Chase) {
 
             var closest = FindClosest(enemies);
@@ -134,7 +137,8 @@ public class KnightBehavior : MonoBehaviour
 
                 curTime += Time.deltaTime;
                 if (curTime >= hitTime && enemyHealth > 0 && closest != null) {
-                    closest.GetComponent<UnitStats>().health -= unitStats.attackPower;
+                    closest.GetComponent<UnitStats>().TakeDamge(attackpower);
+                    //closest.GetComponent<UnitStats>().health -= unitStats.attackPower;
                     curTime = curTime - hitTime;
                 }
             }
