@@ -8,13 +8,21 @@ public class CardVisualizer : MonoBehaviour
     CardTypeContainer cardTypeContainer;
     List<CardType> cardTypes;
 
+    public GameObject genericCardVisuals;
+    public Sprite blueCard;
+    public Sprite redCard;
+
+    public Sprite[] numbers;
+
     public List<Player> players;
+
+    List<List<GameObject>> playerCardPositions = new List<List<GameObject>>();
     public List<GameObject> cardPositionsP1;
     public List<GameObject> cardPositionsP2;
-    List<List<GameObject>> playerCardPositions = new List<List<GameObject>>();
-    public List<SpriteRenderer> renderersP1;
-    public List<SpriteRenderer> renderersP2;
-    List<List<SpriteRenderer>> playerCardRenderers = new List<List<SpriteRenderer>>();
+
+    List<List<CardVisuals>> cardVisuals = new List<List<CardVisuals>>();
+    List<CardVisuals> cardVisualsP1 = new List<CardVisuals>();
+    List<CardVisuals> cardVisualsP2 = new List<CardVisuals>();
 
     private void Awake() {
         cardTypeContainer = FindObjectOfType<CardTypeContainer>();
@@ -22,10 +30,12 @@ public class CardVisualizer : MonoBehaviour
     }
 
     private void Start() {
+        //Initializing list of lists
         playerCardPositions.Add(cardPositionsP1);
         playerCardPositions.Add(cardPositionsP2);
-        playerCardRenderers.Add(renderersP1);
-        playerCardRenderers.Add(renderersP2);
+        cardVisuals.Add(cardVisualsP1);
+        cardVisuals.Add(cardVisualsP2);
+   
 
         gameInit = FindObjectOfType<GameInitializer>();
         players = gameInit.players;
@@ -35,10 +45,10 @@ public class CardVisualizer : MonoBehaviour
             int MAX_CARDS_IN_HAND = players[i].handState.GetMaxCards();
 
             for (int k = 0; k < MAX_CARDS_IN_HAND; k++) {
-                GameObject go = playerCardPositions[i][k];
-                go.AddComponent<Selectable>();
-
-                playerCardRenderers[i].Add(go.GetComponent<SpriteRenderer>());
+                GameObject cardPlace = playerCardPositions[i][k];
+                cardPlace.AddComponent<Selectable>();
+                GameObject cardVisual = Instantiate(genericCardVisuals, cardPlace.transform); //This GameObject contains easy access to all the Sprites and Sprite Renderers
+                cardVisuals[i].Add(cardVisual.GetComponent<CardVisuals>());
             }
             for (int k = 0; k < MAX_CARDS_IN_HAND; k++) {
                 string playerID = "Player" + (i + 1).ToString();
@@ -70,7 +80,32 @@ public class CardVisualizer : MonoBehaviour
                     }
                 }
                 if(currentCard != null) {
-                    playerCardRenderers[i][k].sprite = currentCard.artwork;
+
+                    Sprite _cardArt = null;
+                    Sprite _artwork = null;
+                    Sprite _manaCost = null;
+
+                    //Card visuals, red or blue:
+                    if(i == 0) {
+                        _cardArt = blueCard;
+                    } else if (i == 1) {
+                        _cardArt = redCard;
+                    }
+
+                    //Card artwork visuals:
+                    _artwork = currentCard.artwork;
+
+                    //Manacost visuals:
+                    int manaCost = Mathf.FloorToInt(currentCard.manaCost)/10;
+                    _manaCost = (Sprite)numbers.GetValue(manaCost);
+
+                    cardVisuals[i][k].RefreshCard(_cardArt, _artwork, _manaCost);
+
+                    
+
+
+
+                    //playerCardVisuals[i][k].sprite = currentCard.artwork;
                 } else {
                     Debug.Log("Currentcard is null");
                 }

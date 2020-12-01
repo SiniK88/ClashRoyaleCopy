@@ -18,9 +18,9 @@ public class Selectable : MonoBehaviour
 
     private void SelectionVisual() {
         if (isSelected) {
-            this.transform.localScale = Vector3.one * 0.13f;
+            this.transform.localScale = Vector3.one * 1.3f;
         } else {
-            this.transform.localScale = Vector3.one * 0.1f;
+            this.transform.localScale = Vector3.one * 1f;
         }
     }
 

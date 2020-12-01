@@ -15,7 +15,7 @@ MonoBehaviour:
   cardType: 1
   cardName: UnitDataKnight
   artwork: {fileID: 21300000, guid: f034ff185998f7248bd19516150a8c81, type: 3}
-  manaCost: 3
+  manaCost: 30
   disallowedPlacements:
     serializedVersion: 2
     m_Bits: 58368

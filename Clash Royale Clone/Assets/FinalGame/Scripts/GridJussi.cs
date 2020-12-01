@@ -37,7 +37,7 @@ public class GridJussi : MonoBehaviour {
 				Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeLengthX + nodeLengthX/2) + Vector3.up * (y * nodeLengthY + nodeLengthY/2);
 				var nodeState = Node.NodeState.NoState;
 
-				Collider[] colliders = Physics.OverlapBox(worldPoint, new Vector3(nodeLengthX / 2, nodeLengthY / 2, 1));
+				Collider2D[] colliders = Physics2D.OverlapBoxAll(worldPoint, new Vector3(nodeLengthX, nodeLengthY), 0);
 				if (colliders.Length != 0) {
 					int layerMax = colliders.Max(c => c.gameObject.layer); // 8 is "Battlefield		9 is "Obstacle"		10 is "Border", finds the maximum value among these
 
@@ -84,7 +84,7 @@ public class GridJussi : MonoBehaviour {
 				}
 
 				Gizmos.color = cubeColor;
-				Gizmos.DrawWireCube(n.worldPosition, new Vector3(nodeLengthX, nodeLengthY, 1)*0.9f);
+				Gizmos.DrawWireCube(n.worldPosition, new Vector3(nodeLengthX, nodeLengthY, 1));
 			}
 		}
 	}
