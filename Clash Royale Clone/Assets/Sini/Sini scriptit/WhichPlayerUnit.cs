@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class WhichPlayerUnit : MonoBehaviour
+{
 
-    public interface IDamageable {
-        void ApplyDamage(int amount);
-    }
+    public bool Player1 = true; 
 
+
+}

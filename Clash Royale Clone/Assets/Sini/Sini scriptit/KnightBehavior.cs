@@ -22,7 +22,8 @@ public class KnightBehavior : MonoBehaviour
 
 
     private Towers towerhp;
-    private UnitStats unitStats;
+    //private UnitStats unitStats;
+    private TankHealth TankHealth;
 
     EnemyPlayers enem; 
 
@@ -31,7 +32,7 @@ public class KnightBehavior : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         nextPoint = ClosestPoint();
         towerhp = waypoints[nextPoint].GetComponent<Towers>();
-        unitStats = gameObject.GetComponent<UnitStats>(); // unitStats from different script
+        //unitStats = gameObject.GetComponent<UnitStats>(); // unitStats from different script
         //agent.stoppingDistance = 0;
         ContinuePatrol();
     }
@@ -98,6 +99,7 @@ public class KnightBehavior : MonoBehaviour
             agent.enabled = false;
         }
 
+
         if (currentState == KnightState.Move) {
             if (CloseEnoughToWaypoint()) {
                 agent.velocity = Vector3.zero;
@@ -112,7 +114,7 @@ public class KnightBehavior : MonoBehaviour
                 }
                 curTime += Time.deltaTime;
                 if (curTime >= hitTime && towerhp.towerMaxHP > 0) {
-                    towerhp.towerMaxHP -= unitStats.attackPower;
+                    towerhp.towerMaxHP -= attackpower;
                     curTime = curTime - hitTime;
                 }
             }
@@ -123,26 +125,42 @@ public class KnightBehavior : MonoBehaviour
 
             var closest = FindClosest(enemies);
             if (closest == null) {
+
                 currentState = KnightState.Move;
             }
-            var enemyHealth = closest.GetComponent<UnitStats>().health;
+
+            var enemyHealth = closest.GetComponent<TankHealth>().health;
+
+            if(closest) {
+                var notify = closest.GetComponent<INotifyOnDestroy>();
+                if (notify != null)
+                    notify.AddListener(TargetDead);
+            }
+
+            void TargetDead() {
+                closest = null;
+            }
+
 
             agent.SetDestination(closest.position);
-            if(Vector3.Distance(transform.position, closest.position)< waypointTolerance && closest != null) {
+            if (Vector3.Distance(transform.position, closest.position) < waypointTolerance) {
                 print("is there any enemy health close" + enemyHealth);
 
-                if(closest.GetComponent<UnitStats>().health <= 0 && closest != null) {
+                if (closest.GetComponent<UnitStats>().health <= 0) {
                     currentState = KnightState.Chase;
                 }
 
                 curTime += Time.deltaTime;
-                if (curTime >= hitTime && enemyHealth > 0 && closest != null) {
-                    closest.GetComponent<UnitStats>().TakeDamge(attackpower);
-                    //closest.GetComponent<UnitStats>().health -= unitStats.attackPower;
+                if (curTime >= hitTime && enemyHealth > 0) {
+                    IDamageable daobject = closest.GetComponent<IDamageable>();
+                    if (daobject != null) {
+                        daobject.ApplyDamage(attackpower);
+                    }
+                    //closest.GetComponent<UnitStats>().TakeDamge(attackpower);
+                    // vanha closest.GetComponent<UnitStats>().health -= unitStats.attackPower;
                     curTime = curTime - hitTime;
                 }
             }
-
 
         }
 
