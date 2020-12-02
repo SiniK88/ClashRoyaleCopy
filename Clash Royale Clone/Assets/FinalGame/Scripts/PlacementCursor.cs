@@ -14,10 +14,10 @@ public class PlacementCursor : MonoBehaviour {
 
     public string playerID = null;
     public Vector3 currentPos;
-    Vector3 initialPos = Vector3.zero + Vector3.up * 5f;
+    Vector3 initialPos = Vector3.zero + Vector3.down * 1f;
 
     public Vector3 moveSpeed = Vector3.zero;
-    float cursorSpeed = 5f;
+    float cursorSpeed = 3f;
 
     SpriteRenderer rend;
 
@@ -30,6 +30,7 @@ public class PlacementCursor : MonoBehaviour {
 
     public GameObject placer;
     public GameObject placerG;
+    CardType.PlacementType placementType;
 
     private void Awake() {        
         gameObject.transform.position = initialPos;
@@ -46,24 +47,38 @@ public class PlacementCursor : MonoBehaviour {
 
         if(placer != null && placerG!= null) {
             
-            UpdateNodes();
 
-            placerG.transform.position = acceptableNode.worldPosition;
+            
             placer.transform.position += moveSpeed * cursorSpeed * Time.deltaTime;
+
+            UpdateNodes();
+            placerG.transform.position = new Vector3(acceptableNode.worldPosition.x, acceptableNode.worldPosition.y, 0);
+
+            if (currentNode.nodeState == Node.NodeState.Border || currentNode.nodeState == Node.NodeState.NoState) {
+                placer.transform.position = currentPos;
+            }
+
+            currentPos = placer.transform.position;
             
         }       
     }
 
     public void UpdateNodes() {
 
-        int x = Mathf.FloorToInt((grid.gridWorldSize.x / 2 + placer.transform.position.x) / grid.nodeLengthX);
-        int y = Mathf.FloorToInt((grid.gridWorldSize.y / 2 + placer.transform.position.y) / grid.nodeLengthY);
+        int x = Mathf.FloorToInt((placer.transform.position.x - grid.worldBottomLeft.x) / grid.nodeLengthX);
+        int y = Mathf.FloorToInt((placer.transform.position.y - grid.worldBottomLeft.y) / grid.nodeLengthY);
 
         if (x >= 0 && x < map.GetLength(0) && y >= 0 && y < map.GetLength(1)) { //Check that the index is within map[x,y] array bounds.
             if (!(map[x, y] == currentNode)) { //Confirms that the new Node [x,y] is different than the previous, and therefore there is any reason to change anything
                 currentNode = map[x, y];
-                if(currentNode.nodeState != Node.NodeState.Border) { //If the new currentNode is border, then the placermarker shouldn't update
-                    acceptableNode = currentNode;                    
+                if(currentNode.nodeState != Node.NodeState.Border && currentNode.nodeState != Node.NodeState.NoState) { //If the new currentNode is border or outside the map, then the placermarker shouldn't update
+                    if(placementType == CardType.PlacementType.Spell) {
+                        acceptableNode = currentNode;
+                    } else if (placementType == CardType.PlacementType.Unit) {
+                        if(currentNode.nodeState != Node.NodeState.Obstacle) { //Units cannot be placed onto obstacles
+                            acceptableNode = currentNode;
+                        }
+                    }                                  
                 }                
             }
         }
@@ -83,7 +98,8 @@ public class PlacementCursor : MonoBehaviour {
         gameObject.transform.position = initialPos;
     }
 
-    public void AddCursorObject(GameObject placerMarker, GameObject placerGhost) {
+    public void AddCursorObject(GameObject placerMarker, GameObject placerGhost, CardType.PlacementType _placementType) {
+       placementType = _placementType;
        placer = Instantiate(placerMarker, gameObject.transform);
        placerG = Instantiate(placerGhost, gameObject.transform);
     }
@@ -96,10 +112,10 @@ public class PlacementCursor : MonoBehaviour {
         }
     }
 
-    //private void OnDrawGizmos() {
-    //    Gizmos.color = Color.cyan;
-    //    if(currentNode != null) {
-    //        Gizmos.DrawSphere(currentNode.worldPosition, 0.5f);
-    //    }        
-    //}
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.cyan;
+        if (initialPos != null) {
+            Gizmos.DrawWireSphere(initialPos, 0.5f);
+        }
+    }
 }

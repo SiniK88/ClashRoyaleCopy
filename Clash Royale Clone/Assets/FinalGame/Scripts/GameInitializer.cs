@@ -16,6 +16,8 @@ public class GameInitializer : MonoBehaviour
     bool playersIsHuman = true;
     CardVisualizer cardVisualizer;
 
+    float manaRegenSpeed = 5f;
+
 
     private void Awake() {
 
@@ -85,13 +87,15 @@ public class GameInitializer : MonoBehaviour
         currentPlayer.handState.DrawCardIntoIndex(_cardIndex, nextCard);
 
         //Now visual stuff
-        cardVisualizer.UpdateCardVisuals();
+        cardVisualizer.UpdateSinceCardVisuals(_playerIndex, _cardIndex);
 
     }
 
     private void Update() {
 
-        print("Player 1 Mana is: " + player1.GetMana());
-        print("Player 2 Mana is: " + player2.GetMana());
+        for(int i = 0; i < players.Count; i++) {
+            float manaAddition = manaRegenSpeed * Time.deltaTime;
+            players[i].AddMana(manaAddition);
+        }
     }
 }

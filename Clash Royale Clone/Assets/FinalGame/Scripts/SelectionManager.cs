@@ -115,7 +115,7 @@ public class SelectionManager : MonoBehaviour {
                 if(currentSelection != null && currentCardType.manaCost < players[playerIndex].GetMana()) { //Manacost condition needs to be fitted to some PlayerStat
                     currentSelection.IsClicked = true;
                     clickedCard = true;                    
-                    cursor.AddCursorObject(currentCardType.placerVisuals, currentCardType.placerGhostVisuals); //One more parameter needs to handle the LayerMask
+                    cursor.AddCursorObject(currentCardType.placerVisuals, currentCardType.placerGhostVisuals, currentCardType.placementType); //One more parameter needs to handle the LayerMask
                 } else {
                     print("Not Enough Mana! Current mana is: " + players[playerIndex].GetMana() + "\nManacost is: " + currentCardType.manaCost);
                 }                

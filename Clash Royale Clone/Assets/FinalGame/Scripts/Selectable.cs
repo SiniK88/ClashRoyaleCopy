@@ -18,17 +18,19 @@ public class Selectable : MonoBehaviour
 
     private void SelectionVisual() {
         if (isSelected) {
-            this.transform.localScale = Vector3.one * 1.3f;
+            this.transform.position += Vector3.back * 1f;
+            this.transform.localScale = Vector3.one * 1.1f;
         } else {
-            this.transform.localScale = Vector3.one * 1f;
+            this.transform.position -= Vector3.back * 1f;
+            this.transform.localScale = Vector3.one;
         }
     }
 
     private void ClickVisual() {
         if (isClicked) {
-            this.transform.position += Vector3.up * 1f;
+            this.transform.position += Vector3.up * 0.5f;
         } else {
-            this.transform.position -= Vector3.up * 1f;
+            this.transform.position -= Vector3.up * 0.5f;
         }
     }
 

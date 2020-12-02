@@ -7,6 +7,8 @@ using System.Linq;
 public class GridJussi : MonoBehaviour {
 
 	public Vector2 gridWorldSize;
+	public Vector3 worldBottomLeft;
+
 	public float nodeLengthX;
 	public float nodeLengthY;
 	Node[,] grid;
@@ -27,7 +29,7 @@ public class GridJussi : MonoBehaviour {
 
 	void CreateGrid() {
 		grid = new Node[gridSizeX, gridSizeY];
-		Vector3 worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.up * gridWorldSize.y / 2;
+		worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.up * gridWorldSize.y / 2;
 
 		var nodeStates = new Node.NodeState[] { Node.NodeState.Border, Node.NodeState.Obstacle, Node.NodeState.Battlefield };
 		var layers = new int[] { 10, 9, 8 };

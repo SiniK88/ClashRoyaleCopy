@@ -8,6 +8,10 @@ using System;
 
 public class CardType : ScriptableObject {
 
+    public enum PlacementType {
+        Unit, Spell
+    }
+
     public Card.Effect cardType;
     public string cardName;
 
@@ -19,4 +23,6 @@ public class CardType : ScriptableObject {
     public GameObject placerVisuals; //Continuous cursor, which is limited only by the borders
     public GameObject placerGhostVisuals; //Discrete cursor, which shows where the unit will be dropped
     public GameObject finalForm; //The actual minion or spell
+
+    public PlacementType placementType;
 }

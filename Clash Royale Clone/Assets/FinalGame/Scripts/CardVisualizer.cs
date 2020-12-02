@@ -80,7 +80,6 @@ public class CardVisualizer : MonoBehaviour
                     }
                 }
                 if(currentCard != null) {
-
                     Sprite _cardArt = null;
                     Sprite _artwork = null;
                     Sprite _manaCost = null;
@@ -98,14 +97,7 @@ public class CardVisualizer : MonoBehaviour
                     //Manacost visuals:
                     int manaCost = Mathf.FloorToInt(currentCard.manaCost)/10;
                     _manaCost = (Sprite)numbers.GetValue(manaCost);
-
                     cardVisuals[i][k].RefreshCard(_cardArt, _artwork, _manaCost);
-
-                    
-
-
-
-                    //playerCardVisuals[i][k].sprite = currentCard.artwork;
                 } else {
                     Debug.Log("Currentcard is null");
                 }
@@ -113,22 +105,39 @@ public class CardVisualizer : MonoBehaviour
         }        
     }
 
-    //private Color GetCardColor(Card.Effect effect) {
-    //    switch (effect) {
-    //        case Card.Effect.Tank: {
-    //                return Color.red;
-    //            }
-    //        case Card.Effect.Knight: {
-    //                return Color.yellow;
-    //            }
-    //        case Card.Effect.Archer: {
-    //                return Color.green;
-    //            }
-    //        case Card.Effect.DarkKnight: {
-    //                return Color.blue;
-    //            }
-    //        default:
-    //            return Color.white;
-    //    }
-    //}
+    public void UpdateSinceCardVisuals(int _playerIndex, int cardIndex) {
+        Card card = players[_playerIndex].handState.GetCardInIndex(cardIndex);
+        Card.Effect newEffect = card.effect;
+        CardType newCard = null;
+        for (int j = 0; j < cardTypes.Count; j++) {
+            if (cardTypes[j].cardType == newEffect) {
+                newCard = cardTypes[j];
+                break;
+            } else {
+                continue;
+            }
+        }
+        if (newCard != null) {
+            Sprite _cardArt = null;
+            Sprite _artwork = null;
+            Sprite _manaCost = null;
+
+            //Card visuals, red or blue:
+            if (_playerIndex == 0) {
+                _cardArt = blueCard;
+            } else if (_playerIndex == 1) {
+                _cardArt = redCard;
+            }
+
+            //Card artwork visuals:
+            _artwork = newCard.artwork;
+
+            //Manacost visuals:
+            int manaCost = Mathf.FloorToInt(newCard.manaCost) / 10;
+            _manaCost = (Sprite)numbers.GetValue(manaCost);
+            cardVisuals[_playerIndex][cardIndex].RefreshCard(_cardArt, _artwork, _manaCost);
+        } else {
+            Debug.Log("Currentcard is null");
+        }
+    }
 }

@@ -9,7 +9,8 @@ public class Player {
 
     private string playerID = "DefaultPlayerID";
     public bool isHuman;
-    private float mana = 30f;
+    private float mana = 10f;
+    public static readonly float MAX_MANA = 100f;    
 
     public Player(bool _isHuman, List<Card> deckCards) {
         isHuman = _isHuman;
@@ -22,7 +23,7 @@ public class Player {
     }
 
     public void AddMana(float _manaIncrease) {        
-        mana = Mathf.Clamp(mana + _manaIncrease, 0f,100f);        
+        mana = Mathf.Clamp(mana + _manaIncrease, 0f, MAX_MANA);        
     }
 
     public void RemoveMana(float _manaCost) {
