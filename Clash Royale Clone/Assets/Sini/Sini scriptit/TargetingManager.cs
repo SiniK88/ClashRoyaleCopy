@@ -22,20 +22,20 @@ public class TargetingManager : MonoBehaviour {
     }
 
     
-    public IDamageable FindTarget(Vector2 position, bool targetP1Units, bool flyingAllowed, float maxDistance) {
+    public IDamageable FindTarget(Vector3 position, bool targetP1Units, bool flyingAllowed, float maxDistance) {
         // from correct HashSet (based on player / flying)
         var units = targetP1Units ? player1Units : player2Units;
         // find min distance target
         // var minT = units.Min(t => Vector2.Distance(position, t.position));
         Transform minT = null;
         foreach (var t in units) {
-            if (minT == null || Vector2.Distance(position, t.position) < Vector2.Distance(position, minT.position)) {
+            if (minT == null || Vector3.Distance(position, t.position) < Vector3.Distance(position, minT.position)) {
                 minT = t;
             }
         }
 
         // check if inside maxDistance
-        if (Vector2.Distance(position, minT.position) <= maxDistance)
+        if (Vector3.Distance(position, minT.position) <= maxDistance)
             return minT.GetComponent<IDamageable>();
         return null; 
     }

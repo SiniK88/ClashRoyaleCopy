@@ -5,8 +5,7 @@ using UnityEngine.AI;
 
 public enum KnightState { Move, Attack, Chase, Investigate };
 
-public class KnightBehavior : MonoBehaviour
-{
+public class KnightBehavior : MonoBehaviour {
     // similar to agents code. Looks for close enemies. At this point, always goes for closest enemy, even if there already is an enemy
     KnightState currentState = KnightState.Move;
     private NavMeshAgent agent;
@@ -20,12 +19,10 @@ public class KnightBehavior : MonoBehaviour
     public float investigationTime = 0.01f;
     float investigationTimer = 0;
 
-
     private Towers towerhp;
-    //private UnitStats unitStats;
-    private TankHealth TankHealth;
 
-    EnemyPlayers enem; 
+
+    EnemyPlayers enem;
 
     void Awake() {
         enem = GetComponent<EnemyPlayers>();
@@ -48,8 +45,6 @@ public class KnightBehavior : MonoBehaviour
         return Vector3.Distance(transform.position, waypoints[nextPoint].position)
             < waypointTolerance;
     }
-
-  
 
 
     public int ClosestPoint() {
@@ -78,21 +73,19 @@ public class KnightBehavior : MonoBehaviour
     }
 
 
-
-
     void Update() {
         var enemies = enem.CloseEnemies();
         if (enemies.Count > 0) {
             currentState = KnightState.Chase;
             agent.enabled = true;
         } else if (currentState == KnightState.Investigate) {
-                if (investigationTimer > 0) {
-                    investigationTimer -= Time.deltaTime;
-                    if (investigationTimer < 0) {
-                        agent.enabled = true;
-                        currentState = KnightState.Move;
-                    }
+            if (investigationTimer > 0) {
+                investigationTimer -= Time.deltaTime;
+                if (investigationTimer < 0) {
+                    agent.enabled = true;
+                    currentState = KnightState.Move;
                 }
+            }
         } else if (currentState == KnightState.Chase) {
             currentState = KnightState.Investigate;
             investigationTimer = investigationTime;
@@ -122,7 +115,7 @@ public class KnightBehavior : MonoBehaviour
 
 
         } else if (currentState == KnightState.Chase) {
-
+            
             var closest = FindClosest(enemies);
             if (closest == null) {
 
@@ -131,7 +124,7 @@ public class KnightBehavior : MonoBehaviour
 
             var enemyHealth = closest.GetComponent<TankHealth>().health;
 
-            if(closest) {
+            if (closest) {
                 var notify = closest.GetComponent<INotifyOnDestroy>();
                 if (notify != null)
                     notify.AddListener(TargetDead);
@@ -141,24 +134,27 @@ public class KnightBehavior : MonoBehaviour
                 closest = null;
             }
 
+            if (closest != null) {
+                agent.SetDestination(closest.position);
+                if (Vector3.Distance(transform.position, closest.position) < waypointTolerance) {
+                    print("is there any enemy health close" + enemyHealth);
 
-            agent.SetDestination(closest.position);
-            if (Vector3.Distance(transform.position, closest.position) < waypointTolerance) {
-                print("is there any enemy health close" + enemyHealth);
-
-                if (closest.GetComponent<UnitStats>().health <= 0) {
-                    currentState = KnightState.Chase;
-                }
-
-                curTime += Time.deltaTime;
-                if (curTime >= hitTime && enemyHealth > 0) {
-                    IDamageable daobject = closest.GetComponent<IDamageable>();
-                    if (daobject != null) {
-                        daobject.ApplyDamage(attackpower);
+                    if (closest.GetComponent<UnitStats>().health <= 0) {
+                        
+                        closest = null;
+                        currentState = KnightState.Move;
                     }
-                    //closest.GetComponent<UnitStats>().TakeDamge(attackpower);
-                    // vanha closest.GetComponent<UnitStats>().health -= unitStats.attackPower;
-                    curTime = curTime - hitTime;
+
+                    curTime += Time.deltaTime;
+                    if (curTime >= hitTime && enemyHealth > 0) {
+                        IDamageable daobject = closest.GetComponent<IDamageable>();
+                        if (daobject != null) {
+                            daobject.ApplyDamage(attackpower);
+                        }
+                        //closest.GetComponent<UnitStats>().TakeDamge(attackpower);
+                        // vanha closest.GetComponent<UnitStats>().health -= unitStats.attackPower;
+                        curTime = curTime - hitTime;
+                    }
                 }
             }
 
@@ -167,10 +163,6 @@ public class KnightBehavior : MonoBehaviour
 
         if (currentState == KnightState.Attack) {
 
-            //attack();
-            // minion stops
-            // starts attacking and changes animation to attack animation
-            // if waypoint "castle" is destroyed, starts to move towards next closest castle
         }
     }
 

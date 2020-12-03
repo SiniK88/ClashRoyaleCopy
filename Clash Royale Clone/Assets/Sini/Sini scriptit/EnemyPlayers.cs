@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyPlayers : MonoBehaviour
-{
+public class EnemyPlayers : MonoBehaviour {
     //List<Transform> enemies = new List<Transform>();
     List<Transform> closeEnemies = new List<Transform>();
     List<Transform> allEnemies = new List<Transform>();
@@ -13,8 +12,7 @@ public class EnemyPlayers : MonoBehaviour
     public float maxSightAngle = 180f;
 
 
-    void Start()
-    {
+    void Start() {
         // finding enemies
         enemies = GameObject.FindGameObjectsWithTag("P1"); // find every enemy with tag. This needs to be in update
         foreach (var pc in enemies) {
@@ -28,10 +26,9 @@ public class EnemyPlayers : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         UpdateAllEnemies();
-        UpdateCloseEnemies(); 
+        UpdateCloseEnemies();
     }
 
     void UpdateAllEnemies() {
