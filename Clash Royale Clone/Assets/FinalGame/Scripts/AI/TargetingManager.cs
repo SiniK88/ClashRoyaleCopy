@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 
 public class TargetingManager : MonoBehaviour {
+
     HashSet<Transform> player1Units = new HashSet<Transform>();
     HashSet<Transform> player2Units = new HashSet<Transform>();
 
@@ -12,6 +13,8 @@ public class TargetingManager : MonoBehaviour {
     // every unit + building must register itself
     public void RegisterUnit(Transform t) {
         // TODO: check which player's unit this is
+
+
         if (player1Units.Contains(t))
             Debug.LogError("Trying to add same unit twice");
         player1Units.Add(t);
