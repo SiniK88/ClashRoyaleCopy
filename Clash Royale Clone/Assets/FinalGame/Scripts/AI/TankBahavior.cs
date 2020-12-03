@@ -17,15 +17,16 @@ public class TankBahavior : MonoBehaviour
     float waypointTolerance = 1f;
     public float hitTime = 2; //time in seconds between each hit
     float curTime = 0; //time in seconds since last hit
+    public int attackPower = 10; 
 
     private Towers towerhp;
-    private UnitStats unitStats;
+    //private UnitStats unitStats;
 
     void Awake() {
         agent = GetComponent<NavMeshAgent>();
         nextPoint = ClosestPoint();
         towerhp = waypoints[nextPoint].GetComponent<Towers>();
-        unitStats = gameObject.GetComponent<UnitStats>(); // unitStats from different script
+        //unitStats = gameObject.GetComponent<UnitStats>(); // unitStats from different script
         //agent.stoppingDistance = 0;
     }
 
@@ -71,7 +72,7 @@ public class TankBahavior : MonoBehaviour
                 }
                 curTime += Time.deltaTime;
                 if (curTime >= hitTime && towerhp.towerMaxHP > 0) {
-                    towerhp.towerMaxHP -= unitStats.attackPower;
+                    towerhp.towerMaxHP -= attackPower;
                     curTime = curTime - hitTime;
                 }
 

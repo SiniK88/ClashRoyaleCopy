@@ -139,7 +139,7 @@ public class KnightBehavior : MonoBehaviour {
                 if (Vector3.Distance(transform.position, closest.position) < waypointTolerance) {
                     print("is there any enemy health close" + enemyHealth);
 
-                    if (closest.GetComponent<UnitStats>().health <= 0) {
+                    if (closest.GetComponent<TankHealth>().health <= 0) {
                         
                         closest = null;
                         currentState = KnightState.Move;
