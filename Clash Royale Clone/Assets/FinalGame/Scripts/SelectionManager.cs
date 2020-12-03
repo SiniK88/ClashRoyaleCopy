@@ -134,6 +134,8 @@ public class SelectionManager : MonoBehaviour {
                 //Remove current card from hand and draw a new card
                 OnPlaceCard(playerIndex, currentSelection.currentIndex);
 
+                // Audio for clicking card. Test audio file from what we have now. 
+                AudioFW.Play("Barrelcrash"); 
             }
         }        
     }

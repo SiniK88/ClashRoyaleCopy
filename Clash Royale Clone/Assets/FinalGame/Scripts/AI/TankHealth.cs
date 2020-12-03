@@ -9,7 +9,6 @@ public class TankHealth : MonoBehaviour, IDamageable
     public int health = 10;
     public bool isFlying = false; 
 
-
     public void ApplyDamage(int amount) {
 
         health -= amount;
@@ -17,7 +16,7 @@ public class TankHealth : MonoBehaviour, IDamageable
     }
 
     void Death() {
-            GetComponent <NotifyOnDestroy>().Notify();
+            //GetComponent <NotifyOnDestroy>().Notify();
             Destroy(gameObject);
     }
 
