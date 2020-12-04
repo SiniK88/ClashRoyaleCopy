@@ -14,7 +14,8 @@ public class PlacementCursor : MonoBehaviour {
 
     public string playerID = null;
     public Vector3 currentPos;
-    Vector3 initialPos = Vector3.zero + Vector3.down * 1f;
+    public Transform initialTransform;
+    Vector3 initialPos;
 
     public Vector3 moveSpeed = Vector3.zero;
     float cursorSpeed = 3f;
@@ -32,14 +33,15 @@ public class PlacementCursor : MonoBehaviour {
     public GameObject placerG;
     CardType.PlacementType placementType;
 
-    private void Awake() {        
+    private void Awake() {
+        initialPos = initialTransform.position;
         gameObject.transform.position = initialPos;
         rend = GetComponent<SpriteRenderer>();
-        rend.enabled = false;
-        grid = FindObjectOfType<GridJussi>();
+        rend.enabled = false;        
     }
 
     private void Start() {
+        grid = FindObjectOfType<GridJussi>();
         map = grid.GetGrid();
     }
 

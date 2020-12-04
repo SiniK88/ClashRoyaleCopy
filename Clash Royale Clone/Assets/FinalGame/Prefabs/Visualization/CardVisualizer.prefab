@@ -43,6 +43,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f85952449fbdc4189e8977964a8981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  genericCardVisuals: {fileID: 8113019660745068153, guid: 3b84e6bef53ac8647aaf5a6e3f9b1ba9, type: 3}
+  blueCard: {fileID: 21300000, guid: abf956fcdb998b849ac0132bb4aad0df, type: 3}
+  redCard: {fileID: 21300000, guid: 3d8d1cd26b5e92642b9826f334ff6e66, type: 3}
+  numbers:
+  - {fileID: 21300000, guid: e3a85291e03f12f47bce7d45a41d073e, type: 3}
+  - {fileID: 21300000, guid: 54c767a86d8621b45bfa613231a7ef06, type: 3}
+  - {fileID: 21300000, guid: 57b16318f17ce5648ab4c61b0a59b3e1, type: 3}
+  - {fileID: 21300000, guid: 30d536ccb6fd5d14da1c8313529ef010, type: 3}
+  - {fileID: 21300000, guid: fe9d019d1cb3038408f5f3c7db6287bc, type: 3}
+  - {fileID: 21300000, guid: ae89bb8625c5c3e409bc2206b5582d32, type: 3}
+  - {fileID: 21300000, guid: 5dee6ca1ebb06374cb854bf5c6bca474, type: 3}
+  - {fileID: 21300000, guid: ab4f1c8e946134a428c7284d57b97333, type: 3}
+  - {fileID: 21300000, guid: e5997d5a562d20147b1d9995534fe078, type: 3}
+  - {fileID: 21300000, guid: 07d69d050c0e2134090bb2772f0eefb5, type: 3}
   cardPositionsP1:
   - {fileID: 0}
   - {fileID: 0}
@@ -53,5 +67,3 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  renderersP1: []
-  renderersP2: []

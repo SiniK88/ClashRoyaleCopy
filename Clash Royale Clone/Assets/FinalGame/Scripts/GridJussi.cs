@@ -17,7 +17,7 @@ public class GridJussi : MonoBehaviour {
 
 	int gridSizeX, gridSizeY;
 
-	void Start() {
+	void Awake() {
 		gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeLengthX);
 		gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeLengthY);
 		CreateGrid();

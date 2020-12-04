@@ -4,8 +4,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class TankBehaviour : MonoBehaviour {
-    public string unitTypeName = "Tank";
+public class TowerBehaviour : MonoBehaviour {
+    public string unitTypeName = "Tower";
 
     UnitTypeContainer unitContainer;
     List<UnitType> unitTypes;
@@ -93,16 +93,16 @@ public class TankBehaviour : MonoBehaviour {
     }
 
     public Vector3 ClosestTarget() {
-        if(targets.Count <= 0) {
+        if (targets.Count <= 0) {
             print("Tried to access closest target but the targets.List was empty");
-            return Vector3.zero;            
+            return Vector3.zero;
         }
 
         targetPos = targets[0].position; //Initialize the value to something
         float minDistance = Vector3.Distance(transform.position, targets[0].position); //Initialize the value to something      
-        
-        foreach(Transform t in targets) {
-            if(Vector3.Distance(transform.position, t.position) < minDistance) {
+
+        foreach (Transform t in targets) {
+            if (Vector3.Distance(transform.position, t.position) < minDistance) {
                 targetPos = t.position;
             }
         }
@@ -112,11 +112,10 @@ public class TankBehaviour : MonoBehaviour {
     public void NavigateToClosest() {
         agent.SetDestination(targetPos);
     }
-
     private void OnDrawGizmos() {
 
         Color color;
-        if(thisPlayer == 1) {
+        if (thisPlayer == 1) {
             color = Color.blue;
         } else if (thisPlayer == 2) {
             color = Color.red;

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SelectionManager : MonoBehaviour {
 
-    //This is a player-specific selection manager!! Each player has it's own, meaning, that we don't have to cross-check PlayerID's all the time. Each SelectionManager gets initialized in GameInitializer
+    //This is a player-specific selection manager!! Each player has it's own, meaning, that we don't have to cross-check PlayerID's all the time. 
 
     public delegate void CardPlaced(int playerIndex, int cardIndex);
     public static event CardPlaced OnPlaceCard;
@@ -22,6 +22,7 @@ public class SelectionManager : MonoBehaviour {
     }
 
     public string _playerID;
+    public Transform battlefieldUnits;
 
     GameInitializer gameInit;
     List<Player> players;
@@ -33,8 +34,7 @@ public class SelectionManager : MonoBehaviour {
     Selectable lastSelected = null;
     Selectable[] selectables;   
 
-    bool clickedCard = false;
-
+    bool clickedCard = false;    
 
     void Start() { //Most of the stuff below need to happen in Start(). That's because a lot of stuff is initialized in Awake()
         gameInit = FindObjectOfType<GameInitializer>();
@@ -126,7 +126,7 @@ public class SelectionManager : MonoBehaviour {
                 UndoClickOperations(); //Cursor can be neglected / removed from here.
 
                 //Instantiate the spawn at correct location
-                Instantiate(finalForm, spawnPos, Quaternion.identity); //Fix rotation. Also somehow give a player ID to the minion
+                Instantiate(finalForm, spawnPos, Quaternion.identity, battlefieldUnits); //Fix rotation. Also somehow give a player ID to the minion
 
                 //Substract the card manacost from player manapool
                 players[playerIndex].RemoveMana(currentCardType.manaCost);

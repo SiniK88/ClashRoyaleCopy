@@ -47,21 +47,21 @@ public class GameInitializer : MonoBehaviour
             string newPlayerID = ("Player" + (i + 1).ToString());
             players[i].SetPlayerID(newPlayerID);
             
-            //Create an individual input system for each player
-            GameObject newPlayer = Instantiate(playerController);
-            PlayerController newPlayerController = newPlayer.GetComponent<PlayerController>();
-            newPlayer.name = newPlayerID;
-            newPlayerController.playerID = newPlayerID;
+            ////Create an individual input system for each player
+            //GameObject newPlayer = Instantiate(playerController);
+            //PlayerController newPlayerController = newPlayer.GetComponent<PlayerController>();
+            //newPlayer.name = newPlayerID;
+            //newPlayerController.playerID = newPlayerID;
 
-            //Add a SelectionManager component to each player
-            newPlayer.AddComponent<SelectionManager>();
-            newPlayer.GetComponent<SelectionManager>()._playerID = newPlayerID;
+            ////Add a SelectionManager component to each player
+            //newPlayer.AddComponent<SelectionManager>();
+            //newPlayer.GetComponent<SelectionManager>()._playerID = newPlayerID;
 
-            //Create an individual cursor for each player
-            GameObject newCursor = Instantiate(playerCursor);
-            PlacementCursor placementCursor = newCursor.GetComponent<PlacementCursor>();
-            newCursor.name = "CursorP" + (i + 1).ToString();
-            placementCursor.playerID = newPlayerID;
+            ////Create an individual cursor for each player
+            //GameObject newCursor = Instantiate(playerCursor);
+            //PlacementCursor placementCursor = newCursor.GetComponent<PlacementCursor>();
+            //newCursor.name = "CursorP" + (i + 1).ToString();
+            //placementCursor.playerID = newPlayerID;
         }
 
         cardVisualizer = FindObjectOfType<CardVisualizer>();
