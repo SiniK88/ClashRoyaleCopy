@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: TowerUnit
   m_EditorClassIdentifier: 
   unitTypeName: Tower
-  health: 1000
+  health: 50
   attackPower: 1
-  attackSpeed: 1
+  attackSpeed: 5
   baseSpeed: 0
-  sizeDiameter: 1
-  viewDiameter: 1
+  sizeRadius: 1
+  attackRadius: 3
+  aggroRadius: 3
   targetTypes: 000000000100000002000000
-  targeteeTypes: 000000000100000002000000
+  unitCharacteristics: 00000000

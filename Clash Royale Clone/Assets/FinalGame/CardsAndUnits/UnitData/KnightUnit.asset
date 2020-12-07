@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: KnightUnit
   m_EditorClassIdentifier: 
   unitTypeName: Knight
-  health: 100
-  attackPower: 20
-  attackSpeed: 10
+  health: 10
+  attackPower: 2
+  attackSpeed: 2
   baseSpeed: 1
-  sizeDiameter: 0.4
-  viewDiameter: 0
-  targetTypes: 
-  targeteeTypes: 
+  sizeRadius: 0.2
+  attackRadius: 2
+  aggroRadius: 5
+  targetTypes: 000000000100000002000000
+  unitCharacteristics: 

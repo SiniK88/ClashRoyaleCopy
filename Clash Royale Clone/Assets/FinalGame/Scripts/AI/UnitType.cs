@@ -17,10 +17,11 @@ public class UnitType : ScriptableObject {
 
     public float baseSpeed;
 
-    public float sizeDiameter;
+    public float sizeRadius;
 
-    public float viewDiameter;
+    public float attackRadius;
+    public float aggroRadius;
 
     public int[] targetTypes; //0 = Tower, 1 = GroundUnit, 2 = AirUnit
-    public int[] targeteeTypes; //0 = Tower, 1 = GroundUnit, 2 = AirUnit
+    public int[] unitCharacteristics; //0 = Tower, 1 = GroundUnit, 2 = AirUnit
 }

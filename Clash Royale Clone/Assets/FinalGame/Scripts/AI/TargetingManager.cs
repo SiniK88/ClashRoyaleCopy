@@ -15,6 +15,7 @@ public class TargetingManager : MonoBehaviour {
                 Debug.LogError("Trying to add the same unit twice");
             }
             player1Units.Add(t);
+                      
         } else if (playerID == 2) {
             if (player2Units.Contains(t)) {
                 Debug.LogError("Trying to add the same unit twice");
@@ -24,6 +25,7 @@ public class TargetingManager : MonoBehaviour {
             Debug.Log("Tried to add unit to Hashset but it doesn't have a playerID number");
         }
     }
+
     public void UnregisterUnit(Transform t, int playerID) {
         if (playerID == 1) {
             if (!player1Units.Contains(t)) {
@@ -42,36 +44,55 @@ public class TargetingManager : MonoBehaviour {
         } else {
             Debug.Log("Tried to remove unit from Hashset but it doesn't have a playerID number");
         }
-    }
+    }   
 
-    public HashSet<Transform> GetHashSet(int playerID) {
-        if (playerID == 1) {
-            return player1Units;
-        } else if (playerID == 2) {
-            return player2Units;
-        } else {
-            Debug.Log("Tried to get HashSet for a unit, but playerID is not 1 or 2");
-            return null;
+    public HashSet<Transform> FindPotentialTargets(Vector3 position, int thisPlayer, int[] targetTypes) {
+
+        HashSet<Transform> playerUnits = (thisPlayer == 1) ? player2Units : player1Units;
+
+        HashSet<Transform> potentialTargets = new HashSet<Transform>();
+
+        foreach (Transform unit in playerUnits) {
+            int[] targetees = unit.GetComponent<UnitTargetInfo>().unitCharacteristics;
+            bool hasDuplicates = targetees.Intersect(targetTypes).Any(); //Same as: foreach(int targetType in targetTypes) {foreach(int targeteeType in targetees) {if(targetType == targeteeType) { matchBetweenTarget = true;break;}}if (matchBetweenTarget) {break;}}
+            if (hasDuplicates) {
+                potentialTargets.Add(unit);
+            }
         }
+
+        return potentialTargets;
     }
 
+    public Transform FindTarget(Vector3 position, HashSet<Transform> potentialTargets, bool towersOnly) {
+        Transform target = null;
 
-    //public IDamageable FindTarget(Vector3 position, bool targetP1Units, bool flyingAllowed, float maxDistance) {
-    //    // from correct HashSet (based on player / flying)
-    //    var units = targetP1Units ? player1Units : player2Units;
-    //    // find min distance target
-    //    // var minT = units.Min(t => Vector2.Distance(position, t.position));
-    //    Transform minT = null;
-    //    foreach (var t in units) {
-    //        if (minT == null || Vector3.Distance(position, t.position) < Vector3.Distance(position, minT.position)) {
-    //            minT = t;
-    //        }
+        if (towersOnly) { //Returns the closest Tower, if there are any
+            foreach(Transform unit in potentialTargets) {
+                if (unit.GetComponent<UnitTargetInfo>().unitCharacteristics.Contains(0)) {
+                    if (target == null || Vector3.Distance(position, unit.position) < Vector3.Distance(position, target.position)) {
+                        target = unit;
+                    }
+                }                
+            }
+        } else {
+            foreach (Transform unit in potentialTargets) {
+                if (target == null || Vector3.Distance(position, unit.position) < Vector3.Distance(position, target.position)) {
+                        target = unit;
+                }                
+            }
+        }
+
+        return target;
+    }
+    //public HashSet<Transform> GetHashSet(int playerID) {
+    //    if (playerID == 1) {
+    //        return player1Units;
+    //    } else if (playerID == 2) {
+    //        return player2Units;
+    //    } else {
+    //        Debug.Log("Tried to get HashSet for a unit, but playerID is not 1 or 2");
+    //        return null;
     //    }
-
-    //    // check if inside maxDistance
-    //    if (Vector3.Distance(position, minT.position) <= maxDistance)
-    //        return minT.GetComponent<IDamageable>();
-    //    return null;
     //}
 
 }

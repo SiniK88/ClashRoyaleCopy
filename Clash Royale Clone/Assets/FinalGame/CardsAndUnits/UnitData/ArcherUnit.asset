@@ -17,7 +17,8 @@ MonoBehaviour:
   attackPower: 10
   attackSpeed: 10
   baseSpeed: 1
-  sizeDiameter: 0.3
-  viewDiameter: 0
+  sizeRadius: 0
+  attackRadius: 0
+  aggroRadius: 0
   targetTypes: 
-  targeteeTypes: 
+  unitCharacteristics: 

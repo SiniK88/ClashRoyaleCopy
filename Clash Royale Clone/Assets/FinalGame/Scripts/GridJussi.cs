@@ -62,33 +62,33 @@ public class GridJussi : MonoBehaviour {
 		return grid[x, y];
 	}
 
-	void OnDrawGizmos() {
-		Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 1));
+	//void OnDrawGizmos() {
+	//	Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 1));
 
-		if (grid != null) {
-			foreach (Node n in grid) {
+	//	if (grid != null) {
+	//		foreach (Node n in grid) {
 
-				Color cubeColor = Color.white;
+	//			Color cubeColor = Color.white;
 
-				switch (n.nodeState) {
-					case Node.NodeState.Border:
-						cubeColor = Color.black;
-						break;
-					case Node.NodeState.Battlefield:
-						cubeColor = Color.yellow;
-						break;
-					case Node.NodeState.Obstacle:
-						cubeColor = Color.red;
-						break;
-					case Node.NodeState.NoState:
-						cubeColor = Color.magenta;
-						break;
-				}
+	//			switch (n.nodeState) {
+	//				case Node.NodeState.Border:
+	//					cubeColor = Color.black;
+	//					break;
+	//				case Node.NodeState.Battlefield:
+	//					cubeColor = Color.yellow;
+	//					break;
+	//				case Node.NodeState.Obstacle:
+	//					cubeColor = Color.red;
+	//					break;
+	//				case Node.NodeState.NoState:
+	//					cubeColor = Color.magenta;
+	//					break;
+	//			}
 
-				Gizmos.color = cubeColor;
-				Gizmos.DrawWireCube(n.worldPosition, new Vector3(nodeLengthX, nodeLengthY, 1));
-			}
-		}
-	}
+	//			Gizmos.color = cubeColor;
+	//			Gizmos.DrawWireCube(n.worldPosition, new Vector3(nodeLengthX, nodeLengthY, 1));
+	//		}
+	//	}
+	//}
 }
 
