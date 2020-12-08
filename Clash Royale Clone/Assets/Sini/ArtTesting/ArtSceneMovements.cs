@@ -14,7 +14,7 @@ public class ArtSceneMovements : MonoBehaviour
     int nextPoint = 0;
     public float patrolSpeed = 1f;
     float waypointTolerance = 1f;
-    int attackPower = 10; 
+    int attackPower = 30; 
     public float hitTime = 2; //time in seconds between each hit
     float curTime = 0; //time in seconds since last hit
 
