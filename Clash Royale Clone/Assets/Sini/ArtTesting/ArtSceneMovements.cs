@@ -20,6 +20,8 @@ public class ArtSceneMovements : MonoBehaviour
 
     private ArtScenestats towerhp;
 
+    public Transform dust; 
+
 
     void Awake() {
         agent = GetComponent<NavMeshAgent>();
@@ -27,6 +29,7 @@ public class ArtSceneMovements : MonoBehaviour
         towerhp = waypoints[nextPoint].GetComponent<ArtScenestats>();
         //unitStats = gameObject.GetComponent<UnitStats>(); // unitStats from different script
         //agent.stoppingDistance = 0;
+        dust.GetComponent<ParticleSystem>().enableEmission = false; 
     }
 
     void ContinuePatrol() {
@@ -57,7 +60,9 @@ public class ArtSceneMovements : MonoBehaviour
 
     void Update() {
         if (currentState == ArtState.Move) {
+            dust.GetComponent<ParticleSystem>().enableEmission = true;
             if (CloseEnoughToWaypoint()) {
+                dust.GetComponent<ParticleSystem>().enableEmission = false;
                 agent.velocity = Vector3.zero;
                 //agent.transform.position = waypoints[nextPoint].position;
                 if (towerhp.towerMaxHP <= 0) {
