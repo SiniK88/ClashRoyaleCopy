@@ -18,7 +18,7 @@ MonoBehaviour:
   attackSpeed: 1
   baseSpeed: 0.3
   sizeRadius: 0.5
-  attackRadius: 0.1
-  aggroRadius: 0.2
-  targetTypes: 00000000
-  unitCharacteristics: 01000000
+  attackRadius: 1
+  aggroRadius: 1.5
+  targets: 1
+  characteristcs: 2

@@ -114,10 +114,10 @@ public class PlacementCursor : MonoBehaviour {
         }
     }
 
-    private void OnDrawGizmos() {
-        Gizmos.color = Color.cyan;
-        if (initialPos != null) {
-            Gizmos.DrawWireSphere(initialPos, 0.5f);
-        }
-    }
+    //private void OnDrawGizmos() {
+    //    Gizmos.color = Color.cyan;
+    //    if (initialPos != null) {
+    //        Gizmos.DrawWireSphere(initialPos, 0.5f);
+    //    }
+    //}
 }

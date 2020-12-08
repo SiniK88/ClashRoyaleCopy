@@ -21,5 +21,5 @@ MonoBehaviour:
     m_Bits: 58368
   placerVisuals: {fileID: 1688381474393727592, guid: 7c6a124c90ec9a4409b79ba4a1c72209, type: 3}
   placerGhostVisuals: {fileID: 3244793649637045470, guid: dd8bbcfa1f18e9643b19ce2d52f59680, type: 3}
-  finalForm: {fileID: 3341547094592729355, guid: c0c7da0d36a11ff46b8d8be50d9284fd, type: 3}
+  finalForm: {fileID: 1417061553363329953, guid: 7ef3d27c627aa4e4cafb289f3ac2abed, type: 3}
   placementType: 0

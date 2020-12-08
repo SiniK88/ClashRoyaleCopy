@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(NotifyOnDestroy))]
-public class KnightHealth : MonoBehaviour, IDamageable {
+public class TowerHealth : MonoBehaviour, IDamageable {
 
     [SerializeField] int health;
-
+    
     public void Start() {
         health = GetComponent<IBehaviourStats>().GetHealth();
     }
 
     private void Update() {
-        if (health <= 0) {
+        if(health <= 0) {
             Death();
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+[Flags] public enum TargetClass { Tower = 1, Ground = 2, Air = 4 };
 
 [CreateAssetMenu(fileName = "New UnitType", menuName = "Unit")]
 
@@ -21,7 +22,7 @@ public class UnitType : ScriptableObject {
 
     public float attackRadius;
     public float aggroRadius;
-
-    public int[] targetTypes; //0 = Tower, 1 = GroundUnit, 2 = AirUnit
-    public int[] unitCharacteristics; //0 = Tower, 1 = GroundUnit, 2 = AirUnit
+    
+    public TargetClass targets;
+    public TargetClass characteristcs;
 }

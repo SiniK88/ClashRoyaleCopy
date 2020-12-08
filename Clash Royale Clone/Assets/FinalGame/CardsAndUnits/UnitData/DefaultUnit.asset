@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14a6cd25d3a2b974f972d848928ad516, type: 3}
-  m_Name: TowerUnit
+  m_Name: DefaultUnit
   m_EditorClassIdentifier: 
-  unitTypeName: Tower
-  health: 50
-  attackPower: 1
-  attackSpeed: 1
+  unitTypeName: Default
+  health: 0
+  attackPower: 0
+  attackSpeed: 0
   baseSpeed: 0
-  sizeRadius: 0.5
-  attackRadius: 1
-  aggroRadius: 2
-  targets: -1
-  characteristcs: 1
+  sizeRadius: 0
+  attackRadius: 0
+  aggroRadius: 0
+  targets: 0
+  characteristcs: 0

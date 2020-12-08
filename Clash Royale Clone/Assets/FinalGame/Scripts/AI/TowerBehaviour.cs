@@ -1,18 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class TowerBehaviour : MonoBehaviour {
+//README: This is the universal A.I. behaviour model. You can give this to a specific unit by editing lines 7 and 8, and giving the correct names.
+public class TowerBehaviour : MonoBehaviour, IBehaviourStats {
     public string unitTypeName = "Tower";
 
     //private void OnEnable() {
-    //    TargetingManager.OnModifyUnitsCol += ModifyTargetCol;
+    //    TargetingManager.OnUnitsSetChange += RefreshUnitsSet;
     //}
     //private void OnDisable() {
-    //    TargetingManager.OnModifyUnitsCol -= ModifyTargetCol;
+    //    TargetingManager.OnUnitsSetChange -= RefreshUnitsSet;
     //}
+
+    public int GetHealth() {
+        return health;
+    }
 
     UnitTypeContainer unitContainer;
     List<UnitType> unitTypes;
@@ -26,7 +30,6 @@ public class TowerBehaviour : MonoBehaviour {
     UnitTargetInfo targetInfo;
 
     TargetingManager targetManager;
-    HashSet<Transform> potentialTargets;
     Transform currentTarget;
     Transform closestTarget;
 
@@ -40,6 +43,9 @@ public class TowerBehaviour : MonoBehaviour {
     public float aggroRadius;
     public int[] targetTypes; //0 = Tower, 1 = GroundUnit, 2 = AirUnit
     public int[] unitCharacteristics; //0 = Tower, 1 = GroundUnit, 2 = AirUnit
+
+    public TargetClass targets;
+    public TargetClass characteristcs;
 
     float attackRad;
     float reachRad;
@@ -66,8 +72,8 @@ public class TowerBehaviour : MonoBehaviour {
         sizeRadius = thisUnit.sizeRadius;
         attackRadius = thisUnit.attackRadius;
         aggroRadius = thisUnit.aggroRadius;
-        targetTypes = thisUnit.targetTypes;
-        unitCharacteristics = thisUnit.unitCharacteristics;
+        targets = thisUnit.targets;
+        characteristcs = thisUnit.characteristcs;
 
         //Initialize some private stats as well:
         attackRad = attackRadius; //The tolrance distance for when the enemy starts "Attacking" the target instead of "Navigating" towards it.
@@ -84,8 +90,8 @@ public class TowerBehaviour : MonoBehaviour {
 
         //Assert the correct TargetInformation to this unit
         targetInfo = GetComponent<UnitTargetInfo>();
-        targetInfo.SetTargets(targetTypes);
-        targetInfo.SetTargetees(unitCharacteristics);
+        targetInfo.SetTargetEnum(targets);
+        targetInfo.SetCharacteristicsEnum(characteristcs);
 
         //Add the unit's Transform to the current battlefield units Hashset:
         targetManager = FindObjectOfType<TargetingManager>();
@@ -96,13 +102,50 @@ public class TowerBehaviour : MonoBehaviour {
         previousState = AIstate.NoState;
     }
 
+    public void OnDeath() {
+        targetManager.UnregisterUnit(gameObject.transform, thisPlayer);
+        Destroy(gameObject);
+    }
+
+    public void OnTargetDeath() {
+        currentState = AIstate.Navigate;
+    }
+
+    public void ListenSelf() {
+        var notify = GetComponent<INotifyOnDestroy>();
+        if (notify != null) {
+            notify.AddListener(OnDeath);
+        }
+    }
+
+    public void UnListenSelf() {
+        var notify = GetComponent<INotifyOnDestroy>();
+        if (notify != null) {
+            notify.RemoveListener(OnDeath);
+        }
+    }
+
+    public void ListenTarget() {
+        var notify = currentTarget.GetComponent<INotifyOnDestroy>();
+        if (notify != null) {
+            notify.AddListener(OnTargetDeath);
+        }
+    }
+
+    public void UnListenTarget() {
+        var notify = currentTarget.GetComponent<INotifyOnDestroy>();
+        if (notify != null) {
+            notify.RemoveListener(OnTargetDeath);
+        }
+    }
+
     private void Start() {
         //Initialize the potentialTargets hashset
-        potentialTargets = targetManager.FindPotentialTargets(transform.position, thisPlayer, targetTypes);
-        currentTarget = targetManager.FindTarget(transform.position, potentialTargets, true);
+        currentTarget = targetManager.FindClosestTarget(transform, thisPlayer, true);
         if (currentTarget == null) {
             Debug.Log("Target was null in start");
         }
+        ListenSelf();
     }
 
     private void Update() {
@@ -110,14 +153,14 @@ public class TowerBehaviour : MonoBehaviour {
         if (currentState != previousState) { //When state changes from the previous frame, we should handle it's destination only once, instead of on every frame
             switch (currentState) {
                 case AIstate.Navigate:
-                    currentTarget = targetManager.FindTarget(transform.position, potentialTargets, true);
+                    currentTarget = targetManager.FindClosestTarget(transform, thisPlayer, true);
                     NavigateToClosest(currentTarget);
                     break;
                 case AIstate.Aggro:
                     NavigateToClosest(currentTarget);
                     break;
                 case AIstate.Attack:
-                    //Listen to DeathNotification from target
+                    ListenTarget();
                     attackTimer = timer;
                     agent.isStopped = true;
                     break;
@@ -153,7 +196,7 @@ public class TowerBehaviour : MonoBehaviour {
     }
 
     public void Navigate() {
-        closestTarget = targetManager.FindTarget(transform.position, potentialTargets, false);
+        closestTarget = targetManager.FindClosestTarget(transform, thisPlayer, false);
 
         if (Vector3.Distance(transform.position, closestTarget.position) < attackRad) {
             currentState = AIstate.Attack;
@@ -165,7 +208,7 @@ public class TowerBehaviour : MonoBehaviour {
     }
 
     public void Aggro() {
-        closestTarget = targetManager.FindTarget(transform.position, potentialTargets, false);
+        closestTarget = targetManager.FindClosestTarget(transform, thisPlayer, false);
 
         if (Vector3.Distance(transform.position, closestTarget.position) < attackRad) {
             currentState = AIstate.Attack;
@@ -207,9 +250,8 @@ public class TowerBehaviour : MonoBehaviour {
 
     public void NavigateToClosest(Transform target) {
         if (target != null) {
+            agent.isStopped = false;
             agent.SetDestination(target.position);
-        } else {
-            Debug.Log(gameObject.name + " tried to Navigate to target, but it was null");
         }
     }
 

@@ -2,28 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(NotifyOnDestroy))] // optional - will add the other component automatically
+[RequireComponent(typeof(NotifyOnDestroy))]
 public class TankHealth : MonoBehaviour, IDamageable {
 
-    public int health = -1;
-    public bool isFlying = false; 
-
-    public void ApplyDamage(int amount) {
-        health -= amount;
-    }
-
-    void Death() {
-            GetComponent<NotifyOnDestroy>().Notify();
-            Destroy(gameObject);
-    }
+    [SerializeField] int health;
 
     public void Start() {
-        health = GetComponent<TankBehaviour>().health;
+        health = GetComponent<IBehaviourStats>().GetHealth();
     }
 
     private void Update() {
-        if(health <= 0) {
+        if (health <= 0) {
             Death();
         }
     }
-} 
+    public void ApplyDamage(int damage) {
+        health -= damage;
+    }
+
+    private void Death() {
+        GetComponent<NotifyOnDestroy>().Notify();
+    }
+}

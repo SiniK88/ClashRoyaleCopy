@@ -1,297 +1,298 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
-//using System.Linq;
-//using UnityEngine;
-//using UnityEngine.AI;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
 
-//public class KnightBehaviour : MonoBehaviour {
-//    public string unitTypeName = "Knight";
+//README: This is the universal A.I. behaviour model. You can give this to a specific unit by editing lines 7 and 8, and giving the correct names.
+public class KnightBehaviour : MonoBehaviour, IBehaviourStats {
+    public string unitTypeName = "Knight";
 
-//    private void OnEnable() {
-//        TargetingManager.OnModifyUnitsCol += ModifyTargetCol;
-//    }
-//    private void OnDisable() {
-//        TargetingManager.OnModifyUnitsCol -= ModifyTargetCol;
-//    }
+    //private void OnEnable() {
+    //    TargetingManager.OnUnitsSetChange += RefreshUnitsSet;
+    //}
+    //private void OnDisable() {
+    //    TargetingManager.OnUnitsSetChange -= RefreshUnitsSet;
+    //}
 
-//    UnitTypeContainer unitContainer;
-//    List<UnitType> unitTypes;
-//    UnitType thisUnit;
+    public int GetHealth() {
+        return health;
+    }
 
-//    NavMeshAgent agent;
+    UnitTypeContainer unitContainer;
+    List<UnitType> unitTypes;
+    UnitType thisUnit;
 
-//    public int thisPlayer = -1;
-//    public int enemyPlayer = -1;
+    NavMeshAgent agent;
 
-//    UnitTargetInfo targetInfo;
+    public int thisPlayer = -1;
+    public int enemyPlayer = -1;
 
-//    TargetingManager targetManager;
-//    HashSet<Transform> targets = new HashSet<Transform>();
-//    HashSet<Transform> towers = new HashSet<Transform>();
-//    Transform towerTarget = null;
-//    Transform enemyTarget = null;
-//    Transform currentTarget = null;
+    UnitTargetInfo targetInfo;
 
-//    //The same data as in UnitType:    
-//    public int health;
-//    public int attackPower;
-//    public int attackSpeed;
-//    public float baseSpeed;
-//    public float sizeRadius;
-//    public float attackRadius;
-//    public float aggroRadius;
-//    public int[] targetTypes; //0 = Tower, 1 = GroundUnit, 2 = AirUnit
-//    public int[] targeteeTypes; //0 = Tower, 1 = GroundUnit, 2 = AirUnit
+    TargetingManager targetManager;
+    Transform currentTarget;
+    Transform closestTarget;
 
-//    float attackRad;
-//    float reachRad;
+    //The same data as in UnitType:    
+    public int health;
+    public int attackPower;
+    public int attackSpeed;
+    public float baseSpeed;
+    public float sizeRadius;
+    public float attackRadius;
+    public float aggroRadius;
+    public int[] targetTypes; //0 = Tower, 1 = GroundUnit, 2 = AirUnit
+    public int[] unitCharacteristics; //0 = Tower, 1 = GroundUnit, 2 = AirUnit
 
-//    float attackTimer;
-//    float timer = 60f;
+    public TargetClass targets;
+    public TargetClass characteristcs;
 
-//    enum AIstate { Navigate, Aggro, Attack, Stun, NoState };
-//    AIstate currentState = AIstate.NoState;
-//    AIstate previousState = AIstate.NoState;
+    float attackRad;
+    float reachRad;
 
-//    private void Awake() {
+    float attackTimer;
+    float timer = 60f;
 
-//        //Initialize the correct UnitType, and place it in variable thisUnit
-//        unitContainer = FindObjectOfType<UnitTypeContainer>();
-//        unitTypes = unitContainer.unitTypes;
-//        for (int i = 0; i < unitTypes.Count; i++) { if (unitTypes[i].unitTypeName.Equals(unitTypeName)) { thisUnit = unitTypes[i]; break; } } //Basic For-loop to find the correct UnitType from container
+    enum AIstate { Navigate, Aggro, Attack, Stun, NoState };
+    AIstate currentState;
+    AIstate previousState;
 
-//        //Initialize the UnitType stats to this instance
-//        health = thisUnit.health;
-//        attackPower = thisUnit.attackPower;
-//        attackSpeed = thisUnit.attackSpeed;
-//        baseSpeed = thisUnit.baseSpeed;
-//        sizeRadius = thisUnit.sizeRadius;
-//        attackRadius = thisUnit.attackRadius;
-//        aggroRadius = thisUnit.aggroRadius;
-//        targetTypes = thisUnit.targetTypes;
-//        targeteeTypes = thisUnit.targeteeTypes;
+    private void Awake() {
 
-//        //Initialize some private stats as well:
-//        attackRad = attackRadius; //The tolrance distance for when the enemy starts "Attacking" the target instead of "Navigating" towards it.
-//        reachRad = attackRad * 1.2f; //Once the "Attacking" has started, we need to enlargen the attackDiameter, so that there won't occur any "following jitter", where the unit stops, but has to start navigating agian, because the enemy is out-of-reach on the next update.
+        //Initialize the correct UnitType, and place it in variable thisUnit
+        unitContainer = FindObjectOfType<UnitTypeContainer>();
+        unitTypes = unitContainer.unitTypes;
+        for (int i = 0; i < unitTypes.Count; i++) { if (unitTypes[i].unitTypeName.Equals(unitTypeName)) { thisUnit = unitTypes[i]; break; } } //Basic For-loop to find the correct UnitType from container
 
-//        //Initialize the NavMeshAgent and assign stats to the agent's parameters
-//        agent = GetComponent<NavMeshAgent>();
-//        agent.speed = baseSpeed;
-//        agent.radius = sizeRadius;
+        //Initialize the UnitType stats to this instance
+        health = thisUnit.health;
+        attackPower = thisUnit.attackPower;
+        attackSpeed = thisUnit.attackSpeed;
+        baseSpeed = thisUnit.baseSpeed;
+        sizeRadius = thisUnit.sizeRadius;
+        attackRadius = thisUnit.attackRadius;
+        aggroRadius = thisUnit.aggroRadius;
+        targets = thisUnit.targets;
+        characteristcs = thisUnit.characteristcs;
 
-//        //Assert the correct player id:
-//        thisPlayer = GetComponentInParent<PlayerID>().playerID;
-//        enemyPlayer = (thisPlayer == 1) ? 2 : 1;
+        //Initialize some private stats as well:
+        attackRad = attackRadius; //The tolrance distance for when the enemy starts "Attacking" the target instead of "Navigating" towards it.
+        reachRad = attackRad * 1.2f; //Once the "Attacking" has started, we need to enlargen the attackDiameter, so that there won't occur any "following jitter", where the unit stops, but has to start navigating agian, because the enemy is out-of-reach on the next update.
 
-//        //Assert the correct TargetInformation to this unit
-//        targetInfo = GetComponent<UnitTargetInfo>();
-//        targetInfo.SetTargets(targetTypes);
-//        targetInfo.SetTargetees(targeteeTypes);
+        //Initialize the NavMeshAgent and assign stats to the agent's parameters
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = baseSpeed;
+        agent.radius = sizeRadius;
 
-//        //Add the unit's Transform to the current battlefield units Hashset:
-//        targetManager = FindObjectOfType<TargetingManager>();
-//        targetManager.RegisterUnit(gameObject.transform, thisPlayer);
-//    }
+        //Assert the correct player id:
+        thisPlayer = GetComponentInParent<PlayerID>().playerID;
+        enemyPlayer = (thisPlayer == 1) ? 2 : 1;
 
-//    private void Start() {
-//        //Assemble the list of enemy towers, if the unit targets them
-//        CalculateTowerCol();
+        //Assert the correct TargetInformation to this unit
+        targetInfo = GetComponent<UnitTargetInfo>();
+        targetInfo.SetTargetEnum(targets);
+        targetInfo.SetCharacteristicsEnum(characteristcs);
 
-//        //Assemble the starting Enemy target list, excluding towers. Note that this Unit's targetlist is dependant on the targetTypes[].
-//        CalculateTargetCol();
+        //Add the unit's Transform to the current battlefield units Hashset:
+        targetManager = FindObjectOfType<TargetingManager>();
+        targetManager.RegisterUnit(gameObject.transform, thisPlayer);
 
-//        //Select the closest target
-//        ClosestTower();
+        //Initialize the Unit States, so the game will orient the unit correctly starting from Update()
+        currentState = AIstate.NoState;
+        previousState = AIstate.NoState;
+    }
 
-//        //Navigate towards closest target
-//        NavigateToClosest(towerTarget);
+    public void OnDeath() {
+        targetManager.UnregisterUnit(gameObject.transform, thisPlayer);
+        Destroy(gameObject);
+    }
 
-//    }
+    public void OnTargetDeath() {
+        currentState = AIstate.Navigate;
+    }
 
-//    private void Update() {
+    public void ListenSelf() {
+        var notify = GetComponent<INotifyOnDestroy>();
+        if (notify != null) {
+            notify.AddListener(OnDeath);
+        }
+    }
 
-//        if (currentState != previousState) { //When state changes from the previous frame, we should handle it's destination only once, instead of on every frame
-//            switch (currentState) {
-//                case AIstate.Navigate:
-//                    ClosestTower();
-//                    agent.SetDestination(towerTarget.position);
-//                    break;
-//                case AIstate.Aggro:
-//                    agent.SetDestination(enemyTarget.position);
-//                    break;
-//                case AIstate.Attack:
-//                    //Listen to DeathNotification from target
-//                    attackTimer = timer;
-//                    agent.isStopped = true;
-//                    break;
-//                case AIstate.Stun:
-//                    agent.isStopped = true;
-//                    break;
-//                case AIstate.NoState:
-//                    agent.isStopped = true;
-//                    break;
-//            }
-//        }
+    public void UnListenSelf() {
+        var notify = GetComponent<INotifyOnDestroy>();
+        if (notify != null) {
+            notify.RemoveListener(OnDeath);
+        }
+    }
 
-//        previousState = currentState;
+    public void ListenTarget() {
+        var notify = currentTarget.GetComponent<INotifyOnDestroy>();
+        if (notify != null) {
+            notify.AddListener(OnTargetDeath);
+        }
+    }
 
-//        switch (currentState) { //We could nest this switch inside a Update timer, so that these commands will only be executed every 4 frames , or something like that
+    public void UnListenTarget() {
+        var notify = currentTarget.GetComponent<INotifyOnDestroy>();
+        if (notify != null) {
+            notify.RemoveListener(OnTargetDeath);
+        }
+    }
 
-//            case AIstate.Navigate:
-//                Navigate();
-//                break;
-//            case AIstate.Aggro:
-//                Aggro();
-//                break;
-//            case AIstate.Attack:
-//                Attack();
-//                break;
-//            case AIstate.Stun:
-//                print(gameObject.name + " is Stunned");
-//                break;
-//            case AIstate.NoState:
-//                NoState();
-//                break;
-//        }
-//    }
+    private void Start() {
+        //Initialize the potentialTargets hashset
+        currentTarget = targetManager.FindClosestTarget(transform, thisPlayer, true);
+        if (currentTarget == null) {
+            Debug.Log("Target was null in start");
+        }
+        ListenSelf();
+    }
 
-//    public void Navigate() {
-//        ClosestTarget();
+    private void Update() {
 
-//        if (Vector2.Distance(transform.position, enemyTarget.position) < attackRad) {
-//            currentState = AIstate.Attack;
-//        } else if (Vector2.Distance(transform.position, enemyTarget.position) < aggroRadius) {
-//            currentState = AIstate.Aggro;
-//        }
-//    }
+        if (currentState != previousState) { //When state changes from the previous frame, we should handle it's destination only once, instead of on every frame
+            switch (currentState) {
+                case AIstate.Navigate:
+                    currentTarget = targetManager.FindClosestTarget(transform, thisPlayer, true);
+                    NavigateToClosest(currentTarget);
+                    break;
+                case AIstate.Aggro:
+                    NavigateToClosest(currentTarget);
+                    break;
+                case AIstate.Attack:
+                    ListenTarget();
+                    attackTimer = timer;
+                    agent.isStopped = true;
+                    break;
+                case AIstate.Stun:
+                    agent.isStopped = true;
+                    break;
+                case AIstate.NoState:
+                    agent.isStopped = true;
+                    break;
+            }
+        }
 
-//    public void Aggro() {
-//        ClosestTarget();
+        previousState = currentState;
 
-//        if (Vector2.Distance(transform.position, enemyTarget.position) < attackRad) {
-//            currentState = AIstate.Attack;
-//        } else if (Vector2.Distance(transform.position, enemyTarget.position) > aggroRadius + 0.1f) { //The enemy target got away from the range, with a slight 0.1f buffer
-//            currentState = AIstate.Navigate;
-//            //DeListen target death notification
-//        }
-//    }
+        switch (currentState) { //We could nest this switch inside a Update timer, so that these commands will only be executed every 4 frames , or something like that
 
-//    public void Attack() {
-//        //No need to check the ClosestTarget(), since we should lock our attention to one troop at least as long as it's in the reachRadius
+            case AIstate.Navigate:
+                Navigate();
+                break;
+            case AIstate.Aggro:
+                Aggro();
+                break;
+            case AIstate.Attack:
+                Attack();
+                break;
+            case AIstate.Stun:
+                print(gameObject.name + " is Stunned");
+                break;
+            case AIstate.NoState:
+                NoState();
+                break;
+        }
+    }
 
-//        if (Vector2.Distance(transform.position, enemyTarget.position) < reachRad) {
-//            //Attack the target
-//            attackTimer -= attackSpeed;
-//            if (attackTimer <= 0) {
-//                enemyTarget.GetComponent<IDamageable>().ApplyDamage(attackPower);
-//                attackTimer = timer;
-//            }
+    public void Navigate() {
+        closestTarget = targetManager.FindClosestTarget(transform, thisPlayer, false);
 
-//        } else if (Vector2.Distance(transform.position, enemyTarget.position) < aggroRadius) {
-//            currentState = AIstate.Aggro;
-//        } else {
-//            currentState = AIstate.Navigate;
-//            //DeListen target death notification
-//        }
-//    }
+        if (Vector3.Distance(transform.position, closestTarget.position) < attackRad) {
+            currentState = AIstate.Attack;
+            currentTarget = closestTarget;
+        } else if (Vector3.Distance(transform.position, closestTarget.position) < aggroRadius) {
+            currentState = AIstate.Aggro;
+            currentTarget = closestTarget;
+        }
+    }
 
-//    public void NoState() {
-//        StartCoroutine(StunCooldown(1f));
-//    }
+    public void Aggro() {
+        closestTarget = targetManager.FindClosestTarget(transform, thisPlayer, false);
 
-//    IEnumerator StunCooldown(float time) {
-//        currentState = AIstate.Stun;
-//        yield return new WaitForSeconds(time);
-//        currentState = AIstate.Navigate;
-//    }
-//    public void CalculateTowerCol() {
-//        if (targetTypes.Contains(0)) { //1 = TowerType
-//            HashSet<Transform> allTargets = targetManager.GetHashSet(enemyPlayer);
-//            foreach (Transform unit in allTargets) {
-//                if (unit.GetComponent<UnitTargetInfo>().targeteeTypes.Contains(0)) { //1 = TowerType
-//                    towers.Add(unit);
-//                }
-//            }
-//        }
-//    }
+        if (Vector3.Distance(transform.position, closestTarget.position) < attackRad) {
+            currentState = AIstate.Attack;
+            currentTarget = closestTarget;
+        } else if (Vector3.Distance(transform.position, closestTarget.position) > aggroRadius + 0.1f) { //The enemy target got away from the range, with a slight 0.1f buffer
+            currentState = AIstate.Navigate;
+            //DeListen target death notification
+        }
+    }
 
-//    public void CalculateTargetCol() {
-//        HashSet<Transform> allTargets = targetManager.GetHashSet(enemyPlayer);
-//        foreach (Transform unit in allTargets) {
-//            print(unit.transform.parent.name);
-//            int[] targetees = unit.GetComponent<UnitTargetInfo>().targeteeTypes;
-//            bool hasDuplicates = targetees.Intersect(targetTypes).Any(); //foreach(int targetType in targetTypes) {foreach(int targeteeType in targetees) {if(targetType == targeteeType) { matchBetweenTarget = true;break;}}if (matchBetweenTarget) {break;}}
-//            if (hasDuplicates) {
-//                targets.Add(unit);
-//            }
-//        }
-//    }
+    public void Attack() {
+        //No need to check the closest target, since we should lock our attention to one troop at least as long as it's in the reachRadius
 
-//    public void ModifyTargetCol(int playerID, Transform t) {
-//        int[] targetees = t.GetComponent<UnitTargetInfo>().targeteeTypes;
-//        bool isCorrectType = targetees.Intersect(targetTypes).Any();
-//        if (isCorrectType) {
-//            if (targets.Contains(t)) {
-//                targets.Remove(t);
-//            } else {
-//                targets.Add(t);
-//            }
-//        }
-//    }
+        if (Vector2.Distance(transform.position, currentTarget.position) < reachRad) {
+            //Attack the target
+            attackTimer -= attackSpeed;
+            if (attackTimer <= 0) {
+                currentTarget.GetComponent<IDamageable>().ApplyDamage(attackPower);
+                attackTimer = timer;
+            }
 
-//    public Transform ClosestTower() {
-//        if (towers.Count <= 0) {
-//            print("Tried to access closest tower but the towers collection was empty");
-//            return null;
-//        }
+        } else if (Vector2.Distance(transform.position, currentTarget.position) < aggroRadius) {
+            currentState = AIstate.Aggro;
+        } else {
+            currentState = AIstate.Navigate;
+            //DeListen target death notification
+        }
+    }
 
-//        towerTarget = null;
+    public void NoState() {
+        StartCoroutine(StunCooldown(1f));
+    }
 
-//        foreach (Transform t in towers) {
-//            if (towerTarget == null || Vector3.Distance(transform.position, t.position) < Vector3.Distance(transform.position, towerTarget.position)) {
-//                towerTarget = t;
-//            }
-//        }
-//        return towerTarget;
-//    }
+    IEnumerator StunCooldown(float time) {
+        currentState = AIstate.Stun;
+        yield return new WaitForSeconds(time);
+        currentState = AIstate.Navigate;
+    }
 
-//    public Transform ClosestTarget() { //The return type is not really used, since targetPos variable is already public
-//        if (targets.Count <= 0) {
-//            print("Tried to access closest target but the targets collection was empty");
-//            return null;
-//        }
+    public void NavigateToClosest(Transform target) {
+        if (target != null) {
+            agent.isStopped = false;
+            agent.SetDestination(target.position);
+        }
+    }
 
-//        enemyTarget = null;
+    private void OnDrawGizmos() {
+        Color color;
+        if (thisPlayer == 1) {
+            color = Color.blue;
+        } else if (thisPlayer == 2) {
+            color = Color.red;
+        } else {
+            color = Color.magenta;
+        }
+        Gizmos.color = color;
 
-//        foreach (Transform t in targets) {
-//            if (enemyTarget == null || Vector3.Distance(transform.position, t.position) < Vector3.Distance(transform.position, enemyTarget.position)) {
-//                enemyTarget = t;
-//            }
-//        }
-//        return enemyTarget;
-//    }
+        if (currentTarget != null) {
+            Gizmos.DrawLine(transform.position, currentTarget.position);
+        }
 
-//    public void NavigateToClosest(Transform target) {
-//        agent.SetDestination(target.position);
-//    }
+        Color stateColor = Color.magenta;
 
-//    private void OnDrawGizmos() {
-//        Color color;
-//        if (thisPlayer == 1) {
-//            color = Color.blue;
-//        } else if (thisPlayer == 2) {
-//            color = Color.red;
-//        } else {
-//            color = Color.magenta;
-//        }
-//        Gizmos.color = color;
+        switch (currentState) {
 
-//        if (enemyTarget != null) {
-//            Gizmos.DrawLine(transform.position, enemyTarget.position);
-//        }
+            case AIstate.Navigate:
+                stateColor = Color.green;
+                break;
+            case AIstate.Aggro:
+                stateColor = Color.yellow;
+                break;
+            case AIstate.Attack:
+                stateColor = Color.red;
+                break;
+            case AIstate.Stun:
+                stateColor = Color.grey;
+                break;
+            case AIstate.NoState:
+                stateColor = Color.black;
+                break;
+        }
 
-//        Gizmos.color = Color.red;
-//        Gizmos.DrawWireSphere(transform.position, attackRad);
-//    }
-//}
+        Gizmos.color = stateColor;
+
+        Gizmos.DrawWireSphere(transform.position, 0.4f);
+    }
+}
