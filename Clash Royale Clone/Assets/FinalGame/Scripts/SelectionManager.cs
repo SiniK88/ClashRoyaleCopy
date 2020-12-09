@@ -136,7 +136,7 @@ public class SelectionManager : MonoBehaviour {
                 OnPlaceCard(playerIndex, currentSelection.currentIndex);
 
                 // Audio for clicking card. Test audio file from what we have now. 
-                AudioFW.Play("Barrelcrash"); 
+                //AudioFW.Play("Barrelcrash"); 
             }
         }        
     }

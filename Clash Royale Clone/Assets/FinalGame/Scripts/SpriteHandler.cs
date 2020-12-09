@@ -20,6 +20,8 @@ public class SpriteHandler : MonoBehaviour
 
     private void Awake() {
         movement = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1);
+        blueRend.sprite = Front;
+        redRend.sprite = Front;
         
     }
 

@@ -16,9 +16,9 @@ MonoBehaviour:
   health: 20
   attackPower: 5
   attackSpeed: 1
-  baseSpeed: 0.3
-  sizeRadius: 0.5
-  attackRadius: 1
-  aggroRadius: 1.5
+  baseSpeed: 0.5
+  sizeRadius: 0.2
+  attackRadius: 2
+  aggroRadius: 5
   targets: 1
   characteristcs: 2

@@ -16,9 +16,9 @@ MonoBehaviour:
   health: 50
   attackPower: 10
   attackSpeed: 10
-  baseSpeed: 1
-  sizeRadius: 0
-  attackRadius: 0
-  aggroRadius: 0
-  targetTypes: 
-  unitCharacteristics: 
+  baseSpeed: 1.5
+  sizeRadius: 0.2
+  attackRadius: 4
+  aggroRadius: 5
+  targets: -1
+  characteristcs: 2

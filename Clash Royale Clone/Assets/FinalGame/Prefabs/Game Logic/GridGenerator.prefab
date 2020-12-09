@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65b58abb08154740b399a11bd12fc91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridWorldSize: {x: 8, y: 10}
+  gridWorldSize: {x: 20, y: 25}
   worldBottomLeft: {x: 0, y: 0, z: 0}
-  nodeLengthX: 0.3
-  nodeLengthY: 0.3
+  nodeLengthX: 1
+  nodeLengthY: 1
