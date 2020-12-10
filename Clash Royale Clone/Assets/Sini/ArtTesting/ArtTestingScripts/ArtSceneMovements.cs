@@ -20,8 +20,8 @@ public class ArtSceneMovements : MonoBehaviour
 
     private ArtScenestats towerhp;
 
-    public Transform dust; 
-
+    public Transform dust;
+    public Transform hit;
 
     void Awake() {
         agent = GetComponent<NavMeshAgent>();
@@ -30,11 +30,14 @@ public class ArtSceneMovements : MonoBehaviour
         //unitStats = gameObject.GetComponent<UnitStats>(); // unitStats from different script
         //agent.stoppingDistance = 0;
         dust.GetComponent<ParticleSystem>().enableEmission = false; 
+        hit.GetComponent<ParticleSystem>().enableEmission = false;
     }
 
     void ContinuePatrol() {
+
         agent.speed = patrolSpeed;
         agent.SetDestination(waypoints[nextPoint].position);
+        hit.GetComponent<ParticleSystem>().enableEmission = false;
     }
 
 
@@ -73,9 +76,11 @@ public class ArtSceneMovements : MonoBehaviour
                     }
                     towerhp = waypoints[nextPoint].GetComponent<ArtScenestats>();
                 }
+                
                 curTime += Time.deltaTime;
                 if (curTime >= hitTime && towerhp.towerMaxHP > 0) {
                     towerhp.towerMaxHP -= attackPower;
+                    hit.GetComponent<ParticleSystem>().enableEmission = true;
                     curTime = curTime - hitTime;
                 }
 
