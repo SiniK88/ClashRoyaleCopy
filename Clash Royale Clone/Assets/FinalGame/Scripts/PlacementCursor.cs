@@ -18,7 +18,7 @@ public class PlacementCursor : MonoBehaviour {
     Vector3 initialPos;
 
     public Vector3 moveSpeed = Vector3.zero;
-    float cursorSpeed = 3f;
+    float cursorSpeed = 6f;
 
     SpriteRenderer rend;
 
@@ -88,7 +88,12 @@ public class PlacementCursor : MonoBehaviour {
 
     public void MoveCursor(Vector2 move, string _playerID) {
         if (_playerID.Equals(playerID)) {
-            moveSpeed = new Vector3(move.x, move.y, 0);
+            if (playerID.Equals("Player1")) {
+                moveSpeed = new Vector3(move.x, move.y, 0);
+            } else {
+                moveSpeed = new Vector3(-move.x, -move.y, 0); //Invert the cursor movement, because Player2 (Red) is looking from opposite direction
+            }
+            
         }
     }
 

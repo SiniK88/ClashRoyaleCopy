@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b902054dd7d4a2499cac0828bf6643d, type: 3}
+  m_Name: Barrel
+  m_EditorClassIdentifier: 
+  cardType: 7
+  cardName: Barrel
+  artwork: {fileID: 21300000, guid: f275205588564b94c890faab34997e74, type: 3}
+  manaCost: 70
+  unitCount: 1
+  disallowedPlacements:
+    serializedVersion: 2
+    m_Bits: 1536
+  placerVisuals: {fileID: 7955897181823974043, guid: 85b85e4452edf124b839c22af9c8e96f, type: 3}
+  placerGhostVisuals: {fileID: 8484623625460711221, guid: 428d0f99cd10f814293ac4006f86e268, type: 3}
+  finalForm: {fileID: 1688381474393727592, guid: 7c6a124c90ec9a4409b79ba4a1c72209, type: 3}
+  placementType: 1

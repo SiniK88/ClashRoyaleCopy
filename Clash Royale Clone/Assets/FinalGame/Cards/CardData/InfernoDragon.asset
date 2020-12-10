@@ -16,6 +16,7 @@ MonoBehaviour:
   cardName: InfernoDragon
   artwork: {fileID: 21300000, guid: 688afb1110b8b3747a0f21be358ae18e, type: 3}
   manaCost: 40
+  unitCount: 1
   disallowedPlacements:
     serializedVersion: 2
     m_Bits: 58368

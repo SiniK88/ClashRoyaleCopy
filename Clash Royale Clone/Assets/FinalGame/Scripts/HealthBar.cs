@@ -24,8 +24,6 @@ public class HealthBar : MonoBehaviour {
 
         currentHealth = healthScript.GetHealth();
         fillAmount = (float)currentHealth / maxHealth;
-        print("MaxHealth: " + maxHealth);
-        print("CurrentHealth: " + currentHealth);
         maskBlue.transform.localScale = new Vector3(fillAmount, 1, 1);
         maskRed.transform.localScale = new Vector3(fillAmount, 1, 1);
     }

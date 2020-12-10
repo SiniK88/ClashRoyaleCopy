@@ -123,11 +123,15 @@ public class SelectionManager : MonoBehaviour {
             } else if (clickedCard) {
                 //Initialize the spawn
                 GameObject finalForm = currentCardType.finalForm;
+                int unitCount = currentCardType.unitCount;
                 Vector3 spawnPos = cursor.GetNodePosition();
                 UndoClickOperations(); //Cursor can be neglected / removed from here.
 
-                //Instantiate the spawn at correct location
-                Instantiate(finalForm, spawnPos, Quaternion.identity, battlefieldUnits); //Fix rotation. Also somehow give a player ID to the minion
+                //Instantiate the spawn(s) at correct location
+                for(int i = 0; i < unitCount; i++) {
+                    Instantiate(finalForm, spawnPos + new Vector3(i,0,0), Quaternion.identity, battlefieldUnits); //Fix rotation. Also somehow give a player ID to the minion
+                }
+                
 
                 //Substract the card manacost from player manapool
                 players[playerIndex].RemoveMana(currentCardType.manaCost);

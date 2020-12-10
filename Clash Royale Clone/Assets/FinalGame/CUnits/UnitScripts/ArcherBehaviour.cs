@@ -36,7 +36,7 @@ public class ArcherBehaviour : MonoBehaviour, IBehaviourStats {
     //The same data as in UnitType:    
     public int health;
     public int attackPower;
-    public int attackSpeed;
+    public float attackPerSecond;
     public float baseSpeed;
     public float sizeRadius;
     public float attackRadius;
@@ -51,7 +51,6 @@ public class ArcherBehaviour : MonoBehaviour, IBehaviourStats {
     float reachRad;
 
     float attackTimer;
-    float timer = 60f;
 
     enum AIstate { Navigate, Aggro, Attack, Stun, NoState };
     AIstate currentState;
@@ -65,19 +64,20 @@ public class ArcherBehaviour : MonoBehaviour, IBehaviourStats {
         for (int i = 0; i < unitTypes.Count; i++) { if (unitTypes[i].unitTypeName.Equals(unitTypeName)) { thisUnit = unitTypes[i]; break; } } //Basic For-loop to find the correct UnitType from container
 
         //Initialize the UnitType stats to this instance
-        health = thisUnit.health;
-        attackPower = thisUnit.attackPower;
-        attackSpeed = thisUnit.attackSpeed;
-        baseSpeed = thisUnit.baseSpeed;
-        sizeRadius = thisUnit.sizeRadius;
-        attackRadius = thisUnit.attackRadius;
-        aggroRadius = thisUnit.aggroRadius;
-        targets = thisUnit.targets;
-        characteristcs = thisUnit.characteristcs;
+        health =            thisUnit.health;
+        attackPower =       thisUnit.attackPower;
+        attackPerSecond =   thisUnit.attackPerSecond;
+        baseSpeed =         thisUnit.baseSpeed;
+        sizeRadius =        thisUnit.sizeRadius;
+        attackRadius =      thisUnit.attackRadius;
+        aggroRadius =       thisUnit.aggroRadius;
+        targets =           thisUnit.targets;
+        characteristcs =    thisUnit.characteristcs;
 
         //Initialize some private stats as well:
         attackRad = attackRadius; //The tolrance distance for when the enemy starts "Attacking" the target instead of "Navigating" towards it.
         reachRad = attackRad * 1.2f; //Once the "Attacking" has started, we need to enlargen the attackDiameter, so that there won't occur any "following jitter", where the unit stops, but has to start navigating agian, because the enemy is out-of-reach on the next update.
+        attackTimer = attackPerSecond;
 
         //Initialize the NavMeshAgent and assign stats to the agent's parameters
         agent = GetComponent<NavMeshAgent>();
@@ -166,7 +166,7 @@ public class ArcherBehaviour : MonoBehaviour, IBehaviourStats {
                     break;
                 case AIstate.Attack:
                     ListenTarget();
-                    attackTimer = timer;
+                    attackTimer = attackPerSecond;
                     agent.isStopped = true;
                     break;
                 case AIstate.Stun:
@@ -234,10 +234,10 @@ public class ArcherBehaviour : MonoBehaviour, IBehaviourStats {
 
         if (Vector2.Distance(transform.position, currentTarget.position) < reachRad && currentTarget != gameObject.transform) {
             //Attack the target
-            attackTimer -= attackSpeed;
+            attackTimer -= Time.deltaTime;
             if (attackTimer <= 0) {
                 currentTarget.GetComponent<IDamageable>().ApplyDamage(attackPower);
-                attackTimer = timer;
+                attackTimer += attackPerSecond;
             }
 
         } else if (Vector2.Distance(transform.position, currentTarget.position) < aggroRadius) {

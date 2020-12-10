@@ -14,7 +14,7 @@ public class UnitType : ScriptableObject {
     public int health;
 
     public int attackPower;
-    public int attackSpeed;
+    public float attackPerSecond;
 
     public float baseSpeed;
 

@@ -23,16 +23,22 @@ public class GameInitializer : MonoBehaviour
 
         //We create the Player Decks here manually. In the end product, the list is already made when we reach this Scene, and we can directly use those lists instead of creating here
         player1cards.Add(new Card(Card.Effect.Tank,             Card.State.IN_DECK));
-        player1cards.Add(new Card(Card.Effect.Knight,           Card.State.IN_DECK));
-        player1cards.Add(new Card(Card.Effect.Archer,           Card.State.IN_DECK));
+        player1cards.Add(new Card(Card.Effect.Knight,           Card.State.IN_DECK));        
         player1cards.Add(new Card(Card.Effect.DarkKnight,       Card.State.IN_DECK));
         player1cards.Add(new Card(Card.Effect.InfernoDragon,    Card.State.IN_DECK));
+        player1cards.Add(new Card(Card.Effect.FireBall,         Card.State.IN_DECK));
+        player1cards.Add(new Card(Card.Effect.IceKnife,         Card.State.IN_DECK));
+        player1cards.Add(new Card(Card.Effect.Barrel,           Card.State.IN_DECK));
+        player1cards.Add(new Card(Card.Effect.Archer,           Card.State.IN_DECK));
 
         player2cards.Add(new Card(Card.Effect.Tank,             Card.State.IN_DECK));
-        player2cards.Add(new Card(Card.Effect.Knight,           Card.State.IN_DECK));
-        player2cards.Add(new Card(Card.Effect.Archer,           Card.State.IN_DECK));
+        player2cards.Add(new Card(Card.Effect.Knight,           Card.State.IN_DECK));        
         player2cards.Add(new Card(Card.Effect.DarkKnight,       Card.State.IN_DECK));
         player2cards.Add(new Card(Card.Effect.InfernoDragon,    Card.State.IN_DECK));
+        player2cards.Add(new Card(Card.Effect.FireBall,         Card.State.IN_DECK));
+        player2cards.Add(new Card(Card.Effect.IceKnife,         Card.State.IN_DECK));
+        player2cards.Add(new Card(Card.Effect.Barrel,           Card.State.IN_DECK));
+        player2cards.Add(new Card(Card.Effect.Archer,           Card.State.IN_DECK));
 
 
         player1 = new Player(playersIsHuman, player1cards);
@@ -83,7 +89,6 @@ public class GameInitializer : MonoBehaviour
         currentPlayer.handState.RemoveCardFromIndex(_cardIndex);
         currentPlayer.deckState.InsertPlacedCardIntoDeck(placedCard);
         Card nextCard = currentPlayer.deckState.NextCardFromDeck();
-        print(nextCard.effect);
         currentPlayer.handState.DrawCardIntoIndex(_cardIndex, nextCard);
 
         //Now visual stuff

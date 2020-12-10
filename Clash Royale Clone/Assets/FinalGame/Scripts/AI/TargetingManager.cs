@@ -82,53 +82,20 @@ public class TargetingManager : MonoBehaviour {
         return closest;
     }
 
-    //public HashSet<Transform> FindPotentialTargets(Vector3 position, int thisPlayer, int[] targetTypes) {
+    public List<Transform> FindAllTargetsWithinRadius(Transform seeker, int thisPlayer, float searchRadius) {
+        List<Transform> unitsWithinRadius = new List<Transform>();
+        HashSet<Transform> playerUnits = (thisPlayer == 1) ? player2Units : player1Units;
+        TargetClass targets = seeker.GetComponent<UnitTargetInfo>().targets;
 
-    //    HashSet<Transform> playerUnits = (thisPlayer == 1) ? player2Units : player1Units;
-
-    //    HashSet<Transform> potentialTargets = new HashSet<Transform>();
-
-    //    foreach (Transform unit in playerUnits) {
-    //        int[] targetees = unit.GetComponent<UnitTargetInfo>().unitCharacteristics;
-    //        bool hasDuplicates = targetees.Intersect(targetTypes).Any(); //Same as: foreach(int targetType in targetTypes) {foreach(int targeteeType in targetees) {if(targetType == targeteeType) { matchBetweenTarget = true;break;}}if (matchBetweenTarget) {break;}}
-    //        if (hasDuplicates) {
-    //            potentialTargets.Add(unit);
-    //        }
-    //    }
-
-    //    return potentialTargets;
-    //}
-
-    //public Transform FindTarget(Vector3 position, HashSet<Transform> potentialTargets, bool towersOnly) {
-    //    Transform target = null;
-
-    //    if (towersOnly) { //Returns the closest Tower, if there are any
-    //        foreach (Transform unit in potentialTargets) {
-    //            if (unit.GetComponent<UnitTargetInfo>().unitCharacteristics.Contains(0)) {
-    //                if (target == null || Vector3.Distance(position, unit.position) < Vector3.Distance(position, target.position)) {
-    //                    target = unit;
-    //                }
-    //            }
-    //        }
-    //    } else {
-    //        foreach (Transform unit in potentialTargets) {
-    //            if (target == null || Vector3.Distance(position, unit.position) < Vector3.Distance(position, target.position)) {
-    //                target = unit;
-    //            }
-    //        }
-    //    }
-
-    //    return target;
-    //}
-    //public HashSet<Transform> GetHashSet(int playerID) {
-    //    if (playerID == 1) {
-    //        return player1Units;
-    //    } else if (playerID == 2) {
-    //        return player2Units;
-    //    } else {
-    //        Debug.Log("Tried to get HashSet for a unit, but playerID is not 1 or 2");
-    //        return null;
-    //    }
-    //}
+        foreach (Transform unit in playerUnits) {
+            TargetClass characteristcs = unit.GetComponent<UnitTargetInfo>().characteristcs;
+            if ((targets & characteristcs) != 0) { //Checks that the Seeker can actually target the unit
+                if(Vector2.Distance(seeker.position, unit.position) <= searchRadius) { //Checks that the unit is within a searchRadius centering from Seekers transform, eg. Fireball effect
+                    unitsWithinRadius.Add(unit);
+                }                
+            }
+        }
+        return unitsWithinRadius;
+    }
 
 }
