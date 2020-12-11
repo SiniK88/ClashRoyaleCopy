@@ -106,7 +106,7 @@ MonoBehaviour:
   enemyPlayer: -1
   health: 0
   attackPower: 0
-  attackSpeed: 0
+  attackPerSecond: 0
   baseSpeed: 0
   sizeRadius: 0
   attackRadius: 0
@@ -154,6 +154,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
+--- !u!95 &2770294758941649264
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4648321734289866082}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!111 &259985515629042051
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4648321734289866082}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &3342525589134461186
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -215,6 +249,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
+--- !u!1 &4648321734289866082 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7989718534883144800, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
+  m_PrefabInstance: {fileID: 3342525589134461186}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4648321734289866083 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7989718534883144801, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}

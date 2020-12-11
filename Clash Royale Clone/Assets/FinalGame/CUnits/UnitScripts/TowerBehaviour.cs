@@ -6,6 +6,9 @@ using UnityEngine.AI;
 //README: This is the universal A.I. behaviour model. You can give this to a specific unit by editing lines 7 and 8, and giving the correct names.
 public class TowerBehaviour : MonoBehaviour, IBehaviourStats {
     public string unitTypeName = "Tower";
+    public AIstate GetState() {
+        return currentState;
+    }
 
     //private void OnEnable() {
     //    TargetingManager.OnUnitsSetChange += RefreshUnitsSet;
@@ -52,7 +55,6 @@ public class TowerBehaviour : MonoBehaviour, IBehaviourStats {
 
     float attackTimer;
 
-    enum AIstate { Navigate, Aggro, Attack, Stun, NoState };
     AIstate currentState;
     AIstate previousState;
 

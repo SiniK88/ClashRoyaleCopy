@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+public enum AIstate { Navigate, Aggro, Attack, Stun, NoState };
 
 //README: This is the universal A.I. behaviour model. You can give this to a specific unit by editing lines 7 and 8, and giving the correct names.
 public class DefaultBehaviour : MonoBehaviour, IBehaviourStats {
     public string unitTypeName = "Default";
+
+    public AIstate GetState() {
+        return currentState;
+    }
 
     //private void OnEnable() {
     //    TargetingManager.OnUnitsSetChange += RefreshUnitsSet;
@@ -52,7 +57,7 @@ public class DefaultBehaviour : MonoBehaviour, IBehaviourStats {
 
     float attackTimer;
 
-    enum AIstate { Navigate, Aggro, Attack, Stun, NoState };
+    
     AIstate currentState;
     AIstate previousState;
 

@@ -12,6 +12,20 @@ public class SpriteHandler : MonoBehaviour
     public Sprite Right;
     public Sprite Left;
 
+    IBehaviourStats aiScript;
+
+    //Lista public AnimationBlue
+    public Animation frontWalk;
+    //...
+
+    //Lista public AnimationRed
+    public Animation frontWalkRed;
+    //...
+
+    //Tai muutta layerin scriptissä.
+
+
+
     Transform[] transforms;
     public Transform movement;
 
@@ -19,14 +33,36 @@ public class SpriteHandler : MonoBehaviour
     Vector3 currentPos;
 
     private void Awake() {
+        aiScript = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).GetComponent<IBehaviourStats>();
         movement = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1);
         blueRend.sprite = Front;
         redRend.sprite = Front;
+
+        //aiScript.GetState();
         
     }
 
     private void Update() {
         transform.position = movement.position;
+
+        //Check unit Rotation ...
+            //gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1); ROTAATIo
+        //Check if unit is moving ...
+            //Liikkuu paitsi jos AI.State = Attack TAI Stun TAI NoState
+        //Check if unit is attacking ...
+            //Onko unit AI.State = Attack?
+
+        //Rotaatio, bool isAttacking, bool isWalking -> oikea animaatio
+
+
+
+
+
+
+        //Check if unit is dying (comes as a notification)
+
+
+
     }
 
 }

@@ -6,6 +6,9 @@ using UnityEngine.AI;
 //README: This is the universal A.I. behaviour model. You can give this to a specific unit by editing lines 7 and 8, and giving the correct names.
 public class ArcherBehaviour : MonoBehaviour, IBehaviourStats {
     public string unitTypeName = "Archer";
+    public AIstate GetState() {
+        return currentState;
+    }
 
     //private void OnEnable() {
     //    TargetingManager.OnUnitsSetChange += RefreshUnitsSet;
@@ -51,8 +54,7 @@ public class ArcherBehaviour : MonoBehaviour, IBehaviourStats {
     float reachRad;
 
     float attackTimer;
-
-    enum AIstate { Navigate, Aggro, Attack, Stun, NoState };
+    
     AIstate currentState;
     AIstate previousState;
 
