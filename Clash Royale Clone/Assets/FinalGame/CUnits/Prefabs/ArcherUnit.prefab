@@ -106,7 +106,7 @@ MonoBehaviour:
   enemyPlayer: -1
   health: 0
   attackPower: 0
-  attackSpeed: 0
+  attackPerSecond: 0
   baseSpeed: 0
   sizeRadius: 0
   attackRadius: 0
@@ -161,10 +161,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1996435597360287429}
     m_Modifications:
+    - target: {fileID: 49956374405671398, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -438470420748553846, guid: 1b55b58e8b3ca764b956ba266b85d495, type: 3}
+    - target: {fileID: 587439593165229870, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -438470420748553846, guid: 1b55b58e8b3ca764b956ba266b85d495, type: 3}
+    - target: {fileID: 2731318706235300425, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2731318706235300425, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2731318706235300425, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 5123171329426266280, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 2ed7be7819686b848b7957f8ba54cdfc, type: 2}
     - target: {fileID: 7322638192470136445, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
       propertyPath: Front
       value: 
-      objectReference: {fileID: 21300000, guid: 5847d928c939e2948b41a16cdacbf6bb, type: 3}
+      objectReference: {fileID: -438470420748553846, guid: 1b55b58e8b3ca764b956ba266b85d495, type: 3}
     - target: {fileID: 7989718534883144800, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
       propertyPath: m_Name
       value: Visualization
@@ -213,6 +237,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8704231193702938119, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: cafd7c2c6b74f3d45ad0d877b61bffe3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
 --- !u!4 &4760522359413961692 stripped

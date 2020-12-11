@@ -106,7 +106,7 @@ MonoBehaviour:
   enemyPlayer: -1
   health: 0
   attackPower: 0
-  attackSpeed: 0
+  attackPerSecond: 0
   baseSpeed: 0
   sizeRadius: 0
   attackRadius: 0
@@ -161,6 +161,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7068154117845648549}
     m_Modifications:
+    - target: {fileID: 5123171329426266280, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7322638192470136445, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
       propertyPath: Front
       value: 
