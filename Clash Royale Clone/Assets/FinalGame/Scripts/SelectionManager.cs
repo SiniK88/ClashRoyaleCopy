@@ -101,7 +101,8 @@ public class SelectionManager : MonoBehaviour {
                 selected.IsSelected = true;
                 lastSelected = selected;
             }
-        }        
+        }
+        AudioFW.Play("Card_Use");
     }
 
     public void OnClickAction(string playerID) { //Handles all the logic behind pressing the "A" button on controller
@@ -119,6 +120,7 @@ public class SelectionManager : MonoBehaviour {
                     cursor.AddCursorObject(currentCardType.placerVisuals, currentCardType.placerGhostVisuals, currentCardType.placementType); //One more parameter needs to handle the LayerMask
                 } else {
                     print("Not Enough Mana! Current mana is: " + players[playerIndex].GetMana() + "\nManacost is: " + currentCardType.manaCost);
+                    AudioFW.Play("Card_NoMana");
                 }                
             } else if (clickedCard) {
                 //Initialize the spawn
@@ -140,7 +142,7 @@ public class SelectionManager : MonoBehaviour {
                 OnPlaceCard(playerIndex, currentSelection.currentIndex);
 
                 // Audio for clicking card. Test audio file from what we have now. 
-                //AudioFW.Play("Barrelcrash"); 
+                AudioFW.Play("Card_Select"); 
             }
         }        
     }
@@ -161,6 +163,7 @@ public class SelectionManager : MonoBehaviour {
         cursor.ResetCursor();
         currentSelection.IsClicked = false;
         clickedCard = false;
+        AudioFW.Play("Card_Reset");
     }
 
     public void RefreshSelectables() {

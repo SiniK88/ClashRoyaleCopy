@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
+  particles: {fileID: 6436863761897856115, guid: 8e4f27d56398ee24483c5eaa02431284, type: 3}
 --- !u!1001 &3238628473412782013
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -240,7 +241,7 @@ PrefabInstance:
     - target: {fileID: 8704231193702938119, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: cafd7c2c6b74f3d45ad0d877b61bffe3, type: 2}
+      objectReference: {fileID: 9100000, guid: 2ed7be7819686b848b7957f8ba54cdfc, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
 --- !u!4 &4760522359413961692 stripped
