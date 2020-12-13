@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
+  particles: {fileID: 0}
 --- !u!1 &1105264542359998492
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,10 +170,22 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: a87a96ee724b64c4a893050ca8f43cf8, type: 3}
+    - target: {fileID: 5123171329426266280, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7322638192470136445, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
+      propertyPath: Back
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7322638192470136445, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
       propertyPath: Front
       value: 
-      objectReference: {fileID: 21300000, guid: 4a1f096fd08b8dc429ad1c67fd28ee09, type: 3}
+      objectReference: {fileID: 21300000, guid: a87a96ee724b64c4a893050ca8f43cf8, type: 3}
+    - target: {fileID: 7322638192470136445, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7989718534883144800, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
       propertyPath: m_Name
       value: Visualization

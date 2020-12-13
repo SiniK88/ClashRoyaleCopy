@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SpriteHandler : MonoBehaviour
 {
@@ -13,7 +14,6 @@ public class SpriteHandler : MonoBehaviour
     public Sprite Left;
 
     IBehaviourStats aiScript;
-
 
     //Lista public AnimationBlue
     Animator[] animator;
@@ -38,6 +38,8 @@ public class SpriteHandler : MonoBehaviour
         redRend.sprite = Front;
 
         aiScript.GetState();
+
+
         
     }
 
@@ -50,8 +52,16 @@ public class SpriteHandler : MonoBehaviour
         //Vector2 pos = gameObject.transform.position;
 
         // this one works weirdly
+
         if (aiScript.GetState() == AIstate.Navigate || aiScript.GetState() == AIstate.Aggro) {
             //print("moving");
+            // for blend tree but some starnge behaviour there too
+            animator[0].SetFloat("Move X", movement.position.x);
+            animator[0].SetFloat("Move Y", movement.position.y);
+            animator[1].SetFloat("Move X", movement.position.x);
+            animator[1].SetFloat("Move Y", movement.position.y);
+
+            /*
             if (rotationX >= -135 && rotationX <= -45) {
                 animator[0].SetBool("WalkUp", false);
                 animator[0].SetBool("WalkDown", false);
@@ -79,39 +89,32 @@ public class SpriteHandler : MonoBehaviour
             animator[1].SetBool("WalkDown", false);
             animator[1].SetBool("WalkLeft", false);
             animator[1].SetBool("WalkRight", false);
-        } 
+        } */
+        }
 
-        // for blend tree but some starnge behaviour there too
-        //animator[0].SetFloat("Move X", movement.position.x);
-        //animator[0].SetFloat("Move Y", movement.position.y); 
-        //animator[1].SetFloat("Move X", movement.position.x);
-        //animator[1].SetFloat("Move Y", movement.position.y);
-    }
-
-        
         //Check if unit is moving ...
         //Liikkuu paitsi jos AI.State = Attack TAI Stun TAI NoState
         //Check if unit is attacking ...
         //Onko unit AI.State = Attack?
 
         //Rotaatio, bool isAttacking, bool isWalking -> oikea animaatio
-        /*
+
         if (aiScript.GetState() == AIstate.Attack) {
             print("attack state works");
-            if (animator[0].gameObject.activeSelf) {
+            //if (animator[0].gameObject.activeSelf) {
                 animator[0].SetTrigger("Hit");
                 animator[1].SetTrigger("Hit");
-                //animator.SetBool("IsAttackingUp", true);
-                //animator.SetBool("IsWalkingUp", false); 
-            }
+
+            //}
+
         }
- 
-        */
-
-        //Check if unit is dying (comes as a notification)
-
-
 
     }
+
+    //Check if unit is dying (comes as a notification)
+
+
+
+}
 
 

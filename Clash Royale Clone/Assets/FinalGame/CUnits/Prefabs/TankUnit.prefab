@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
+  particles: {fileID: 6436863761897856115, guid: 8e4f27d56398ee24483c5eaa02431284, type: 3}
 --- !u!1001 &1727267231112089495
 PrefabInstance:
   m_ObjectHideFlags: 0
