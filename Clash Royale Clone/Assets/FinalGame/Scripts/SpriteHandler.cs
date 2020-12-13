@@ -25,7 +25,7 @@ public class SpriteHandler : MonoBehaviour
 
     Transform[] transforms;
     public Transform movement;
-
+    NavMeshAgent agent;
 
     private void Awake() {
         //if (animator == null)
@@ -34,6 +34,7 @@ public class SpriteHandler : MonoBehaviour
         animator = GetComponentsInChildren<Animator>();
         aiScript = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).GetComponent<IBehaviourStats>();
         movement = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1);
+        agent = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).GetComponent<NavMeshAgent>();
         blueRend.sprite = Front;
         redRend.sprite = Front;
 
@@ -49,18 +50,34 @@ public class SpriteHandler : MonoBehaviour
         //Vector2 position = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).position; //ROTAATIo
         movement = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1); //ROTAATIo
         float rotationX = movement.eulerAngles.x;
-        //Vector2 pos = gameObject.transform.position;
 
-        // this one works weirdly
+        // desiredVelocity is to find what direction navmesh agent is moving
+        Vector3 normalizedMovement = agent.desiredVelocity.normalized;
+        Vector3 forwardVector = Vector3.Project(normalizedMovement, transform.up);
+        Vector3 rightVector = Vector3.Project(normalizedMovement, transform.right);
+
+        // Dot(direction1, direction2) = 1 if they are in the same direction, -1 if they are opposite
+        float forwardVelocity = forwardVector.magnitude * Vector3.Dot(forwardVector, transform.up);
+        float rightVelocity = rightVector.magnitude * Vector3.Dot(rightVector, transform.right);
+
+        
 
         if (aiScript.GetState() == AIstate.Navigate || aiScript.GetState() == AIstate.Aggro) {
             //print("moving");
-            // for blend tree but some starnge behaviour there too
+            // Blue players units behave correctly up on both cameras now, but not red players units. 
+            animator[0].SetFloat("Move Y", Mathf.InverseLerp(-1f, 1f, forwardVelocity));
+            animator[0].SetFloat("Move X", Mathf.InverseLerp(-1f, 1f, rightVelocity)); 
+            animator[1].SetFloat("Move Y", Mathf.InverseLerp(-1f, 1f, forwardVelocity));
+            animator[1].SetFloat("Move X", Mathf.InverseLerp(-1f, 1f, rightVelocity));
+
+
+            /*
+            // this one works weirdly. It turns units to left or right at the middle of the arena. 
             animator[0].SetFloat("Move X", movement.position.x);
             animator[0].SetFloat("Move Y", movement.position.y);
             animator[1].SetFloat("Move X", movement.position.x);
             animator[1].SetFloat("Move Y", movement.position.y);
-
+            */
             /*
             if (rotationX >= -135 && rotationX <= -45) {
                 animator[0].SetBool("WalkUp", false);
