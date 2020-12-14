@@ -4,18 +4,15 @@ using UnityEngine;
 using UnityEngine.AI;
 
 //README: This is the universal A.I. behaviour model. You can give this to a specific unit by editing lines 7 and 8, and giving the correct names.
-public class ArcherBehaviour : MonoBehaviour, IBehaviourStats {
+public class ArcherBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
     public string unitTypeName = "Archer";
+
+    public void Stun(float time) {
+        StartCoroutine(StunCooldown(time));
+    }
     public AIstate GetState() {
         return currentState;
     }
-
-    //private void OnEnable() {
-    //    TargetingManager.OnUnitsSetChange += RefreshUnitsSet;
-    //}
-    //private void OnDisable() {
-    //    TargetingManager.OnUnitsSetChange -= RefreshUnitsSet;
-    //}
 
     public int GetHealth() {
         return health;

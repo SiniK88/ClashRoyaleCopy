@@ -5,8 +5,12 @@ using UnityEngine.AI;
 public enum AIstate { Navigate, Aggro, Attack, Stun, NoState };
 
 //README: This is the universal A.I. behaviour model. You can give this to a specific unit by editing lines 7 and 8, and giving the correct names.
-public class DefaultBehaviour : MonoBehaviour, IBehaviourStats {
+public class DefaultBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
     public string unitTypeName = "Default";
+
+    public void Stun(float time) {
+        StartCoroutine(StunCooldown(time));
+    }
 
     public AIstate GetState() {
         return currentState;

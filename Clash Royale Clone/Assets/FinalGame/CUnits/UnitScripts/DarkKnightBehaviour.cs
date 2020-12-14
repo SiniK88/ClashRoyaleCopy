@@ -4,8 +4,12 @@ using UnityEngine;
 using UnityEngine.AI;
 
 //README: This is the universal A.I. behaviour model. You can give this to a specific unit by editing lines 7 and 8, and giving the correct names.
-public class TowerBehaviour : MonoBehaviour, IBehaviourStats {
-    public string unitTypeName = "Tower";
+public class DarkKnightBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
+    public string unitTypeName = "DarkKnight";
+    public void Stun(float time) {
+        StartCoroutine(StunCooldown(time));
+    }
+
     public AIstate GetState() {
         return currentState;
     }
@@ -47,6 +51,7 @@ public class TowerBehaviour : MonoBehaviour, IBehaviourStats {
     float reachRad;
 
     float attackTimer;
+
 
     AIstate currentState;
     AIstate previousState;
@@ -231,7 +236,14 @@ public class TowerBehaviour : MonoBehaviour, IBehaviourStats {
             //Attack the target
             attackTimer -= Time.deltaTime;
             if (attackTimer <= 0) {
-                currentTarget.GetComponent<IDamageable>().ApplyDamage(attackPower);
+                List<Transform> enemyUnits = targetManager.FindAllTargetsWithinRadius(gameObject.transform, thisPlayer, attackRadius);
+
+                foreach (Transform unit in enemyUnits) {
+                    IDamageable healthScript = unit.GetComponent<IDamageable>();
+                    if (healthScript != null) {
+                        healthScript.ApplyDamage(attackPower);
+                    }
+                }
                 attackTimer += attackPerSecond;
             }
 

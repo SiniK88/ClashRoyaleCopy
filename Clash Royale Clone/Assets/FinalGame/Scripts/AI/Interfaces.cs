@@ -13,5 +13,9 @@ public interface IBehaviourStats {
     AIstate GetState();
 }
 
+public interface IStunnable {
+    void Stun(float time);
+}
+
 
 

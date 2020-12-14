@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14a6cd25d3a2b974f972d848928ad516, type: 3}
   m_Name: IceKnifeUnit
   m_EditorClassIdentifier: 
-  unitTypeName: 
-  health: 0
-  attackPower: 0
+  unitTypeName: IceKnife
+  health: 9999
+  attackPower: 1
   attackPerSecond: 0
   baseSpeed: 0
   sizeRadius: 0
-  attackRadius: 0
+  attackRadius: 2
   aggroRadius: 0
-  targets: 0
+  targets: -1
   characteristcs: 0

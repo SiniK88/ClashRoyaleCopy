@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14a6cd25d3a2b974f972d848928ad516, type: 3}
   m_Name: InfernoDragonUnit
   m_EditorClassIdentifier: 
-  unitTypeName: 
-  health: 0
-  attackPower: 0
-  attackPerSecond: 0
-  baseSpeed: 0
-  sizeRadius: 0
-  attackRadius: 0
-  aggroRadius: 0
-  targets: 0
-  characteristcs: 0
+  unitTypeName: InfernoDragon
+  health: 1070
+  attackPower: 350
+  attackPerSecond: 0.4
+  baseSpeed: 1.4
+  sizeRadius: 0.2
+  attackRadius: 3.5
+  aggroRadius: 5
+  targets: -1
+  characteristcs: 4

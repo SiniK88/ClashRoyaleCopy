@@ -4,8 +4,12 @@ using UnityEngine;
 using UnityEngine.AI;
 
 //README: This is the universal A.I. behaviour model. You can give this to a specific unit by editing lines 7 and 8, and giving the correct names.
-public class TowerBehaviour : MonoBehaviour, IBehaviourStats {
-    public string unitTypeName = "Tower";
+public class InfernoDragonBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
+    public string unitTypeName = "InfernoDragon";
+    public void Stun(float time) {
+        StartCoroutine(StunCooldown(time));
+    }
+
     public AIstate GetState() {
         return currentState;
     }
@@ -47,6 +51,8 @@ public class TowerBehaviour : MonoBehaviour, IBehaviourStats {
     float reachRad;
 
     float attackTimer;
+    int uninterruptedAttacks;
+
 
     AIstate currentState;
     AIstate previousState;
@@ -73,6 +79,7 @@ public class TowerBehaviour : MonoBehaviour, IBehaviourStats {
         attackRad = attackRadius; //The tolrance distance for when the enemy starts "Attacking" the target instead of "Navigating" towards it.
         reachRad = attackRad * 1.2f; //Once the "Attacking" has started, we need to enlargen the attackDiameter, so that there won't occur any "following jitter", where the unit stops, but has to start navigating agian, because the enemy is out-of-reach on the next update.
         attackTimer = attackPerSecond;
+        uninterruptedAttacks = 0;
 
         //Initialize the NavMeshAgent and assign stats to the agent's parameters
         agent = GetComponent<NavMeshAgent>();
@@ -231,14 +238,28 @@ public class TowerBehaviour : MonoBehaviour, IBehaviourStats {
             //Attack the target
             attackTimer -= Time.deltaTime;
             if (attackTimer <= 0) {
-                currentTarget.GetComponent<IDamageable>().ApplyDamage(attackPower);
+                uninterruptedAttacks++;
+
+                if(uninterruptedAttacks < 5) {
+                    //8.5% damage
+                    currentTarget.GetComponent<IDamageable>().ApplyDamage(Mathf.FloorToInt(attackPower * 0.085f));
+                } else if (uninterruptedAttacks < 10) {
+                    //28.5% damage
+                    currentTarget.GetComponent<IDamageable>().ApplyDamage(Mathf.FloorToInt(attackPower * 0.285f));
+                } else {
+                    //100% attackPower
+                    currentTarget.GetComponent<IDamageable>().ApplyDamage(Mathf.FloorToInt(attackPower * 1f));
+                }
+
                 attackTimer += attackPerSecond;
             }
 
         } else if (Vector2.Distance(transform.position, currentTarget.position) < aggroRadius) {
             currentState = AIstate.Aggro;
+            uninterruptedAttacks = 0;
         } else {
             currentState = AIstate.Navigate;
+            uninterruptedAttacks = 0;
             //DeListen target death notification
         }
     }

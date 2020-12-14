@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14a6cd25d3a2b974f972d848928ad516, type: 3}
   m_Name: BarrelUnit
   m_EditorClassIdentifier: 
-  unitTypeName: 
-  health: 0
-  attackPower: 0
+  unitTypeName: Barrel
+  health: 9999
+  attackPower: 128
   attackPerSecond: 0
   baseSpeed: 0
   sizeRadius: 0
-  attackRadius: 0
+  attackRadius: 1.5
   aggroRadius: 0
-  targets: 0
+  targets: -1
   characteristcs: 0
