@@ -15,7 +15,7 @@ MonoBehaviour:
   cardType: 5
   cardName: FireBall
   artwork: {fileID: 21300000, guid: 0cd9e87c89253ae4c92dab1310834bf8, type: 3}
-  manaCost: 50
+  manaCost: 10
   unitCount: 1
   disallowedPlacements:
     serializedVersion: 2

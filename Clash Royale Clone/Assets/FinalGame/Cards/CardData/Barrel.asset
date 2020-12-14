@@ -15,12 +15,12 @@ MonoBehaviour:
   cardType: 7
   cardName: Barrel
   artwork: {fileID: 21300000, guid: f275205588564b94c890faab34997e74, type: 3}
-  manaCost: 70
+  manaCost: 10
   unitCount: 1
   disallowedPlacements:
     serializedVersion: 2
     m_Bits: 1536
-  placerVisuals: {fileID: 7955897181823974043, guid: 85b85e4452edf124b839c22af9c8e96f, type: 3}
-  placerGhostVisuals: {fileID: 8484623625460711221, guid: 428d0f99cd10f814293ac4006f86e268, type: 3}
-  finalForm: {fileID: 1688381474393727592, guid: 7c6a124c90ec9a4409b79ba4a1c72209, type: 3}
-  placementType: 1
+  placerVisuals: {fileID: 8484623625460711221, guid: 428d0f99cd10f814293ac4006f86e268, type: 3}
+  placerGhostVisuals: {fileID: 1688381474393727592, guid: 7c6a124c90ec9a4409b79ba4a1c72209, type: 3}
+  finalForm: {fileID: 9051319200266570421, guid: 77566b489fae49a4b946554baca905a4, type: 3}
+  placementType: 0

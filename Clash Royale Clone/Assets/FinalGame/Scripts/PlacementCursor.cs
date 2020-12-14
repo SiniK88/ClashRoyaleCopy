@@ -22,11 +22,10 @@ public class PlacementCursor : MonoBehaviour {
 
     SpriteRenderer rend;
 
-    Vector3 previousPos = Vector3.zero;
-
     GridJussi grid;
     Node[,] map;
     Node currentNode;
+    Node.NodeState playerSide;
     Node acceptableNode; //The Node which is the last acceptable Node placement-wise for the specific Unit/Spell. 
 
     public GameObject placer;
@@ -43,6 +42,14 @@ public class PlacementCursor : MonoBehaviour {
     private void Start() {
         grid = FindObjectOfType<GridJussi>();
         map = grid.GetGrid();
+
+        if (playerID == null) {
+            playerSide = Node.NodeState.NoState;
+        } else if (playerID.Equals("Player1")) {
+            playerSide = Node.NodeState.BlueBattlefield;
+        } else if (playerID.Equals("Player2")) {
+            playerSide = Node.NodeState.RedBattlefield;
+        }
     }
 
     private void Update() {
@@ -77,7 +84,7 @@ public class PlacementCursor : MonoBehaviour {
                     if(placementType == CardType.PlacementType.Spell) {
                         acceptableNode = currentNode;
                     } else if (placementType == CardType.PlacementType.Unit) {
-                        if(currentNode.nodeState != Node.NodeState.Obstacle) { //Units cannot be placed onto obstacles
+                        if(currentNode.nodeState != Node.NodeState.Obstacle && currentNode.nodeState == playerSide) { //Units cannot be placed onto obstacles
                             acceptableNode = currentNode;
                         }
                     }                                  

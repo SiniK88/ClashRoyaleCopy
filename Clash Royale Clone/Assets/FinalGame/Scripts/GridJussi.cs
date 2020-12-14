@@ -31,8 +31,8 @@ public class GridJussi : MonoBehaviour {
 		grid = new Node[gridSizeX, gridSizeY];
 		worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.up * gridWorldSize.y / 2;
 
-		var nodeStates = new Node.NodeState[] { Node.NodeState.Border, Node.NodeState.Obstacle, Node.NodeState.Battlefield };
-		var layers = new int[] { 10, 9, 8 };
+		var nodeStates = new Node.NodeState[] { Node.NodeState.Border, Node.NodeState.Obstacle, Node.NodeState.BlueBattlefield, Node.NodeState.RedBattlefield, Node.NodeState.Battlefield };
+		var layers = new int[] { 25, 22, 19, 18, 15, 10};
 
 		for (int x = 0; x < gridSizeX; x++) {
 			for (int y = 0; y < gridSizeY; y++) {
@@ -75,13 +75,19 @@ public class GridJussi : MonoBehaviour {
                         cubeColor = Color.black;
                         break;
                     case Node.NodeState.Battlefield:
+                        cubeColor = Color.gray;
+                        break;
+					case Node.NodeState.BlueBattlefield:
+						cubeColor = Color.blue;
+						break;
+					case Node.NodeState.RedBattlefield:
+						cubeColor = Color.red;
+						break;
+					case Node.NodeState.Obstacle:
                         cubeColor = Color.yellow;
                         break;
-                    case Node.NodeState.Obstacle:
-                        cubeColor = Color.red;
-                        break;
                     case Node.NodeState.NoState:
-                        cubeColor = Color.magenta;
+                        cubeColor = Color.white;
                         break;
                 }
 

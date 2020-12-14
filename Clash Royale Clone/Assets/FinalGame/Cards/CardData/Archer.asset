@@ -15,7 +15,7 @@ MonoBehaviour:
   cardType: 2
   cardName: Archer
   artwork: {fileID: 21300000, guid: 7e83bf40c6c124c44b7a8793f4fe4445, type: 3}
-  manaCost: 30
+  manaCost: 10
   unitCount: 2
   disallowedPlacements:
     serializedVersion: 2

@@ -15,12 +15,12 @@ MonoBehaviour:
   cardType: 4
   cardName: InfernoDragon
   artwork: {fileID: 21300000, guid: 688afb1110b8b3747a0f21be358ae18e, type: 3}
-  manaCost: 40
+  manaCost: 10
   unitCount: 1
   disallowedPlacements:
     serializedVersion: 2
     m_Bits: 58368
   placerVisuals: {fileID: 1688381474393727592, guid: 7c6a124c90ec9a4409b79ba4a1c72209, type: 3}
   placerGhostVisuals: {fileID: 3244793649637045470, guid: dd8bbcfa1f18e9643b19ce2d52f59680, type: 3}
-  finalForm: {fileID: 304486677518782946, guid: 4bc57e0a794b89c4e8dfadda04e9cda2, type: 3}
+  finalForm: {fileID: 5345598774745304402, guid: ab39e642115179643a23f31753f41dae, type: 3}
   placementType: 0

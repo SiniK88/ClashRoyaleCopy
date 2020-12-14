@@ -15,7 +15,7 @@ MonoBehaviour:
   cardType: 0
   cardName: UnitDataTank
   artwork: {fileID: 21300000, guid: 19d3a26c38024e543be37647fdce1715, type: 3}
-  manaCost: 50
+  manaCost: 10
   unitCount: 1
   disallowedPlacements:
     serializedVersion: 2

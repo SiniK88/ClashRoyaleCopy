@@ -17,7 +17,7 @@ MonoBehaviour:
   attackPower: 89
   attackPerSecond: 1.2
   baseSpeed: 1.4
-  sizeRadius: 0.2
+  sizeRadius: 1
   attackRadius: 5
   aggroRadius: 5
   targets: -1
