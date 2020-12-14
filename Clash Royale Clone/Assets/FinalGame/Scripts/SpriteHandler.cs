@@ -5,49 +5,21 @@ using UnityEngine.AI;
 
 public class SpriteHandler : MonoBehaviour
 {
-    public SpriteRenderer blueRend;
-    public SpriteRenderer redRend;
-
-    public Sprite Front;
-    public Sprite Back;
-    public Sprite Right;
-    public Sprite Left;
-
     IBehaviourStats aiScript;
-
-    //Lista public AnimationBlue
     Animator[] animator;
-
-    //Lista public AnimationRed
-    public Animation frontWalkRed;
-
-    //Tai muutta layerin scriptissä.
-
-    Transform[] transforms;
-    public Transform movement;
     NavMeshAgent agent;
 
     private void Awake() {
-        //if (animator == null)
-        //animator.runtimeAnimatorController = Resources.Load("path_to_your_controller") as RuntimeAnimatorController;
 
         animator = GetComponentsInChildren<Animator>();
         aiScript = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).GetComponent<IBehaviourStats>();
-        movement = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1);
         agent = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).GetComponent<NavMeshAgent>();
-        blueRend.sprite = Front;
-        redRend.sprite = Front;
-
-        aiScript.GetState();
 
     }
 
     private void Update() {
-        transform.position = movement.position;
+        transform.position = agent.transform.position;
 
-        //Vector2 position = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1).position; //ROTAATIo
-        movement = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1); //ROTAATIo
-        float rotationX = movement.eulerAngles.x;
 
         if (aiScript.GetState() == AIstate.Navigate || aiScript.GetState() == AIstate.Aggro) {
             //print("moving");
@@ -88,17 +60,10 @@ public class SpriteHandler : MonoBehaviour
             //if (animator[0].gameObject.activeSelf) {
                 animator[0].SetTrigger("Hit");
                 animator[1].SetTrigger("Hit");
-
             //}
-
         }
 
     }
-
-    //Check if unit is dying (comes as a notification)
-
-
-
 }
 
 
