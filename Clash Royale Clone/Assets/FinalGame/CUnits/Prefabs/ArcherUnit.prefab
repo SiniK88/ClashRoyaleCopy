@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 8445329570317744100}
   - component: {fileID: 199707886951467059}
   - component: {fileID: 1304797384209388775}
+  - component: {fileID: 2348449710577042231}
   m_Layer: 0
   m_Name: AI
   m_TagString: Untagged
@@ -206,6 +207,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   particles: {fileID: 6436863761897856115, guid: 8e4f27d56398ee24483c5eaa02431284, type: 3}
+--- !u!95 &2348449710577042231
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996435598820632123}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 224a1b88544b30d4484bf4bc90d0ac53, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!212 &2248731636998808535
 SpriteRenderer:
   m_ObjectHideFlags: 0

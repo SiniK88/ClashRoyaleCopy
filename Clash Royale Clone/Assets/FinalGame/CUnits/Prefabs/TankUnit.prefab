@@ -154,7 +154,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  particles: {fileID: 6436863761897856115, guid: 8e4f27d56398ee24483c5eaa02431284, type: 3}
 --- !u!1001 &1727267231112089495
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -165,7 +164,7 @@ PrefabInstance:
     - target: {fileID: 5123171329426266280, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9100000, guid: c4ec01ad29d246d48a6a6ca86fbb21ba, type: 2}
     - target: {fileID: 7322638192470136445, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
       propertyPath: Front
       value: 
@@ -218,6 +217,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8704231193702938119, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e1c5cc2a45079af43a594c2b7707db41, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
 --- !u!4 &8726096772919442422 stripped
