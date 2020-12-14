@@ -40,8 +40,6 @@ public class SpriteHandler : MonoBehaviour
 
         aiScript.GetState();
 
-
-        
     }
 
     private void Update() {
@@ -51,25 +49,22 @@ public class SpriteHandler : MonoBehaviour
         movement = gameObject.transform.parent.GetChild(gameObject.transform.GetSiblingIndex() - 1); //ROTAATIo
         float rotationX = movement.eulerAngles.x;
 
-        // desiredVelocity is to find what direction navmesh agent is moving
-        Vector3 normalizedMovement = agent.desiredVelocity.normalized;
-        Vector3 forwardVector = Vector3.Project(normalizedMovement, transform.up);
-        Vector3 rightVector = Vector3.Project(normalizedMovement, transform.right);
-
-        // Dot(direction1, direction2) = 1 if they are in the same direction, -1 if they are opposite
-        float forwardVelocity = forwardVector.magnitude * Vector3.Dot(forwardVector, transform.up);
-        float rightVelocity = rightVector.magnitude * Vector3.Dot(rightVector, transform.right);
-
-        
-
         if (aiScript.GetState() == AIstate.Navigate || aiScript.GetState() == AIstate.Aggro) {
             //print("moving");
             // Blue players units behave correctly up on both cameras now, but not red players units. 
-            animator[0].SetFloat("Move Y", Mathf.InverseLerp(-1f, 1f, forwardVelocity));
-            animator[0].SetFloat("Move X", Mathf.InverseLerp(-1f, 1f, rightVelocity)); 
-            animator[1].SetFloat("Move Y", Mathf.InverseLerp(-1f, 1f, forwardVelocity));
-            animator[1].SetFloat("Move X", Mathf.InverseLerp(-1f, 1f, rightVelocity));
 
+            if(Mathf.Abs(agent.velocity.y) >= Mathf.Abs(agent.velocity.x)) {
+                animator[0].SetFloat("Move Y", agent.velocity.y);
+                animator[0].SetFloat("Move X", 0);
+                animator[1].SetFloat("Move Y", agent.velocity.y);
+                animator[1].SetFloat("Move X", 0);
+            }
+            else {
+                animator[0].SetFloat("Move X", -agent.velocity.x);
+                animator[0].SetFloat("Move Y", 0);
+                animator[1].SetFloat("Move X", -agent.velocity.x);
+                animator[1].SetFloat("Move Y", 0);
+            }
 
             /*
             // this one works weirdly. It turns units to left or right at the middle of the arena. 
@@ -78,35 +73,7 @@ public class SpriteHandler : MonoBehaviour
             animator[1].SetFloat("Move X", movement.position.x);
             animator[1].SetFloat("Move Y", movement.position.y);
             */
-            /*
-            if (rotationX >= -135 && rotationX <= -45) {
-                animator[0].SetBool("WalkUp", false);
-                animator[0].SetBool("WalkDown", false);
-                animator[0].SetBool("WalkLeft", false);
-                animator[0].SetBool("WalkRight", false);
 
-                animator[1].SetBool("WalkUp", false);
-                animator[1].SetBool("WalkDown", false);
-                animator[1].SetBool("WalkLeft", false);
-                animator[1].SetBool("WalkRight", false);
-            }
-            if (rotationX >= 45 && rotationX <= 135) { }
-            animator[0].SetBool("WalkUp", false);
-            animator[0].SetBool("WalkDown", false);
-            animator[0].SetBool("WalkLeft", false);
-            animator[0].SetBool("WalkRight",true); /// whyy do both players animations change direction. Does it somehow just search rotation of one of them??
-        }
-        if (rotationX >= -45 && rotationX <= 45) {
-            animator[0].SetBool("WalkUp", false);
-            animator[0].SetBool("WalkDown", false);
-            animator[0].SetBool("WalkLeft", false);
-            animator[0].SetBool("WalkRight", false);
-
-            animator[1].SetBool("WalkUp", false);
-            animator[1].SetBool("WalkDown", false);
-            animator[1].SetBool("WalkLeft", false);
-            animator[1].SetBool("WalkRight", false);
-        } */
         }
 
         //Check if unit is moving ...
