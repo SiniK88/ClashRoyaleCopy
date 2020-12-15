@@ -157,7 +157,7 @@ public class ArcherBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
         //Initialize the potentialTargets hashset
         currentTarget = targetManager.FindClosestTarget(transform, thisPlayer, true);
         if (currentTarget == null) {
-            Debug.Log("Target was null in start");
+            Debug.LogError("Target was null in start");
         }
         ListenSelf();
     }
