@@ -79,6 +79,8 @@ AudioMixerController:
   m_ExposedParameters:
   - guid: 4eb885622d980714f93d7b3429216074
     name: AmbiencePitch
+  - guid: 1db7b589acaa1b24bbe780b3f9e3e58d
+    name: volume
   m_AudioMixerGroupViews:
   - guids:
     - ee8d060d9fda2624e8814bc5f028b76e
