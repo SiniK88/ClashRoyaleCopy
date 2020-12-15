@@ -179,7 +179,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  particles: {fileID: 6436863761897856115, guid: 8e4f27d56398ee24483c5eaa02431284, type: 3}
 --- !u!114 &6248912531904334988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,6 +191,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f53fb75dc5dc045953d001317a6a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitTypeName: BarrelMinion
+  thisPlayer: -1
+  enemyPlayer: -1
+  health: 0
+  attackPower: 0
+  attackPerSecond: 0
+  baseSpeed: 0
+  sizeRadius: 0
+  attackRadius: 0
+  aggroRadius: 0
+  targetTypes: 
+  unitCharacteristics: 
+  targets: 0
+  characteristcs: 0
 --- !u!212 &4289882243696187116
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -273,7 +286,7 @@ PrefabInstance:
     - target: {fileID: 5123171329426266280, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 2ed7be7819686b848b7957f8ba54cdfc, type: 2}
+      objectReference: {fileID: 9100000, guid: 0f377df494895a94ea43e2f569e3e55d, type: 2}
     - target: {fileID: 7322638192470136445, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
       propertyPath: Front
       value: 
@@ -337,7 +350,7 @@ PrefabInstance:
     - target: {fileID: 8704231193702938119, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: cafd7c2c6b74f3d45ad0d877b61bffe3, type: 2}
+      objectReference: {fileID: 9100000, guid: 81808032b7aa92f42a5fb4dcfa37ce6b, type: 2}
     m_RemovedComponents:
     - {fileID: 587439593165229870, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
     - {fileID: 49956374405671398, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
