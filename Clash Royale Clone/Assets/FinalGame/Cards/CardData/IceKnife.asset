@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardType: 6
   cardName: IceKnife
-  artwork: {fileID: 21300000, guid: d8df18343e3f0624bbabf1576634ff5c, type: 3}
+  artwork: {fileID: 21300000, guid: 90e71b34104f22342a5f4d29735cabe9, type: 3}
   manaCost: 10
   unitCount: 1
   disallowedPlacements:

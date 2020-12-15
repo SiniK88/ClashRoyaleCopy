@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameState : MonoBehaviour
 {
@@ -12,11 +13,14 @@ public class GameState : MonoBehaviour
         CountDownTimer.OnTimerRunOut -= TimerRunOut;
     }
 
+    public GameObject gameOverScreen;
+    public Text playerWonText;
+
     int blueTowers;
     int redTowers;
     int blueBigTower;
     int redBigTower;
-
+    
     public Text bluePoints;
     public Text redPoints;
 
@@ -25,8 +29,48 @@ public class GameState : MonoBehaviour
     public Transform[] blueBigTowers;    
     public Transform[] redBigTowers;
 
-    public void TimerRunOut() {
-        StopGameActions();
+    private void Awake() {
+        gameOverScreen.SetActive(false);
+    }
+
+    private void Start() {
+        bluePoints.text = "0";
+        redPoints.text = "0";
+
+        blueTowers = blueSmallTowers.Length;
+        blueBigTower = blueBigTowers.Length;
+        redTowers = redSmallTowers.Length;
+        redBigTower = redBigTowers.Length;
+
+        foreach (Transform t in blueSmallTowers) {
+            var notify = t.GetComponentInChildren<INotifyOnDestroy>();
+            notify.AddListener(OnBlueTowerDestroy);
+        }
+        foreach (Transform t in redSmallTowers) {
+            var notify = t.GetComponentInChildren<INotifyOnDestroy>();
+            notify.AddListener(OnRedTowerDestroy);
+        }
+        foreach (Transform t in blueBigTowers) {
+            var notify = t.GetComponentInChildren<INotifyOnDestroy>();
+            notify.AddListener(OnBlueBigTowerDestroy);
+        }
+        foreach (Transform t in redBigTowers) {
+            var notify = t.GetComponentInChildren<INotifyOnDestroy>();
+            notify.AddListener(OnRedBigTowerDestroy);
+        }
+    }
+
+    public void RestartGame() {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(1);
+    }
+
+    public void ReturnToMenu() {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
+    }
+
+    public void TimerRunOut() {        
 
         //All the win conditions after timer has ran out, first compare the amount of small towers and then the combined health of all player towers.
         if(blueTowers > redTowers) {
@@ -74,35 +118,18 @@ public class GameState : MonoBehaviour
     }
 
     public void PlayerWon(int i) {
-        print("Player" + i + " won the game!");
-    }
-
-    private void Start() {
-
-        bluePoints.text = "0";
-        redPoints.text = "0";
-
-        blueTowers =    blueSmallTowers.Length;
-        blueBigTower =  blueBigTowers.Length;
-        redTowers =     redSmallTowers.Length;
-        redBigTower =   redBigTowers.Length;
-
-        foreach (Transform t in blueSmallTowers) {
-            var notify = t.GetComponentInChildren<INotifyOnDestroy>();            
-            notify.AddListener(OnBlueTowerDestroy);
+        //StopGameActions();
+        string playerWon;
+        if(i == 1) {
+            winner = new Color(0, 60, 255, 0f);            
+            playerWon = "BLUE WON";
+        } else {
+            winner = new Color(255, 0, 0, 0f);
+            playerWon = "RED WON";
         }
-        foreach (Transform t in redSmallTowers) {
-            var notify = t.GetComponentInChildren<INotifyOnDestroy>();
-            notify.AddListener(OnRedTowerDestroy);
-        }
-        foreach (Transform t in blueBigTowers) {
-            var notify = t.GetComponentInChildren<INotifyOnDestroy>();
-            notify.AddListener(OnBlueBigTowerDestroy);
-        }
-        foreach (Transform t in redBigTowers) {
-            var notify = t.GetComponentInChildren<INotifyOnDestroy>();
-            notify.AddListener(OnRedBigTowerDestroy);
-        }
+        playerWonText.text = playerWon;
+        fade = true;
+        gameOverScreen.SetActive(true);
     }
 
     public void OnBlueTowerDestroy() {
@@ -130,5 +157,21 @@ public class GameState : MonoBehaviour
         if (redBigTower <= 0) {
             PlayerWon(1);
         }
+    }
+
+    private void Update() {
+        if (fade) {
+            if(timeLerp < 1) {
+                timeLerp += Time.deltaTime / 5;
+                fadeColorOnScreen();
+            }
+        }
+    }
+    bool fade = false;
+    Color winner;
+    float timeLerp = 0;
+    public void fadeColorOnScreen() {
+        winner.a = Mathf.Lerp(0, 0.7f, timeLerp);
+        gameOverScreen.GetComponent<Image>().color = winner;
     }
 }

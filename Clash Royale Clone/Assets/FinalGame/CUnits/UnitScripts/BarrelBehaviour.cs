@@ -70,7 +70,6 @@ public class BarrelBehaviour : MonoBehaviour {
         //Visuals or particleFX;
 
 
-        //Actual fireball: make a 2D circlecast and damage all IDamageables
         List<Transform> enemyUnits = targetManager.FindAllTargetsWithinRadius(gameObject.transform, thisPlayer, attackRadius);
 
         foreach (Transform unit in enemyUnits) {
@@ -80,8 +79,8 @@ public class BarrelBehaviour : MonoBehaviour {
             }
         }
 
-        for(int i = 0; i < 2; i++) { //Spawns the minion in a row, each one unit to the right from the previous
-            Instantiate(barrelMinion, transform.position + Vector3.right * i, Quaternion.identity, gameObject.transform.parent.parent);
+        for(int i = 0; i <= 2; i++) { //Spawns the minion in a row, each one unit to the right from the previous
+            Instantiate(barrelMinion, new Vector3(transform.position.x + i*0.5f, transform.position.y-1, transform.position.z), Quaternion.identity, gameObject.transform.parent.parent);
         }
 
         GameObject parent = transform.parent.gameObject;

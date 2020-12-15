@@ -654,6 +654,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 278f1d9dc6d481e48b5dce2855ec8962, type: 3}
+--- !u!114 &1220281695 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5995749471187876672, guid: 9aeab3fbf09f03945a4bc3367af077c0, type: 3}
+  m_PrefabInstance: {fileID: 2101705617}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a47533aa1ac084844b2da12f8a31e6f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1370834103
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -722,6 +733,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1545348968 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1545348968, guid: 6057aaa0e044cdd4184d3757974f794c, type: 3}
+  m_PrefabInstance: {fileID: 1600554005}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1600554005
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -729,10 +745,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6639107648670393092, guid: 6057aaa0e044cdd4184d3757974f794c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -24.299988
-      objectReference: {fileID: 0}
+    - target: {fileID: 124723932, guid: 6057aaa0e044cdd4184d3757974f794c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1220281695}
+    - target: {fileID: 1658965172, guid: 6057aaa0e044cdd4184d3757974f794c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1220281695}
     - target: {fileID: 8331094008836062774, guid: 6057aaa0e044cdd4184d3757974f794c, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -826,6 +846,17 @@ PrefabInstance:
 --- !u!114 &1697195449 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3777552868894809815, guid: 6057aaa0e044cdd4184d3757974f794c, type: 3}
+  m_PrefabInstance: {fileID: 1600554005}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1806749665 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1806749665, guid: 6057aaa0e044cdd4184d3757974f794c, type: 3}
   m_PrefabInstance: {fileID: 1600554005}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -994,6 +1025,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5995749471187876672, guid: 9aeab3fbf09f03945a4bc3367af077c0, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1545348968}
+    - target: {fileID: 5995749471187876672, guid: 9aeab3fbf09f03945a4bc3367af077c0, type: 3}
       propertyPath: redPoints
       value: 
       objectReference: {fileID: 1697195449}
@@ -1001,6 +1036,14 @@ PrefabInstance:
       propertyPath: bluePoints
       value: 
       objectReference: {fileID: 187734332}
+    - target: {fileID: 5995749471187876672, guid: 9aeab3fbf09f03945a4bc3367af077c0, type: 3}
+      propertyPath: playerWonText
+      value: 
+      objectReference: {fileID: 1806749665}
+    - target: {fileID: 5995749471187876672, guid: 9aeab3fbf09f03945a4bc3367af077c0, type: 3}
+      propertyPath: gameOverScreen
+      value: 
+      objectReference: {fileID: 1545348968}
     - target: {fileID: 5995749471187876672, guid: 9aeab3fbf09f03945a4bc3367af077c0, type: 3}
       propertyPath: redSmallTowers.Array.data[0]
       value: 
@@ -1015,7 +1058,7 @@ PrefabInstance:
       objectReference: {fileID: 1429479152}
     - target: {fileID: 5995749471187876673, guid: 9aeab3fbf09f03945a4bc3367af077c0, type: 3}
       propertyPath: startingTime
-      value: 180
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5995749471187876675, guid: 9aeab3fbf09f03945a4bc3367af077c0, type: 3}
       propertyPath: m_RootOrder
