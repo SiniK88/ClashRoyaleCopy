@@ -61,7 +61,7 @@ public class IceKnifeBehaviour : MonoBehaviour {
     }
 
     private void Start() {
-        StartCoroutine(Stun(0.1f, 1f));
+        StartCoroutine(Stun(1f, 1f));
     }
 
     IEnumerator Stun(float visualsTimer, float stunTime) {

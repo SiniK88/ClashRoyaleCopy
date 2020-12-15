@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using TMPro;
 
 public class CountDownTimer : MonoBehaviour
 {
+    public delegate void TimerHitZero();
+    public static event TimerHitZero OnTimerRunOut;
+
     //Game logic below
     public float startingTime;
     float currentTime;
+    bool timerRunOut = false;
 
     private void Start() {
         currentTime = startingTime;
@@ -19,9 +24,10 @@ public class CountDownTimer : MonoBehaviour
         if(currentTime > 1) {
             currentTime -= Time.deltaTime;
             UpdateClockVisuals();            
-        } else {
-            Destroy(this);
-        }     
+        } else if (timerRunOut == false) {
+            OnTimerRunOut();
+            timerRunOut = true;
+        } 
     }
 
     //Visualization below

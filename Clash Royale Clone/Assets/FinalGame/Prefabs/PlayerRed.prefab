@@ -504,6 +504,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1740870772919179851}
     m_Modifications:
+    - target: {fileID: 5015764585049275980, guid: ed2c57e8aa32a374eb446a29a1d2133c, type: 3}
+      propertyPath: m_Actions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 6730a374d3554f14a9b11207b9084fac, type: 3}
+    - target: {fileID: 5015764585049275980, guid: ed2c57e8aa32a374eb446a29a1d2133c, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: KeyboardRightSide
+      objectReference: {fileID: 0}
+    - target: {fileID: 5015764585049275980, guid: ed2c57e8aa32a374eb446a29a1d2133c, type: 3}
+      propertyPath: m_NeverAutoSwitchControlSchemes
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5015764585049275981, guid: ed2c57e8aa32a374eb446a29a1d2133c, type: 3}
       propertyPath: m_Name
       value: PlayerInput (1)

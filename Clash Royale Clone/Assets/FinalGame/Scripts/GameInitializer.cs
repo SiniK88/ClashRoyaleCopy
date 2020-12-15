@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameInitializer : MonoBehaviour
 {
@@ -10,18 +11,51 @@ public class GameInitializer : MonoBehaviour
     public Player player1;
     public Player player2;
     public List<Player> players = new List<Player>();
-    public GameObject playerController;
     public GameObject playerCursor;
+    public GameObject playerInput;
+
+
 
     bool playersIsHuman = true;
     CardVisualizer cardVisualizer;
 
     float manaRegenSpeed = 5f;
 
+    private void Start() {
+        var player1 = PlayerInput.all[0];
+        var player2 = PlayerInput.all[1];
+
+        // Discard existing assignments.
+        player1.user.UnpairDevices();
+        player2.user.UnpairDevices();
+
+        // Assign devices and control schemes.
+        var gamepadCount = Gamepad.all.Count;
+        if (gamepadCount >= 2) {
+
+
+            UnityEngine.InputSystem.Users.InputUser.PerformPairingWithDevice(Gamepad.all[0], user: player1.user);
+            UnityEngine.InputSystem.Users.InputUser.PerformPairingWithDevice(Gamepad.all[1], user: player2.user);
+
+            player1.user.ActivateControlScheme("Gamepad");
+            player2.user.ActivateControlScheme("Gamepad");
+        } else if (gamepadCount == 1) {
+            UnityEngine.InputSystem.Users.InputUser.PerformPairingWithDevice(Gamepad.all[0], user: player1.user);
+            UnityEngine.InputSystem.Users.InputUser.PerformPairingWithDevice(Keyboard.current, user: player2.user);
+
+            player1.user.ActivateControlScheme("Gamepad");
+            player2.user.ActivateControlScheme("KeyboardLeftSide");
+        } else {
+            UnityEngine.InputSystem.Users.InputUser.PerformPairingWithDevice(Keyboard.current, user: player1.user);
+            UnityEngine.InputSystem.Users.InputUser.PerformPairingWithDevice(Keyboard.current, user: player2.user);
+
+            player1.user.ActivateControlScheme("KeyboardLeftSide");
+            player2.user.ActivateControlScheme("KeyboardRightSide");
+        }
+    }
 
     private void Awake() {
-
-        //We create the Player Decks here manually. In the end product, the list is already made when we reach this Scene, and we can directly use those lists instead of creating here
+        
         player1cards.Add(new Card(Card.Effect.Tank,             Card.State.IN_DECK));
         player1cards.Add(new Card(Card.Effect.Knight,           Card.State.IN_DECK));        
         player1cards.Add(new Card(Card.Effect.DarkKnight,       Card.State.IN_DECK));
@@ -44,20 +78,22 @@ public class GameInitializer : MonoBehaviour
         player1 = new Player(playersIsHuman, player1cards);
         player2 = new Player(playersIsHuman, player2cards);
         players.Add(player1);
-        players.Add(player2);
-
+        players.Add(player2);        
 
         for (int i = 0; i < players.Count; i++) {
 
             //Set the playerID in the Player-object
             string newPlayerID = ("Player" + (i + 1).ToString());
             players[i].SetPlayerID(newPlayerID);
-            
+
             ////Create an individual input system for each player
-            //GameObject newPlayer = Instantiate(playerController);
+            //GameObject newPlayer = Instantiate(playerInput);
+            //var newPlayer = PlayerInput.Instantiate(playerInput,i+1,controlScheme: "")
             //PlayerController newPlayerController = newPlayer.GetComponent<PlayerController>();
             //newPlayer.name = newPlayerID;
             //newPlayerController.playerID = newPlayerID;
+            //PlayerInput input = newPlayerController.transform.GetComponent<PlayerInput>();
+            //input.currentControlScheme 
 
             ////Add a SelectionManager component to each player
             //newPlayer.AddComponent<SelectionManager>();
