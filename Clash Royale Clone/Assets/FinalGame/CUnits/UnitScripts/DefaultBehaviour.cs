@@ -8,20 +8,21 @@ public enum AIstate { Navigate, Aggro, Attack, Stun, NoState };
 public class DefaultBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
     public string unitTypeName = "Default";
 
+    public float GetSizeRadius() {
+        return sizeRadius;
+    }
+
+    public Vector2 GetEnemyDirection() {
+        Vector2 enemyDirection = (transform.position - currentTarget.position).normalized;
+        return enemyDirection;
+    }
+
     public void Stun(float time) {
         StartCoroutine(StunCooldown(time));
     }
-
     public AIstate GetState() {
         return currentState;
     }
-
-    //private void OnEnable() {
-    //    TargetingManager.OnUnitsSetChange += RefreshUnitsSet;
-    //}
-    //private void OnDisable() {
-    //    TargetingManager.OnUnitsSetChange -= RefreshUnitsSet;
-    //}
 
     public int GetHealth() {
         return health;
@@ -61,7 +62,6 @@ public class DefaultBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
 
     float attackTimer;
 
-    
     AIstate currentState;
     AIstate previousState;
 
@@ -118,7 +118,12 @@ public class DefaultBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
     }
 
     public void OnTargetDeath() {
-        currentState = AIstate.Navigate;
+        UnListenTarget();
+        if (currentState == AIstate.Navigate) {
+            StartCoroutine(StunCooldown(0.2f)); //Otherwise the Navigating unit will continue navigating towards currentTarget. Now Stun resets the target.
+        } else {
+            currentState = AIstate.Navigate;
+        }
     }
 
     public void ListenSelf() {
@@ -167,14 +172,14 @@ public class DefaultBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
         if (currentState != previousState) { //When state changes from the previous frame, we should handle it's destination only once, instead of on every frame
             switch (currentState) {
                 case AIstate.Navigate:
-                    currentTarget = targetManager.FindClosestTarget(transform, thisPlayer, true);
+                    Transform newTarget = targetManager.FindClosestTarget(transform, thisPlayer, true);
+                    ChangeTarget(newTarget);
                     NavigateToClosest(currentTarget);
                     break;
                 case AIstate.Aggro:
                     NavigateToClosest(currentTarget);
                     break;
                 case AIstate.Attack:
-                    ListenTarget();
                     attackTimer = attackPerSecond;
                     agent.isStopped = true;
                     break;
@@ -208,6 +213,14 @@ public class DefaultBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
         }
     }
 
+    public void ChangeTarget(Transform newTarget) {
+        if (newTarget != null) {
+            UnListenTarget();
+            currentTarget = newTarget;
+            ListenTarget();
+        }
+    }
+
     public void Navigate() {
         closestTarget = targetManager.FindClosestTarget(transform, thisPlayer, false);
         if (closestTarget == null) {
@@ -216,10 +229,10 @@ public class DefaultBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
 
         if (Vector3.Distance(transform.position, closestTarget.position) < attackRad) {
             currentState = AIstate.Attack;
-            currentTarget = closestTarget;
+            ChangeTarget(closestTarget);
         } else if (Vector3.Distance(transform.position, closestTarget.position) < aggroRadius) {
             currentState = AIstate.Aggro;
-            currentTarget = closestTarget;
+            ChangeTarget(closestTarget);
         }
     }
 
@@ -229,12 +242,17 @@ public class DefaultBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
             closestTarget = gameObject.transform;
         }
 
+        //Otherwise the unit won't necessaraly ever get in Attacking distance to enemy.
+        //Adding the SizeRadius to the Attack-radius ensures that the unit attacks the "perimeter" of the enemy instead of the "center point"
+        attackRad = attackRadius + closestTarget.GetComponent<IBehaviourStats>().GetSizeRadius();
+        reachRad = attackRad * 1.2f;
+
         if (Vector3.Distance(transform.position, closestTarget.position) < attackRad) {
             currentState = AIstate.Attack;
-            currentTarget = closestTarget;
+            ChangeTarget(closestTarget);
         } else if (Vector3.Distance(transform.position, closestTarget.position) > aggroRadius + 0.1f) { //The enemy target got away from the range, with a slight 0.1f buffer
+            ChangeTarget(null);
             currentState = AIstate.Navigate;
-            //DeListen target death notification
         }
     }
 
@@ -315,3 +333,4 @@ public class DefaultBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
         Gizmos.DrawWireSphere(transform.position, 0.4f);
     }
 }
+

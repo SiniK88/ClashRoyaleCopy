@@ -11,6 +11,8 @@ public interface IDamageable {
 public interface IBehaviourStats {
     int GetHealth();
     AIstate GetState();
+    float GetSizeRadius();
+    Vector2 GetEnemyDirection();
 }
 
 public interface IStunnable {

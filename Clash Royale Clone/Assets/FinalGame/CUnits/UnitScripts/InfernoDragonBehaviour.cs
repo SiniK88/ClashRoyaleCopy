@@ -6,10 +6,19 @@ using UnityEngine.AI;
 //README: This is the universal A.I. behaviour model. You can give this to a specific unit by editing lines 7 and 8, and giving the correct names.
 public class InfernoDragonBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
     public string unitTypeName = "InfernoDragon";
+
+    public float GetSizeRadius() {
+        return sizeRadius;
+    }
+
+    public Vector2 GetEnemyDirection() {
+        Vector2 enemyDirection = (transform.position - currentTarget.position).normalized;
+        return enemyDirection;
+    }
+
     public void Stun(float time) {
         StartCoroutine(StunCooldown(time));
     }
-
     public AIstate GetState() {
         return currentState;
     }
@@ -51,8 +60,6 @@ public class InfernoDragonBehaviour : MonoBehaviour, IBehaviourStats, IStunnable
     float reachRad;
 
     float attackTimer;
-    int uninterruptedAttacks;
-
 
     AIstate currentState;
     AIstate previousState;
@@ -79,7 +86,6 @@ public class InfernoDragonBehaviour : MonoBehaviour, IBehaviourStats, IStunnable
         attackRad = attackRadius; //The tolrance distance for when the enemy starts "Attacking" the target instead of "Navigating" towards it.
         reachRad = attackRad * 1.2f; //Once the "Attacking" has started, we need to enlargen the attackDiameter, so that there won't occur any "following jitter", where the unit stops, but has to start navigating agian, because the enemy is out-of-reach on the next update.
         attackTimer = attackPerSecond;
-        uninterruptedAttacks = 0;
 
         //Initialize the NavMeshAgent and assign stats to the agent's parameters
         agent = GetComponent<NavMeshAgent>();
@@ -111,7 +117,12 @@ public class InfernoDragonBehaviour : MonoBehaviour, IBehaviourStats, IStunnable
     }
 
     public void OnTargetDeath() {
-        currentState = AIstate.Navigate;
+        UnListenTarget();
+        if (currentState == AIstate.Navigate) {
+            StartCoroutine(StunCooldown(0.2f)); //Otherwise the Navigating unit will continue navigating towards currentTarget. Now Stun resets the target.
+        } else {
+            currentState = AIstate.Navigate;
+        }
     }
 
     public void ListenSelf() {
@@ -160,14 +171,14 @@ public class InfernoDragonBehaviour : MonoBehaviour, IBehaviourStats, IStunnable
         if (currentState != previousState) { //When state changes from the previous frame, we should handle it's destination only once, instead of on every frame
             switch (currentState) {
                 case AIstate.Navigate:
-                    currentTarget = targetManager.FindClosestTarget(transform, thisPlayer, true);
+                    Transform newTarget = targetManager.FindClosestTarget(transform, thisPlayer, true);
+                    ChangeTarget(newTarget);
                     NavigateToClosest(currentTarget);
                     break;
                 case AIstate.Aggro:
                     NavigateToClosest(currentTarget);
                     break;
                 case AIstate.Attack:
-                    ListenTarget();
                     attackTimer = attackPerSecond;
                     agent.isStopped = true;
                     break;
@@ -201,6 +212,14 @@ public class InfernoDragonBehaviour : MonoBehaviour, IBehaviourStats, IStunnable
         }
     }
 
+    public void ChangeTarget(Transform newTarget) {
+        if(newTarget != null) {            
+            UnListenTarget();
+            currentTarget = newTarget;
+            ListenTarget();
+        }        
+    }
+
     public void Navigate() {
         closestTarget = targetManager.FindClosestTarget(transform, thisPlayer, false);
         if (closestTarget == null) {
@@ -209,10 +228,10 @@ public class InfernoDragonBehaviour : MonoBehaviour, IBehaviourStats, IStunnable
 
         if (Vector3.Distance(transform.position, closestTarget.position) < attackRad) {
             currentState = AIstate.Attack;
-            currentTarget = closestTarget;
+            ChangeTarget(closestTarget);
         } else if (Vector3.Distance(transform.position, closestTarget.position) < aggroRadius) {
             currentState = AIstate.Aggro;
-            currentTarget = closestTarget;
+            ChangeTarget(closestTarget);
         }
     }
 
@@ -222,15 +241,20 @@ public class InfernoDragonBehaviour : MonoBehaviour, IBehaviourStats, IStunnable
             closestTarget = gameObject.transform;
         }
 
+        //Otherwise the unit won't necessaraly ever get in Attacking distance to enemy.
+        //Adding the SizeRadius to the Attack-radius ensures that the unit attacks the "perimeter" of the enemy instead of the "center point"
+        attackRad = attackRadius + closestTarget.GetComponent<IBehaviourStats>().GetSizeRadius();
+        reachRad = attackRad * 1.2f;
+
         if (Vector3.Distance(transform.position, closestTarget.position) < attackRad) {
             currentState = AIstate.Attack;
-            currentTarget = closestTarget;
+            ChangeTarget(closestTarget);
         } else if (Vector3.Distance(transform.position, closestTarget.position) > aggroRadius + 0.1f) { //The enemy target got away from the range, with a slight 0.1f buffer
+            ChangeTarget(null);
             currentState = AIstate.Navigate;
-            //DeListen target death notification
         }
     }
-
+    int uninterruptedAttacks = 0;
     public void Attack() {
         //No need to check the closest target, since we should lock our attention to one troop at least as long as it's in the reachRadius
 
@@ -240,7 +264,7 @@ public class InfernoDragonBehaviour : MonoBehaviour, IBehaviourStats, IStunnable
             if (attackTimer <= 0) {
                 uninterruptedAttacks++;
 
-                if(uninterruptedAttacks < 5) {
+                if (uninterruptedAttacks < 5) {
                     //8.5% damage
                     currentTarget.GetComponent<IDamageable>().ApplyDamage(Mathf.FloorToInt(attackPower * 0.085f));
                 } else if (uninterruptedAttacks < 10) {
