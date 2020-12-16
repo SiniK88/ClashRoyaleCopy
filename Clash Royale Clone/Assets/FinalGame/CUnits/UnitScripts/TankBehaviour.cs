@@ -108,6 +108,8 @@ public class TankBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
         //Initialize the Unit States, so the game will orient the unit correctly starting from Update()
         currentState = AIstate.NoState;
         previousState = AIstate.NoState;
+
+        AudioFW.Play("Unit_Tank_Ready");
     }
 
     public void OnDeath() {
@@ -263,6 +265,7 @@ public class TankBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
             attackTimer -= Time.deltaTime;
             if (attackTimer <= 0) {
                 currentTarget.GetComponent<IDamageable>().ApplyDamage(attackPower);
+                AudioFW.Play("Unit_Tank_Attack");
                 attackTimer += attackPerSecond;
             }
 

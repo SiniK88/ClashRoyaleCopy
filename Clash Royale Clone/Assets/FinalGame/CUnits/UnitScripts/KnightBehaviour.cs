@@ -108,6 +108,8 @@ public class KnightBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
         //Initialize the Unit States, so the game will orient the unit correctly starting from Update()
         currentState = AIstate.NoState;
         previousState = AIstate.NoState;
+
+        AudioFW.Play("Unit_Knight_Ready");
     }
 
     public void OnDeath() {
@@ -264,6 +266,7 @@ public class KnightBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
             if (attackTimer <= 0) {
                 currentTarget.GetComponent<IDamageable>().ApplyDamage(attackPower);
                 attackTimer += attackPerSecond;
+                AudioFW.Play("Unit_Knight_Attack");
             }
 
         } else if (Vector2.Distance(transform.position, currentTarget.position) < aggroRadius) {
@@ -272,6 +275,7 @@ public class KnightBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
             currentState = AIstate.Navigate;
             //DeListen target death notification
         }
+   
     }
 
     public void NoState() {

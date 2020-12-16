@@ -40,7 +40,6 @@ public class SpriteHandler : MonoBehaviour
         }
 
         if (aiScript.GetState() == AIstate.Attack) {
-            print("attack state works");
             
             animator[0].SetBool("Attack", true);
             animator[1].SetBool("Attack", true);

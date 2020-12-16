@@ -384,6 +384,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5965815377516128947, guid: ed880ed2d897f40409f994b115904e33, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 8586281252018125718, guid: ed880ed2d897f40409f994b115904e33, type: 3}
       propertyPath: m_Name
       value: CommonVisuals
@@ -1058,7 +1062,11 @@ PrefabInstance:
       objectReference: {fileID: 1429479152}
     - target: {fileID: 5995749471187876673, guid: 9aeab3fbf09f03945a4bc3367af077c0, type: 3}
       propertyPath: startingTime
+<<<<<<< HEAD
       value: 180
+=======
+      value: 100
+>>>>>>> 73316e1bf332bd7fed5f206ff8a00ea35ba6c063
       objectReference: {fileID: 0}
     - target: {fileID: 5995749471187876675, guid: 9aeab3fbf09f03945a4bc3367af077c0, type: 3}
       propertyPath: m_RootOrder

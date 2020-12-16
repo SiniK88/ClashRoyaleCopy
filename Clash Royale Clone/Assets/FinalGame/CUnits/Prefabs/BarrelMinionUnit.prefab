@@ -271,6 +271,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -438470420748553846, guid: 1b55b58e8b3ca764b956ba266b85d495, type: 3}
+    - target: {fileID: 605863074236239760, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.879
+      objectReference: {fileID: 0}
     - target: {fileID: 2731318706235300425, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0
@@ -351,6 +355,14 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 81808032b7aa92f42a5fb4dcfa37ce6b, type: 2}
+    - target: {fileID: 8930719162679634029, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.925
+      objectReference: {fileID: 0}
+    - target: {fileID: 8930719162679634029, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 587439593165229870, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
     - {fileID: 49956374405671398, guid: a5956fb1e9dee06449c57b9e6a72a4dd, type: 3}
