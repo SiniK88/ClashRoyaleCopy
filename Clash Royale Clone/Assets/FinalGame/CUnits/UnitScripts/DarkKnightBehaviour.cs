@@ -108,6 +108,8 @@ public class DarkKnightBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
         //Initialize the Unit States, so the game will orient the unit correctly starting from Update()
         currentState = AIstate.NoState;
         previousState = AIstate.NoState;
+
+        AudioFW.Play("Unit_DarkK_Ready");
     }
 
     public void OnDeath() {
@@ -272,6 +274,7 @@ public class DarkKnightBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
                     }
                 }
                 attackTimer += attackPerSecond;
+                AudioFW.Play("Unit_DarkK_Attack");
             }
 
         } else if (Vector2.Distance(transform.position, currentTarget.position) < aggroRadius) {

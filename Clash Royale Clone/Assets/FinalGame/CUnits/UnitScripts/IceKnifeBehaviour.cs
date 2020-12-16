@@ -58,6 +58,8 @@ public class IceKnifeBehaviour : MonoBehaviour {
 
         //Add the unit's Transform to the current battlefield units Hashset:
         targetManager = FindObjectOfType<TargetingManager>();
+
+        AudioFW.Play("Unit_Iceknife_Attack");
     }
 
     private void Start() {

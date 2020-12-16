@@ -58,6 +58,8 @@ public class FireballBehaviour : MonoBehaviour {
 
         //Add the unit's Transform to the current battlefield units Hashset:
         targetManager = FindObjectOfType<TargetingManager>();
+
+        AudioFW.Play("Unit_Fireball_Crash");
     }
 
     private void Start() {
