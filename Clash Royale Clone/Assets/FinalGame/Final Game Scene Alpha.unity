@@ -44520,6 +44520,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1220281695}
+    - target: {fileID: 6639107648670393092, guid: 6057aaa0e044cdd4184d3757974f794c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -24.299866
+      objectReference: {fileID: 0}
     - target: {fileID: 8331094008836062774, guid: 6057aaa0e044cdd4184d3757974f794c, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -49774,6 +49778,10 @@ PrefabInstance:
       propertyPath: timerText
       value: 
       objectReference: {fileID: 1429479152}
+    - target: {fileID: 5995749471187876673, guid: 9aeab3fbf09f03945a4bc3367af077c0, type: 3}
+      propertyPath: startingTime
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 5995749471187876675, guid: 9aeab3fbf09f03945a4bc3367af077c0, type: 3}
       propertyPath: m_RootOrder
       value: 13

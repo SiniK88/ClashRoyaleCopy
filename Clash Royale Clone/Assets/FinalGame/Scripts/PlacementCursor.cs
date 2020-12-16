@@ -19,7 +19,7 @@ public class PlacementCursor : MonoBehaviour {
     Vector3 initialPos;
 
     public Vector3 moveSpeed = Vector3.zero;
-    float cursorSpeed = 6f;
+    float cursorSpeed = 8f;
 
     SpriteRenderer rend;
 
@@ -33,9 +33,8 @@ public class PlacementCursor : MonoBehaviour {
     public bool redLeftDestroyed = false;
     public bool redRightDestroyed = false;
 
-    Node acceptableNode; //The Node which is the last acceptable Node placement-wise for the specific Unit/Spell. 
-    List<Node> unitPlaceNodes = new List<Node>();
-    List<Node> spellPlaceNodes = new List<Node>();
+    Node acceptableNode; //The Node which is the last acceptable Node placement-wise for the specific Unit/Spell.
+
     public GameObject placementShadow;
 
     public GameObject unitVar1;
@@ -47,6 +46,7 @@ public class PlacementCursor : MonoBehaviour {
 
     public GameObject placer;
     public GameObject placerG;
+    int playerLayer = 0;
     CardType.PlacementType placementType;    
 
     private void Awake() {
@@ -65,11 +65,13 @@ public class PlacementCursor : MonoBehaviour {
             playerSide = new List<Node.NodeState>();
             playerSide.Add(Node.NodeState.NoState);
         } else if (playerID.Equals("Player1")) {
+            playerLayer = 14;
             playerSide = new List<Node.NodeState>();
             playerSide.Add(Node.NodeState.BlueBattlefield);
             playerSide.Add(Node.NodeState.RedIntrudedLeft);
             playerSide.Add(Node.NodeState.RedIntrudedRight);
         } else if (playerID.Equals("Player2")) {
+            playerLayer = 13;
             playerSide = new List<Node.NodeState>();
             playerSide.Add(Node.NodeState.RedBattlefield);
             playerSide.Add(Node.NodeState.BlueIntrudedLeft);
@@ -122,7 +124,6 @@ public class PlacementCursor : MonoBehaviour {
             if (currentNode.nodeState == Node.NodeState.Border || currentNode.nodeState == Node.NodeState.NoState) {
                 placer.transform.position = currentPos;
             }
-
             currentPos = placer.transform.position;
             
         }       
@@ -169,15 +170,23 @@ public class PlacementCursor : MonoBehaviour {
     }
 
     public void AddCursorObject(GameObject placerMarker, GameObject placerGhost, CardType.PlacementType _placementType) {
-       placementType = _placementType;
-       placer = Instantiate(placerMarker, gameObject.transform);
-       placerG = Instantiate(placerGhost, gameObject.transform);
+        placementType = _placementType;
+        placer = Instantiate(placerMarker, gameObject.transform);        
+        placerG = Instantiate(placerGhost, gameObject.transform);
 
-       if(placementType == CardType.PlacementType.Spell) {
+        placer.layer = playerLayer;
+        placerG.layer = playerLayer;
+
+        ParticleSystem particles = placer.GetComponentInChildren<ParticleSystem>();
+        if (particles != null) {
+            particles.gameObject.layer = playerLayer;
+        }
+
+        if (placementType == CardType.PlacementType.Spell) {
            spellPlacementShadows.SetActive(true);
-       } else {
+        } else {
            unitVar.SetActive(true);
-       }
+        }
     }
 
     public void DeleteCursorObjects() {

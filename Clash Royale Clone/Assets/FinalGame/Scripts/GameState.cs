@@ -13,6 +13,8 @@ public class GameState : MonoBehaviour
         CountDownTimer.OnTimerRunOut -= TimerRunOut;
     }
 
+    bool timerRanOut = false;
+
     public GameObject blueIntrusionLeft;
     public GameObject blueIntrusionRight;
     public GameObject redIntrusionLeft;
@@ -83,47 +85,44 @@ public class GameState : MonoBehaviour
         } else if(redTowers > blueTowers) {
             PlayerWon(2);
         } else {
-            int blueHealth = 0;
-            int redHealth = 0;
-            foreach(Transform tower in blueSmallTowers) {
-                if(tower != null) {
-                    int towerHealth = tower.GetComponentInChildren<IDamageable>().GetHealth();
-                    blueHealth += towerHealth;
-                }                
-            }
-            foreach (Transform tower in blueBigTowers) {
-                if (tower != null) {
-                    int towerHealth = tower.GetComponentInChildren<IDamageable>().GetHealth();
-                    blueHealth += towerHealth;
-                }
-            }
-            foreach (Transform tower in redSmallTowers) {
-                if (tower != null) {
-                    int towerHealth = tower.GetComponentInChildren<IDamageable>().GetHealth();
-                    redHealth += towerHealth;
-                }
-            }
-            foreach (Transform tower in redBigTowers) {
-                if (tower != null) {
-                    int towerHealth = tower.GetComponentInChildren<IDamageable>().GetHealth();
-                    redHealth += towerHealth;
-                }
-            }
+            timerRanOut = true;
+            //int blueHealth = 0;
+            //int redHealth = 0;
+            //foreach(Transform tower in blueSmallTowers) {
+            //    if(tower != null) {
+            //        int towerHealth = tower.GetComponentInChildren<IDamageable>().GetHealth();
+            //        blueHealth += towerHealth;
+            //    }                
+            //}
+            //foreach (Transform tower in blueBigTowers) {
+            //    if (tower != null) {
+            //        int towerHealth = tower.GetComponentInChildren<IDamageable>().GetHealth();
+            //        blueHealth += towerHealth;
+            //    }
+            //}
+            //foreach (Transform tower in redSmallTowers) {
+            //    if (tower != null) {
+            //        int towerHealth = tower.GetComponentInChildren<IDamageable>().GetHealth();
+            //        redHealth += towerHealth;
+            //    }
+            //}
+            //foreach (Transform tower in redBigTowers) {
+            //    if (tower != null) {
+            //        int towerHealth = tower.GetComponentInChildren<IDamageable>().GetHealth();
+            //        redHealth += towerHealth;
+            //    }
+            //}
 
-            if(blueHealth > redHealth) {
-                PlayerWon(1);
-            } else if(redHealth >= blueHealth) {
-                PlayerWon(2);
-            }
+            //if(blueHealth > redHealth) {
+            //    PlayerWon(1);
+            //} else if(redHealth >= blueHealth) {
+            //    PlayerWon(2);
+            //}
         }
     }
 
-    public void StopGameActions() {
-        Time.timeScale = 0;
-    }
-
     public void PlayerWon(int i) {
-        //StopGameActions();
+        Time.timeScale = 0;
         string playerWon;
         if(i == 1) {
             winner = new Color(0, 60, 255, 0f);            
@@ -140,11 +139,17 @@ public class GameState : MonoBehaviour
     public void OnBlueTowerDestroy() {
         blueTowers--;
         redPoints.text = (2 - blueTowers).ToString();
+        if (timerRanOut) {
+            PlayerWon(2);
+        }
         
     }
     public void OnRedTowerDestroy() {
         redTowers--;
         bluePoints.text = (2 - redTowers).ToString();
+        if (timerRanOut) {
+            PlayerWon(1);
+        }
         
     }
     public void OnBlueBigTowerDestroy() {

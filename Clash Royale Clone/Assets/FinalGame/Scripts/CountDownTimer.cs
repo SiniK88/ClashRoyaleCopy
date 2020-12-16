@@ -27,6 +27,8 @@ public class CountDownTimer : MonoBehaviour
         } else if (timerRunOut == false) {
             OnTimerRunOut();
             timerRunOut = true;
+            StartCoroutine(SuddenDeathText(1.5f));
+            
         } 
     }
 
@@ -47,5 +49,10 @@ public class CountDownTimer : MonoBehaviour
             time = displayMinutes.ToString() + ":0" + displaySeconds.ToString();
         }
         timerText.text = time;
+    }
+
+    IEnumerator SuddenDeathText(float time) {
+        yield return new WaitForSeconds(time);
+        timerText.text = "Sudden death!";
     }
 }
