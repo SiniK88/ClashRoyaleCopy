@@ -187,10 +187,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1069726983, guid: ef82404a5c34c5b4fa1e0472c33d5390, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1194569070446718984, guid: ef82404a5c34c5b4fa1e0472c33d5390, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -234,6 +230,10 @@ PrefabInstance:
     - target: {fileID: 1194569070446718984, guid: ef82404a5c34c5b4fa1e0472c33d5390, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1546802782522927264, guid: ef82404a5c34c5b4fa1e0472c33d5390, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1783845509022431862, guid: ef82404a5c34c5b4fa1e0472c33d5390, type: 3}
       propertyPath: m_Name
@@ -1066,11 +1066,7 @@ PrefabInstance:
       objectReference: {fileID: 1429479152}
     - target: {fileID: 5995749471187876673, guid: 9aeab3fbf09f03945a4bc3367af077c0, type: 3}
       propertyPath: startingTime
-<<<<<<< HEAD
-      value: 180
-=======
       value: 100
->>>>>>> 73316e1bf332bd7fed5f206ff8a00ea35ba6c063
       objectReference: {fileID: 0}
     - target: {fileID: 5995749471187876675, guid: 9aeab3fbf09f03945a4bc3367af077c0, type: 3}
       propertyPath: m_RootOrder
