@@ -7,7 +7,9 @@ using UnityEngine;
 public class UnitHealth : MonoBehaviour, IDamageable {
 
     [SerializeField] int health;
-    //public Transform particles;
+    public Transform particles;
+    public Transform hitParticles; 
+
     public void Start() {
         health = GetComponent<IBehaviourStats>().GetHealth();
     }
@@ -21,11 +23,14 @@ public class UnitHealth : MonoBehaviour, IDamageable {
 
     public void ApplyDamage(int damage) {
         health -= damage;
+
+        var hitted = Instantiate(hitParticles, transform.position, transform.rotation);
+        Destroy(hitted.gameObject, 1);
     }
 
     private void Death() {
-        //var boom = Instantiate(particles, transform.position, transform.rotation);
-        //Destroy(boom.gameObject, 1);
+        var boom = Instantiate(particles, transform.position, transform.rotation);
+        Destroy(boom.gameObject, 1);
         GetComponent<NotifyOnDestroy>().Notify();
     }
 

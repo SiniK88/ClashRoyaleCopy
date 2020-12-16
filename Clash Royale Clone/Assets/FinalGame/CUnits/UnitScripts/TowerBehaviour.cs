@@ -265,6 +265,7 @@ public class TowerBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
             if (attackTimer <= 0) {
                 currentTarget.GetComponent<IDamageable>().ApplyDamage(attackPower);
                 attackTimer += attackPerSecond;
+                AudioFW.Play("Tower_Shoot");
             }
 
         } else if (Vector2.Distance(transform.position, currentTarget.position) < aggroRadius) {
