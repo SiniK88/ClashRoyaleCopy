@@ -90,12 +90,13 @@ public class TargetingManager : MonoBehaviour {
         foreach (Transform unit in playerUnits) {
             TargetClass characteristcs = unit.GetComponent<UnitTargetInfo>().characteristcs;
             if ((targets & characteristcs) != 0) { //Checks that the Seeker can actually target the unit
-                if(Vector2.Distance(seeker.position, unit.position) <= searchRadius) { //Checks that the unit is within a searchRadius centering from Seekers transform, eg. Fireball effect
+                IBehaviourStats behaviourScript = unit.GetComponent<IBehaviourStats>();
+                float sizeRadius = behaviourScript.GetSizeRadius();
+                if(Vector2.Distance(seeker.position, unit.position) <= searchRadius+sizeRadius) { //Checks that the unit is within a searchRadius centering from Seekers transform, eg. Fireball effect
                     unitsWithinRadius.Add(unit);
                 }                
             }
         }
         return unitsWithinRadius;
-    }
-
+    }   
 }

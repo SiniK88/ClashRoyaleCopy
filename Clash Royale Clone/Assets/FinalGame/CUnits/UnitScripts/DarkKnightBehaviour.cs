@@ -265,7 +265,7 @@ public class DarkKnightBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
             //Attack the target
             attackTimer -= Time.deltaTime;
             if (attackTimer <= 0) {
-                List<Transform> enemyUnits = targetManager.FindAllTargetsWithinRadius(gameObject.transform, thisPlayer, attackRadius);
+                List<Transform> enemyUnits = targetManager.FindAllTargetsWithinRadius(gameObject.transform, thisPlayer, attackRad+0.1f);
 
                 foreach (Transform unit in enemyUnits) {
                     IDamageable healthScript = unit.GetComponent<IDamageable>();

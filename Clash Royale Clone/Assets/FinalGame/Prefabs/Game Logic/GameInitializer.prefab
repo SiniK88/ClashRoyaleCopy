@@ -43,5 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24d6d53fe6d1f9a498582d7dfc2b4d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 5015764585049275981, guid: ed2c57e8aa32a374eb446a29a1d2133c, type: 3}
   playerCursor: {fileID: 3708326824166888213, guid: 301301d35abf8cc4a9b843dd2463984b, type: 3}
+  playerInput: {fileID: 5015764585049275981, guid: ed2c57e8aa32a374eb446a29a1d2133c, type: 3}

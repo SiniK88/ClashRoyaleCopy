@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class GameInitializer : MonoBehaviour
 {
+    List<Card> differentCards = new List<Card>();
+
     List<Card> player1cards = new List<Card>();
     List<Card> player2cards = new List<Card>();
 
@@ -54,26 +56,30 @@ public class GameInitializer : MonoBehaviour
         }
     }
 
+    public void CreateRandomDeck(List<Card> playerList) {
+        List<int> guessedNumbers = new List<int>();
+        while (playerList.Count < differentCards.Count) {
+            int randomNumber = Random.Range(0, differentCards.Count);
+            if (!guessedNumbers.Contains(randomNumber)) {
+                guessedNumbers.Add(randomNumber);
+                playerList.Add(differentCards[randomNumber]);
+            }
+        }
+    }
+
     private void Awake() {
-        
-        player1cards.Add(new Card(Card.Effect.Tank,             Card.State.IN_DECK));
-        player1cards.Add(new Card(Card.Effect.Knight,           Card.State.IN_DECK));        
-        player1cards.Add(new Card(Card.Effect.DarkKnight,       Card.State.IN_DECK));
-        player1cards.Add(new Card(Card.Effect.InfernoDragon,    Card.State.IN_DECK));
-        player1cards.Add(new Card(Card.Effect.FireBall,         Card.State.IN_DECK));
-        player1cards.Add(new Card(Card.Effect.IceKnife,         Card.State.IN_DECK));
-        player1cards.Add(new Card(Card.Effect.Barrel,           Card.State.IN_DECK));
-        player1cards.Add(new Card(Card.Effect.Archer,           Card.State.IN_DECK));
 
-        player2cards.Add(new Card(Card.Effect.Tank,             Card.State.IN_DECK));
-        player2cards.Add(new Card(Card.Effect.Knight,           Card.State.IN_DECK));        
-        player2cards.Add(new Card(Card.Effect.DarkKnight,       Card.State.IN_DECK));
-        player2cards.Add(new Card(Card.Effect.InfernoDragon,    Card.State.IN_DECK));
-        player2cards.Add(new Card(Card.Effect.FireBall,         Card.State.IN_DECK));
-        player2cards.Add(new Card(Card.Effect.IceKnife,         Card.State.IN_DECK));
-        player2cards.Add(new Card(Card.Effect.Barrel,           Card.State.IN_DECK));
-        player2cards.Add(new Card(Card.Effect.Archer,           Card.State.IN_DECK));
+        differentCards.Add(new Card(Card.Effect.Tank,             Card.State.IN_DECK));
+        differentCards.Add(new Card(Card.Effect.Knight,           Card.State.IN_DECK));
+        differentCards.Add(new Card(Card.Effect.DarkKnight,       Card.State.IN_DECK));
+        differentCards.Add(new Card(Card.Effect.InfernoDragon,    Card.State.IN_DECK));
+        differentCards.Add(new Card(Card.Effect.FireBall,         Card.State.IN_DECK));
+        differentCards.Add(new Card(Card.Effect.IceKnife,         Card.State.IN_DECK));
+        differentCards.Add(new Card(Card.Effect.Barrel,           Card.State.IN_DECK));
+        differentCards.Add(new Card(Card.Effect.Archer,           Card.State.IN_DECK));
 
+        CreateRandomDeck(player1cards);
+        CreateRandomDeck(player2cards);
 
         player1 = new Player(playersIsHuman, player1cards);
         player2 = new Player(playersIsHuman, player2cards);

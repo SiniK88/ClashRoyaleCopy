@@ -83,5 +83,5 @@ public class FireballBehaviour : MonoBehaviour {
         GameObject parent = transform.parent.gameObject;
         yield return new WaitForSeconds(visualsTimer);
         Destroy(parent);
-    }    
+    }
 }

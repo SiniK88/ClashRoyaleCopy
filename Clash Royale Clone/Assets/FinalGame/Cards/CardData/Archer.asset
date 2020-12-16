@@ -15,12 +15,12 @@ MonoBehaviour:
   cardType: 2
   cardName: Archer
   artwork: {fileID: 21300000, guid: 7e83bf40c6c124c44b7a8793f4fe4445, type: 3}
-  manaCost: 10
+  manaCost: 30
   unitCount: 2
   disallowedPlacements:
     serializedVersion: 2
     m_Bits: 1536
   placerVisuals: {fileID: 1688381474393727592, guid: 7c6a124c90ec9a4409b79ba4a1c72209, type: 3}
-  placerGhostVisuals: {fileID: 3244793649637045470, guid: dd8bbcfa1f18e9643b19ce2d52f59680, type: 3}
+  placerGhostVisuals: {fileID: 4774326198345027176, guid: 7e009c5c11a5a0c4dbde467d9e29fe24, type: 3}
   finalForm: {fileID: 1996435597360287428, guid: bea92373e1c601846a2c26486fac1fe6, type: 3}
   placementType: 0

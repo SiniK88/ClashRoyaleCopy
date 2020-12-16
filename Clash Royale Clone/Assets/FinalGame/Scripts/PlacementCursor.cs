@@ -177,6 +177,14 @@ public class PlacementCursor : MonoBehaviour {
         placer.layer = playerLayer;
         placerG.layer = playerLayer;
 
+        if (playerID.Equals("Player2")) {
+            SpriteRenderer[] sprites = placerG.GetComponentsInChildren<SpriteRenderer>();
+            foreach(SpriteRenderer s in sprites) {
+                s.gameObject.layer = playerLayer;
+                s.transform.Rotate(0, 0, 180);
+            }
+        }
+
         ParticleSystem particles = placer.GetComponentInChildren<ParticleSystem>();
         if (particles != null) {
             particles.gameObject.layer = playerLayer;

@@ -15,12 +15,12 @@ MonoBehaviour:
   cardType: 0
   cardName: UnitDataTank
   artwork: {fileID: 21300000, guid: 19d3a26c38024e543be37647fdce1715, type: 3}
-  manaCost: 10
+  manaCost: 50
   unitCount: 1
   disallowedPlacements:
     serializedVersion: 2
     m_Bits: 1568
   placerVisuals: {fileID: 1688381474393727592, guid: 7c6a124c90ec9a4409b79ba4a1c72209, type: 3}
-  placerGhostVisuals: {fileID: 3244793649637045470, guid: dd8bbcfa1f18e9643b19ce2d52f59680, type: 3}
+  placerGhostVisuals: {fileID: 3059240943973793682, guid: 82f01e21746f9924cafe243dde898126, type: 3}
   finalForm: {fileID: 7068154117845648548, guid: e2c66b9d2d4670440add7832805491ae, type: 3}
   placementType: 0
