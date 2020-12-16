@@ -12,7 +12,7 @@ public class AudioFW : MonoBehaviour
     Dictionary<string, AudioSource> sfx = new Dictionary<string, AudioSource>();
     Dictionary<string, AudioSource> loops = new Dictionary<string, AudioSource>();
     Dictionary<string, AudioFWRandomizer> randomSfx = new Dictionary<string, AudioFWRandomizer>();
-    int x = 0;
+    //int x = 0;
 
     public static void Play(string id) {
         instance.PlayImpl(id);

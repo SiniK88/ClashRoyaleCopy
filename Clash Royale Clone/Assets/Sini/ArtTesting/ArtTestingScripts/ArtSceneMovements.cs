@@ -29,15 +29,15 @@ public class ArtSceneMovements : MonoBehaviour
         towerhp = waypoints[nextPoint].GetComponent<ArtScenestats>();
         //unitStats = gameObject.GetComponent<UnitStats>(); // unitStats from different script
         //agent.stoppingDistance = 0;
-        dust.GetComponent<ParticleSystem>().enableEmission = false; 
-        hit.GetComponent<ParticleSystem>().enableEmission = false;
+        //dust.GetComponent<ParticleSystem>().enableEmission = false; 
+        //hit.GetComponent<ParticleSystem>().enableEmission = false;
     }
 
     void ContinuePatrol() {
 
         agent.speed = patrolSpeed;
         agent.SetDestination(waypoints[nextPoint].position);
-        hit.GetComponent<ParticleSystem>().enableEmission = false;
+        //hit.GetComponent<ParticleSystem>().enableEmission = false;
     }
 
 
@@ -63,9 +63,9 @@ public class ArtSceneMovements : MonoBehaviour
 
     void Update() {
         if (currentState == ArtState.Move) {
-            dust.GetComponent<ParticleSystem>().enableEmission = true;
+            //dust.GetComponent<ParticleSystem>().enableEmission = true;
             if (CloseEnoughToWaypoint()) {
-                dust.GetComponent<ParticleSystem>().enableEmission = false;
+                //dust.GetComponent<ParticleSystem>().enableEmission = false;
                 agent.velocity = Vector3.zero;
                 //agent.transform.position = waypoints[nextPoint].position;
                 if (towerhp.towerMaxHP <= 0) {
@@ -80,7 +80,7 @@ public class ArtSceneMovements : MonoBehaviour
                 curTime += Time.deltaTime;
                 if (curTime >= hitTime && towerhp.towerMaxHP > 0) {
                     towerhp.towerMaxHP -= attackPower;
-                    hit.GetComponent<ParticleSystem>().enableEmission = true;
+                   // hit.GetComponent<ParticleSystem>().enableEmission = true;
                     curTime = curTime - hitTime;
                 }
 

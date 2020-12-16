@@ -134,6 +134,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
+  particles: {fileID: 1615131537716499, guid: ea945bab222ec8a49b3488596d362dbf, type: 3}
+  hitParticles: {fileID: 941155163012474737, guid: 74f3fdfacf423cb469c20e8e3b729f4f, type: 3}
 --- !u!1 &1105264542359998492
 GameObject:
   m_ObjectHideFlags: 0
