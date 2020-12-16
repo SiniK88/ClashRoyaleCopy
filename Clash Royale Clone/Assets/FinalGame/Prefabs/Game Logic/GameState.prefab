@@ -54,10 +54,14 @@ MonoBehaviour:
   redPoints: {fileID: 0}
   blueSmallTowers:
   - {fileID: 0}
+  - {fileID: 0}
   redSmallTowers:
   - {fileID: 0}
-  blueBigTowers: []
-  redBigTowers: []
+  - {fileID: 0}
+  blueBigTowers:
+  - {fileID: 0}
+  redBigTowers:
+  - {fileID: 0}
 --- !u!114 &5995749471187876673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,5 +74,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af15ec5143913464aac134b1a59dcc6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingTime: 100
+  startingTime: 180
   timerText: {fileID: 0}

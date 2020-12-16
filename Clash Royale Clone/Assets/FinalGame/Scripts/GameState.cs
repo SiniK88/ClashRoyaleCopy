@@ -122,7 +122,7 @@ public class GameState : MonoBehaviour
     }
 
     public void PlayerWon(int i) {
-        Time.timeScale = 0;
+        Time.timeScale = 0.5f;
         string playerWon;
         if(i == 1) {
             winner = new Color(0, 60, 255, 0f);            
