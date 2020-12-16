@@ -31,8 +31,8 @@ public class GridJussi : MonoBehaviour {
 		grid = new Node[gridSizeX, gridSizeY];
 		worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x / 2 - Vector3.up * gridWorldSize.y / 2;
 
-		var nodeStates = new Node.NodeState[] { Node.NodeState.Border, Node.NodeState.Obstacle, Node.NodeState.BlueBattlefield, Node.NodeState.RedBattlefield, Node.NodeState.Battlefield };
-		var layers = new int[] { 25, 22, 19, 18, 15, 10};
+		var nodeStates = new Node.NodeState[] { Node.NodeState.Border, Node.NodeState.Obstacle, Node.NodeState.BlueIntrudedLeft, Node.NodeState.BlueIntrudedRight, Node.NodeState.RedIntrudedLeft, Node.NodeState.RedIntrudedRight, Node.NodeState.BlueBattlefield, Node.NodeState.RedBattlefield, Node.NodeState.Battlefield };
+		var layers = new int[] { 30,29,23,22,21,20,19,18,15};
 
 		for (int x = 0; x < gridSizeX; x++) {
 			for (int y = 0; y < gridSizeY; y++) {

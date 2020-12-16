@@ -5,7 +5,7 @@ using UnityEngine;
 public class Node {
 
 	public enum NodeState {
-		Border, Battlefield, BlueBattlefield, RedBattlefield, Obstacle, NoState
+		Border, Battlefield, BlueIntrudedLeft, BlueIntrudedRight, RedIntrudedLeft, RedIntrudedRight, BlueBattlefield, RedBattlefield, Obstacle, NoState
     }
 
 	public NodeState nodeState = NodeState.NoState;

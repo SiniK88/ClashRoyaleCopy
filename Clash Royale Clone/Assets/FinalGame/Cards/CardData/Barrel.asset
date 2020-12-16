@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardType: 7
   cardName: Barrel
-  artwork: {fileID: 21300000, guid: 19e9bd9603a25b2459f413dd18123f27, type: 3}
+  artwork: {fileID: 21300000, guid: 28d200fa471306348a761a8b70b31b5f, type: 3}
   manaCost: 10
   unitCount: 1
   disallowedPlacements:

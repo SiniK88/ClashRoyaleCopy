@@ -29,17 +29,17 @@ TagManager:
   - 
   - RedBattlefield
   - BlueBattlefield
+  - RedIntrudedRight
+  - RedIntrudedLeft
+  - BlueIntrudedRight
+  - BlueIntrudedLeft
+  - 
+  - 
+  - 
   - 
   - 
   - Obstacle
-  - 
-  - 
   - Border
-  - 
-  - 
-  - 
-  - 
-  - 
   - 
   m_SortingLayers:
   - name: Default

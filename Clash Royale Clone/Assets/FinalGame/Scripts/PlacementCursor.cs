@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PlacementCursor : MonoBehaviour {
 
@@ -25,14 +26,31 @@ public class PlacementCursor : MonoBehaviour {
     GridJussi grid;
     Node[,] map;
     Node currentNode;
-    Node.NodeState playerSide;
+    List<Node.NodeState> playerSide;
+
+    public bool blueLeftDestroyed = false;
+    public bool blueRightDestroyed = false;
+    public bool redLeftDestroyed = false;
+    public bool redRightDestroyed = false;
+
     Node acceptableNode; //The Node which is the last acceptable Node placement-wise for the specific Unit/Spell. 
+    List<Node> unitPlaceNodes = new List<Node>();
+    List<Node> spellPlaceNodes = new List<Node>();
+    public GameObject placementShadow;
+
+    public GameObject unitVar1;
+    public GameObject unitVar2;
+    public GameObject unitVar3;
+    public GameObject unitVar4;
+    public GameObject spellPlacementShadows;
+    GameObject unitVar;
 
     public GameObject placer;
     public GameObject placerG;
-    CardType.PlacementType placementType;
+    CardType.PlacementType placementType;    
 
     private void Awake() {
+        unitVar = unitVar1;
         initialPos = initialTransform.position;
         gameObject.transform.position = initialPos;
         rend = GetComponent<SpriteRenderer>();
@@ -44,11 +62,49 @@ public class PlacementCursor : MonoBehaviour {
         map = grid.GetGrid();
 
         if (playerID == null) {
-            playerSide = Node.NodeState.NoState;
+            playerSide = new List<Node.NodeState>();
+            playerSide.Add(Node.NodeState.NoState);
         } else if (playerID.Equals("Player1")) {
-            playerSide = Node.NodeState.BlueBattlefield;
+            playerSide = new List<Node.NodeState>();
+            playerSide.Add(Node.NodeState.BlueBattlefield);
+            playerSide.Add(Node.NodeState.RedIntrudedLeft);
+            playerSide.Add(Node.NodeState.RedIntrudedRight);
         } else if (playerID.Equals("Player2")) {
-            playerSide = Node.NodeState.RedBattlefield;
+            playerSide = new List<Node.NodeState>();
+            playerSide.Add(Node.NodeState.RedBattlefield);
+            playerSide.Add(Node.NodeState.BlueIntrudedLeft);
+            playerSide.Add(Node.NodeState.BlueIntrudedRight);
+        }        
+
+        unitVar.SetActive(false);
+        spellPlacementShadows.SetActive(false);        
+    }
+
+    public void TowerDestroyed(int playerIndex) {
+        if (playerID.Equals("Player1") && playerIndex == 1) {
+            if(redLeftDestroyed && redRightDestroyed) {
+                unitVar = unitVar4;
+            } else if (redLeftDestroyed) {
+                unitVar = unitVar2;
+                playerSide.Add(Node.NodeState.BlueIntrudedLeft);
+            } else if (redRightDestroyed) {
+                unitVar = unitVar3;
+                playerSide.Add(Node.NodeState.BlueIntrudedRight);
+            } else {
+                unitVar = unitVar1;
+            }
+        } else if (playerID.Equals("Player2") && playerIndex == 2) {
+            if (blueLeftDestroyed && blueRightDestroyed) {
+                unitVar = unitVar4;
+            } else if (blueLeftDestroyed) {
+                unitVar = unitVar2;
+                playerSide.Add(Node.NodeState.RedIntrudedLeft);
+            } else if (blueRightDestroyed) {
+                unitVar = unitVar3;
+                playerSide.Add(Node.NodeState.RedIntrudedRight);
+            } else {
+                unitVar = unitVar1;
+            }
         }
     }
 
@@ -84,7 +140,7 @@ public class PlacementCursor : MonoBehaviour {
                     if(placementType == CardType.PlacementType.Spell) {
                         acceptableNode = currentNode;
                     } else if (placementType == CardType.PlacementType.Unit) {
-                        if(currentNode.nodeState != Node.NodeState.Obstacle && currentNode.nodeState == playerSide) { //Units cannot be placed onto obstacles
+                        if(currentNode.nodeState != Node.NodeState.Obstacle && playerSide.Contains(currentNode.nodeState)) { //Units cannot be placed onto obstacles
                             acceptableNode = currentNode;
                         }
                     }                                  
@@ -116,12 +172,20 @@ public class PlacementCursor : MonoBehaviour {
        placementType = _placementType;
        placer = Instantiate(placerMarker, gameObject.transform);
        placerG = Instantiate(placerGhost, gameObject.transform);
+
+       if(placementType == CardType.PlacementType.Spell) {
+           spellPlacementShadows.SetActive(true);
+       } else {
+           unitVar.SetActive(true);
+       }
     }
 
     public void DeleteCursorObjects() {
         placer = null;
         placerG = null;
-        foreach(Transform child in transform) {
+        unitVar.SetActive(false);
+        spellPlacementShadows.SetActive(false);
+        foreach (Transform child in transform) {
             GameObject.Destroy(child.gameObject);
         }
     }

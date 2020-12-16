@@ -13,6 +13,11 @@ public class GameState : MonoBehaviour
         CountDownTimer.OnTimerRunOut -= TimerRunOut;
     }
 
+    public GameObject blueIntrusionLeft;
+    public GameObject blueIntrusionRight;
+    public GameObject redIntrusionLeft;
+    public GameObject redIntrusionRight;
+
     public GameObject gameOverScreen;
     public Text playerWonText;
 
@@ -135,16 +140,12 @@ public class GameState : MonoBehaviour
     public void OnBlueTowerDestroy() {
         blueTowers--;
         redPoints.text = (2 - blueTowers).ToString();
-        if(blueTowers <= 0) {
-            PlayerWon(2);
-        }
+        
     }
     public void OnRedTowerDestroy() {
         redTowers--;
         bluePoints.text = (2 - redTowers).ToString();
-        if (redTowers <= 0) {
-            PlayerWon(1);
-        }
+        
     }
     public void OnBlueBigTowerDestroy() {
         blueBigTower--;

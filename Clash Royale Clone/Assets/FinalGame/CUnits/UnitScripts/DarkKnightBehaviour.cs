@@ -111,6 +111,7 @@ public class DarkKnightBehaviour : MonoBehaviour, IBehaviourStats, IStunnable {
     }
 
     public void OnDeath() {
+        UnListenTarget();
         targetManager.UnregisterUnit(gameObject.transform, thisPlayer);
         GameObject parent = transform.parent.gameObject;
         Destroy(parent);
