@@ -108,6 +108,8 @@ public class InfernoDragonBehaviour : MonoBehaviour, IBehaviourStats, IStunnable
         //Initialize the Unit States, so the game will orient the unit correctly starting from Update()
         currentState = AIstate.NoState;
         previousState = AIstate.NoState;
+
+        AudioFW.Play("Unit_Infernodragon_Ready");
     }
 
     public void OnDeath() {
@@ -264,7 +266,7 @@ public class InfernoDragonBehaviour : MonoBehaviour, IBehaviourStats, IStunnable
             attackTimer -= Time.deltaTime;
             if (attackTimer <= 0) {
                 uninterruptedAttacks++;
-
+                AudioFW.Play("Unit_Infernodragon_Attack");
                 if (uninterruptedAttacks < 5) {
                     //8.5% damage
                     currentTarget.GetComponent<IDamageable>().ApplyDamage(Mathf.FloorToInt(attackPower * 0.085f));
