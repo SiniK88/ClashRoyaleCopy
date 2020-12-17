@@ -5,7 +5,7 @@ using UnityEngine;
 public class BGMusic : MonoBehaviour
 {
 
-    public float startingTime = 60f;
+    public float startingTime = 100f;
     float currentTime;
    
 
