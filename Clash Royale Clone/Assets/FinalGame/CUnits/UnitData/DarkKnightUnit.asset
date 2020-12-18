@@ -21,4 +21,4 @@ MonoBehaviour:
   attackRadius: 2
   aggroRadius: 5
   targets: -1
-  characteristcs: 2
+  characteristcs: 4
